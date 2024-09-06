@@ -1,0 +1,623 @@
+{
+    "profile":
+    {
+        "firstname": "Karine",
+        "lastname": "Guerrache",
+        "profession": "Esthéticienne",
+        "enterprise": "Karine Beauté Zen",
+        "logo": "",
+        "telephone": "02.78.81.63.07",
+        "mobile": "06.03.56.52.23",
+        "adress": "40, route du Neubourg",
+        "postalcode": "27370",
+        "city": "Saint-Pierre-des-Fleurs"
+    },
+    "prestations":
+    [
+        {
+            "Les soins visages et corps":[
+                {
+                    "id":1,
+                    "title": "Pause relaxante",
+                    "price": 37,
+                    "time": "40 minutes",
+                    "description":"Nettoyage du visage, Gommage, Massage"
+                },
+                {
+                    "id":2,
+                    "title": "Pause clarté",
+                    "price": 42,
+                    "time": "45 minutes",
+                    "description":"Nettoyage, Gommage, Masque"
+                },
+                {
+                    "id":3,
+                    "title": "Pause détente",
+                    "price": 60,
+                    "time": "1 heure 05 minutes",
+                    "description":"Nettoyage, Gommage, Sérum concentré d'actifs, Massage, Masque, Contour des yeux, crème de soin"
+                },
+                {
+                    "id":4,
+                    "title": "Pause évasion",
+                    "price": 74,
+                    "time": "1 heure 20 minutes",
+                    "description":"Nettoyage, Gommage, Sérum concentré d'actifs, Massage, Masque crème doublé d'un masque Peel-off, Massage des bras, Contour des yeux, crème de soin"
+                },
+                {
+                    "id":5,
+                    "title": "Pause madèrothérapie",
+                    "price": 72,
+                    "time": "1 heure 15 minutes",
+                    "description":"Soin visage complet anti-âge nature madèrothérapie"
+                },
+                {
+                    "id":6,
+                    "title": "Séance de réflexologie plantaire",
+                    "price": 60,
+                    "time": "1 heure 15 minutes",
+                    "description":"Intervenante extérieure, 400h de formation, au centre de formation << Normandie Réflexologie >>. La réflexologie favorie la relaxation, prévient le stress et stimule les fonctions d'autorégulation grâce à un toucher de zones << réflexes >>"
+                },
+                {
+                    "id":7,
+                    "title": "Massage du dos",
+                    "price": 35,
+                    "time": "30 minutes",
+                    "description":""
+                },
+                {
+                    "id":8,
+                    "title": "Massage du dos à la bougie",
+                    "price": 40,
+                    "time": "30 minutes",
+                    "description":""
+                },
+                {
+                    "id":9,
+                    "title": "Massage du dos à la ventouse",
+                    "price": 50,
+                    "time": "45 minutes",
+                    "description":""
+                },
+                {
+                    "id":10,
+                    "title": "Massage californien",
+                    "price": 65,
+                    "time": "1 heure",
+                    "description":"Relaxant, favorise la détente, manœuvres lentes et douces"
+                },
+                {
+                    "id":11,
+                    "title": "Massage californien",
+                    "price": 91,
+                    "time": "1 heure 30 minutes",
+                    "description":"Relaxant, favorise la détente, manœuvres lentes et douces"
+                },
+                {
+                    "id":12,
+                    "title": "Massage oriental",
+                    "price": 65,
+                    "time": "1 heure",
+                    "description":"Relaxant, manœuvres lentes et douces"
+                },
+                {
+                    "id":13,
+                    "title": "Massage oriental",
+                    "price": 91,
+                    "time": "1 heure 30 minutes",
+                    "description":"Relaxant, manœuvres lentes et douces"
+                },
+                {
+                    "id":14,
+                    "title": "Massage balinais",
+                    "price": 65,
+                    "time": "1 heure",
+                    "description":"Relaxant, dénoue les contractions, avec des étirements de type Thaï doux"
+                },
+                {
+                    "id":15,
+                    "title": "Massage balinais",
+                    "price": 91,
+                    "time": "1 heure 30 minutes",
+                    "description":"Relaxant, dénoue les contractions, avec des étirements de type Thaï doux"
+                },
+                {
+                    "id":16,
+                    "title": "Massage ayurvédique",
+                    "price": 65,
+                    "time": "1 heure",
+                    "description":"Ènergétique, détend tensions et muscles"
+                },
+                {
+                    "id":17,
+                    "title": "Massage ayurvédique",
+                    "price": 91,
+                    "time": "1 heure 30 minutes",
+                    "description":"Ènergétique, détend tensions et muscles"
+                },
+                {
+                    "id":18,
+                    "title": "Massage hawaien",
+                    "price": 65,
+                    "time": "1 heure",
+                    "description":"Délassant, permet de relâcher les tensions, inspiré du Lomi-Lomi"
+                },
+                {
+                    "id":19,
+                    "title": "Massage hawaien",
+                    "price": 91,
+                    "time": "1 heure 30 minutes",
+                    "description":"Délassant, permet de relâcher les tensions, inspiré du Lomi-Lomi"
+                },
+                {
+                    "id":20,
+                    "title": "Massage latéral",
+                    "price": 71,
+                    "time": "1 heure",
+                    "description":"Modelage"
+                },
+                {
+                    "id":21,
+                    "title": "Pause ultra-relaxante",
+                    "price": 167,
+                    "time": "3 heures",
+                    "description":"Nettoyage"
+                },
+                {
+                    "id":22,
+                    "title": "Pause extrême",
+                    "price": 135,
+                    "time": "2 heures 15 minutes",
+                    "description":"Gommage, Enveloppement, Massage du corps"
+                },
+                {
+                    "id":23,
+                    "title": "Pause précieuse",
+                    "price": 98,
+                    "time": "1 heure 45 minutes",
+                    "description":"Gommage, Massage du corps"
+                },
+                {
+                    "id":24,
+                    "title": "Pause exfoliante",
+                    "price": 56,
+                    "time": "1 heure",
+                    "description":"Gommage, application d'une huile ou d'une crème de soin"
+                },
+                {
+                    "id":25,
+                    "title": "Pause bien-être",
+                    "price": 121,
+                    "time": "2 heures 10 minutes",
+                    "description":"Nettoyage, Gommage, Sérum concentré d'actifs, Massage et masque du visage, contour des yeux, crème de soin, nettoyage, enveloppement et massage du dos"
+                },
+                {
+                    "id":26,
+                    "title": "Pause douceur",
+                    "price": 93,
+                    "time": "1 heure 40 minutes",
+                    "description":"Massage du dos, soin complet du visage, du décolleté et des épaules. Nettoyage, gommage, masque et massage du visage"
+                },
+                {
+                    "id":27,
+                    "title": "Pause intense",
+                    "price": 84,
+                    "time": "1 heure 30 minutes",
+                    "description":"Soin du visage et des pieds, nettoyage, gommage, massage et masque des pieds. Nettoyage, gommage, sérum concentré d'actifs, massage et masque du visage. Contour des yeux et crème sur le visage"
+                },
+                {
+                    "id":28,
+                    "title": "Soin du dos purifiant",
+                    "price": 93,
+                    "time": "1 heure 40 minutes",
+                    "description":"Nettoyage, gommage, Vapozone, Extraction de comédons, sérum, masque et massage"
+                },
+                {
+                    "id":29,
+                    "title": "Soin jambes légères",
+                    "price": 52,
+                    "time": "45 minutes",
+                    "description":"Soin rafraichissant et stimulant pour des jambes légères"
+                },
+                {
+                    "id":30,
+                    "title": "Massage amincissant",
+                    "price": 70,
+                    "time": "1 heure",
+                    "description":"Palper rouler manuel"
+                },
+                {
+                    "id":31,
+                    "title": "Madèrothérapie",
+                    "price": 70,
+                    "time": "1 heure",
+                    "description":"Silhouette"
+                },
+                {
+                    "id":32,
+                    "title": "Madèrothérapie",
+                    "price": 40,
+                    "time": "30 minutes",
+                    "description":"Bras"
+                },
+                {
+                    "id":33,
+                    "title": "Madèrothérapie",
+                    "price": 60,
+                    "time": "45 minutes",
+                    "description":"Ventre/ hanches/ cuisses/ mollets /fesses"
+                }
+            ],
+            "Manucure":[
+                {
+                    "Gel et Semi Permanent Mains et Pieds": [
+                        {
+                            "id":1,
+                            "title": "Pose Capsules",
+                            "price":55
+                        },
+                        {
+                            "id":2,
+                            "title": "Gainage /Renfort Gel sur les mains",
+                            "price":47
+                        }, 
+                        {
+                            "id":3,
+                            "title": "Remplissage Gel",
+                            "price":47
+                        }, 
+                        {
+                            "id":4,
+                            "title": "Réparation d'un Ongle en Gel ou en Semi Permanent",
+                            "price":7.20
+                        }, 
+                        {
+                            "id":5,
+                            "title": "Ajout d'un Vernis Permanent",
+                            "price":6
+                        }, 
+                        {
+                            "id":6,
+                            "title": "Ajout d'une French Permanente",
+                            "price":8
+                        }, 
+                        {
+                            "id":7,
+                            "title": "Pose Vernis Semi Permanent sans Dépose",
+                            "price":29
+                        }, 
+                        {
+                            "id":8,
+                            "title": "Pose Vernis Semi Permanent avec Dépose",
+                            "price":35
+                        }, 
+                        {
+                            "id":9,
+                            "title": "Pose French Semi Permanent sans Dépose",
+                            "price":31
+                        }, 
+                        {
+                            "id":10,
+                            "title": "Pose French Semi Permanent avec Dépose",
+                            "price":37
+                        }, 
+                        {
+                            "id":11,
+                            "title": "Pose Strass, stickers par ongle",
+                            "price":0.9
+                        }
+                    ],
+                    "Dépose Gel et Semi Permanent Mains et Pieds": [
+                        {
+                            "id":1,
+                            "title": "Dépose avec un soin classique",
+                            "price": 22
+                        },
+                        {
+                            "id":2,
+                            "title": "Dépose avec un soin à la kératine",
+                            "price": 25
+                        }
+                    ],
+                    "Pour les ongles naturels": [
+                        {
+                            "id": 1,
+                            "title": "Manucure complète: Gommage + entretien des Ongles + Masque + Massage (1h30)",
+                            "price": 36
+                        },
+                        {
+                            "id": 2,
+                            "title": "Limage (mains)",
+                            "price": 7
+                        },
+                        {
+                            "id": 3,
+                            "title": "Limage + soins (mains)",
+                            "price": 10
+                        },
+                        {
+                            "id": 4,
+                            "title": "Limage + soins cuticules + base (mains)",
+                            "price": 22
+                        },
+                        {
+                            "id": 5,
+                            "title": "Soin des pieds complets: Balnéo + Gommage + Élimination des calosités + Entretien des Ongles + Masque + Massage (2h)",
+                            "price": 48
+                        },
+                        {
+                            "id": 6,
+                            "title": "Soin des Ongles de Pieds",
+                            "price": 25
+                        },
+                        {
+                            "id": 7,
+                            "title": "Soin Calluspeeling (Uniquement les Callosités)",
+                            "price": 40
+                        },
+                        {
+                            "id": 8,
+                            "title": "Soin Calluspeeling + Soin des Ongles de Pieds",
+                            "price": 60
+                        },
+                        {
+                            "id": 9,
+                            "title": "Pose de vernis naturel sur les mains et les pieds avec votre vernis que vous amenez à l'institut",
+                            "price": 14
+                        },
+                        {
+                            "id": 10,
+                            "title": "Pose de vernis naturel sur les mains et les pieds avec un vernis de l'institut que vous emmenez avec vous",
+                            "price": 20
+                        }
+                    ]
+                }
+            ],
+            "Épilations":[
+                {
+                    "id": 1,
+                    "title":"Sourcils",
+                    "price": 10
+                },
+                {
+                    "id": 2,
+                    "title":"Lèvres",
+                    "price": 7
+                },
+                {
+                    "id": 3,
+                    "title":"Menton ou nez ou cou",
+                    "price": 7
+                },
+                {
+                    "id": 4,
+                    "title":"Joues ou Pattes",
+                    "price": 8
+                },
+                {
+                    "id": 5,
+                    "title":"Oreilles",
+                    "price": 9
+                },
+                {
+                    "id": 6,
+                    "title":"Aisselles",
+                    "price": 10
+                },
+                {
+                    "id": 7,
+                    "title":"Avant-Bras",
+                    "price": 15
+                },
+                {
+                    "id": 8,
+                    "title":"Bras",
+                    "price": 20
+                },
+                {
+                    "id": 9,
+                    "title":"Mains",
+                    "price": 7
+                },
+                {
+                    "id": 10,
+                    "title":"Torse ou ventre",
+                    "price": 13
+                },
+                {
+                    "id": 11,
+                    "title":"Torse + ventre",
+                    "price": 22
+                },
+                {
+                    "id": 12,
+                    "title":"Dos",
+                    "price": 22
+                },
+                {
+                    "id": 13,
+                    "title":"Fesses",
+                    "price": 15
+                },
+                {
+                    "id": 14,
+                    "title":"Cuisses",
+                    "price": 16
+                },
+                {
+                    "id": 15,
+                    "title":"Demi-Jambes",
+                    "price": 17
+                },
+                {
+                    "id": 16,
+                    "title":"Jambes entières",
+                    "price": 28
+                },
+                {
+                    "id": 17,
+                    "title":"Maillot simple",
+                    "price": 12
+                },
+                {
+                    "id": 17,
+                    "title":"Maillot échancré",
+                    "price": 16
+                },
+                {
+                    "id": 17,
+                    "title":"Maillot semi-intégral",
+                    "price": 24
+                },
+                {
+                    "id": 18,
+                    "title":"Maillot intégral",
+                    "price": 28
+                },
+                {
+                    "id": 19,
+                    "title":"Forfait Sourcils + Lèvres",
+                    "price": 16
+                },
+                {
+                    "id": 20,
+                    "title":"Forfait Sourcils + Lèvres + Menton",
+                    "price": 22
+                },
+                {
+                    "id": 21,
+                    "title":"Forfait Visage complet",
+                    "price": 27
+                },
+                {
+                    "id": 22,
+                    "title":"Forfait Aisselles + Demi-jambes + Maillot Simple",
+                    "price": 34
+                },
+                {
+                    "id": 23,
+                    "title":"Forfait Aisselles + Demi-jambes + Maillot Échancré",
+                    "price": 39
+                },
+                {
+                    "id": 24,
+                    "title":"Forfait Aisselles + Demi-jambes + Maillot Semi-Intégral",
+                    "price": 46
+                },
+                {
+                    "id": 25,
+                    "title":"Forfait Aisselles + Demi-jambes + Maillot Intégral",
+                    "price": 50
+                },
+                {
+                    "id": 26,
+                    "title":"Forfait Aisselles + Jambes Entières + Maillot Simple",
+                    "price": 43
+                },
+                {
+                    "id": 27,
+                    "title":"Forfait Aisselles + Jambes Entières + Maillot Échancré",
+                    "price": 48
+                },
+                {
+                    "id": 26,
+                    "title":"Forfait Aisselles + Jambes Entières + Maillot Semi-Intégral",
+                    "price": 56
+                },
+                {
+                    "id": 26,
+                    "title":"Forfait Aisselles + Jambes Entières + Maillot Intégral",
+                    "price": 59
+                }
+            ],
+            "Solarium":[
+                {
+                    "id":1,
+                    "title":"La séance",
+                    "price": 10
+                },
+                {
+                    "id":2,
+                    "title":"La paire de lunettes",
+                    "price": 5.2
+                }
+            ],
+            "Teinture de sourcils et cils, réhaussement de cils":[
+                {
+                    "id":1,
+                    "title":"Sourcils",
+                    "price":12
+                },
+                {
+                    "id":2,
+                    "title":"Cils",
+                    "price":17
+                },
+                {
+                    "id":3,
+                    "title":"Cils + Sourcils",
+                    "price":27
+                },
+                {
+                    "id":4,
+                    "title":"Réhaussement de cils ou Brow Lift Sourcils",
+                    "price":41
+                },
+                {
+                    "id":5,
+                    "title":"Réhaussement de cils ou Brow Lift Sourcils + Teinture",
+                    "price":55
+                },
+                {
+                    "id":6,
+                    "title":"Décoloration de la lèvre",
+                    "price":10
+                }
+            ],
+            "Extensions de cils":[
+                {
+                    "id":1,
+                    "title":"Pose Naturelle",
+                    "price":76
+                },
+                {
+                    "id":2,
+                    "title":"Volume Russe",
+                    "price":113
+                },
+                {
+                    "id":3,
+                    "title":"Remplissage 3 semaines",
+                    "price":45
+                },
+                {
+                    "id":4,
+                    "title":"Remplissage 4 semaines",
+                    "price":50
+                }
+            ],
+            "Maquillage":[
+                {
+                    "id":1,
+                    "title":"Maquillage de jour",
+                    "price":25
+                },
+                {
+                    "id":2,
+                    "title":"Maquillage de nuit",
+                    "price":32
+                },
+                {
+                    "id":3,
+                    "title":"Maquillage de mariée (1 essai compris",
+                    "price":60
+                },
+                {
+                    "id":4,
+                    "title":"Cours d'automaquillage (1h)",
+                    "price":50
+                }
+            ]
+        }
+    ]
+}

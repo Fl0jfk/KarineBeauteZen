@@ -4,7 +4,7 @@ import activity from "@/app/data/data.json"
 export default function Home() {
   return (
     <main className="pt-[10vh]">
-      <ListCards activity={activity} />
+      <ListCards activity={activity}/>
     </main>
   );
 }
