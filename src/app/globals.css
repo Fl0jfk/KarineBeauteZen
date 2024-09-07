@@ -9,3 +9,11 @@ a {
 button {
     cursor: pointer;
 }
+
+body.modal-open {
+    overflow: hidden;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}

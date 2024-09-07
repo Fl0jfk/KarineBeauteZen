@@ -4,17 +4,12 @@ const nextConfig = {
       formats : ['image/webp'],
       remotePatterns: [
           {
-              protocol: "https",
-              hostname: "**.cdninstagram.com",
-              port: "",
-          },
-          {
               protocol: 'https',
               hostname: 'images.unsplash.com'
           },
           {
               protocol: 'https',
-              hostname: 'littlequeenphotography.s3.eu-west-3.amazonaws.com'
+              hostname: 'karinebeautezen.s3.eu-west-3.amazonaws.com'
           },
           {
               protocol: 'https',

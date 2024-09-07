@@ -12,6 +12,50 @@
         "postalcode": "27370",
         "city": "Saint-Pierre-des-Fleurs"
     },
+    "categories":[
+        {
+            "id":1,
+            "name":"Les soins visages et corps",
+            "img":"https://karinebeautezen.s3.eu-west-3.amazonaws.com/soins+visages+et+corps/soinscover.jpg",
+            "shortDescription":"",
+            "description":""
+        },
+        {
+            "id":2,
+            "name":"Manucure",
+            "img":"https://karinebeautezen.s3.eu-west-3.amazonaws.com/manucure/manucurecover.jpg",
+            "shortDescription":"",
+            "description":""
+        },
+        {
+            "id":3,
+            "name":"Épilation",
+            "img":"https://karinebeautezen.s3.eu-west-3.amazonaws.com/epilation/epilationcover.jpg",
+            "shortDescription":"",
+            "description":""
+        },
+        {
+            "id":4,
+            "name":"Cils et sourcils",
+            "img":"https://karinebeautezen.s3.eu-west-3.amazonaws.com/cils+et+sourcils/cilscover.jpg",
+            "shortDescription":"",
+            "description":""
+        },
+        {
+            "id":5,
+            "name":"Maquillage",
+            "img":"https://karinebeautezen.s3.eu-west-3.amazonaws.com/maquillage/maquillagecover.jpg",
+            "shortDescription":"",
+            "description":""
+        },
+        {
+            "id":6,
+            "name":"Solarium",
+            "img":"https://karinebeautezen.s3.eu-west-3.amazonaws.com/solarium/solariumcover.jpg",
+            "shortDescription":"",
+            "description":""
+        }
+    ],
     "prestations":
     [
         {
@@ -154,14 +198,14 @@
                     "title": "Massage latéral",
                     "price": 71,
                     "time": "1 heure",
-                    "description":"Modelage"
+                    "description":"Modelage relaxant adapté aux femmes enceintes et aux personnes rencontrant des difficultés à se coucher sur le ventre ou sur le dos"
                 },
                 {
                     "id":21,
                     "title": "Pause ultra-relaxante",
                     "price": 167,
                     "time": "3 heures",
-                    "description":"Nettoyage"
+                    "description":"Nettoyage et gommage du visage gommage du corps enveloppement du corps, massage du corps et du visage masque visage, contour des yeux, crème de soin"
                 },
                 {
                     "id":22,
@@ -609,7 +653,7 @@
                 },
                 {
                     "id":3,
-                    "title":"Maquillage de mariée (1 essai compris",
+                    "title":"Maquillage de mariée (1 essai compris)",
                     "price":60
                 },
                 {

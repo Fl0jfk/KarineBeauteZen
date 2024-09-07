@@ -1,0 +1,92 @@
+.scrollingMenuPanel {
+    margin-top: 25px;
+    margin-bottom: 15px;
+    flex-basis: 50%;
+    overflow: hidden;
+    position: relative;
+}
+
+@media screen and (max-width: 768px) {
+    .scrollingMenuPanel {
+        margin-top: 20px;
+    }
+}
+
+.scrollingMenuPanel p {
+    margin-block: 0;
+}
+
+.scrollingMenuPanel .scrollingMenuTitle {
+    background-color: var(--primaryColor);
+    color: var(--tertiaryColor);
+    border-radius: 10px;
+    font-size: 18px;
+    padding: 10px 20px 10px 10px;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+    .scrollingMenuPanel .scrollingMenuTitle {
+        font-size: 16px;
+    }
+}
+
+.scrollingMenuPanel .scrollingMenuTitle i {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+    .scrollingMenuPanel .scrollingMenuTitle i {
+        font-size: 20px;
+    }
+}
+
+.scrollingMenuPanel .scrollingMenuContent {
+    border-radius: 10px 10px 5px 5px;
+    background-color: var(--backgroundGrey);
+    padding: 20px;
+    position: relative;
+    font-size: 18px;
+    color: var(--primaryColor);
+}
+
+.scrollingMenuPanel .scrollingMenuContent.active {
+    animation: slide-in 0.2s ease-in-out;
+}
+
+.scrollingMenuPanel .scrollingMenuContent.hidden {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .scrollingMenuPanel .scrollingMenuContent {
+        font-size: 12px;
+    }
+}
+
+.fa-chevron-up.activeChevron {
+    animation: rotateChevron 0.3s ease-in-out forwards;
+}
+
+@keyframes rotateChevron {
+    0% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(-180deg);
+    }
+}
+
+@keyframes slide-in {
+    0% {
+        transform: translateY(-30%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

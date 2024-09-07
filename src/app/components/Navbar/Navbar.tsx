@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import Logo from "../../assets/Logo.png";
 import { useDispatch } from "react-redux";
-import { setModalOpenArtistic, setModalOpenBoudoir, setModalOpenBoudoirTexture, setModalOpenMomentsLife, setModalOpenOutside, setModalOpenPortrait, setModalOpenPregnancy } from '@/app/redux/reducers/modal';
+import { setModalOpenCils, setModalOpenEpilation, setModalOpenManucure, setModalOpenMaquillage, setModalOpenSoins, setModalOpenSolarium } from '@/app/redux/reducers/modal';
 
 export default function Navbar({menuOpened, onLinkClick} :NavbarProps ){
     const [clickOnLink, setClickOnLink] = useState(menuOpened);
@@ -15,19 +15,17 @@ export default function Navbar({menuOpened, onLinkClick} :NavbarProps ){
     const dispatch = useDispatch();
     const handleModalOpen = (name:string) => {
         switch(name) {
-            case 'Artistique': dispatch(setModalOpenArtistic());
+            case 'Les soins visages et corps': dispatch(setModalOpenSoins());
                 break;
-            case 'Boudoir': dispatch(setModalOpenBoudoir());
+            case 'Manucure': dispatch(setModalOpenManucure());
                 break;
-            case 'Boudoir Texture': dispatch(setModalOpenBoudoirTexture());
+            case 'Épilation': dispatch(setModalOpenEpilation());
                 break;
-            case 'Moments de vie': dispatch(setModalOpenMomentsLife());
+            case 'Cils et sourcils': dispatch(setModalOpenCils());
                 break;
-            case 'Extérieur': dispatch(setModalOpenOutside());
+            case 'Maquillage': dispatch(setModalOpenMaquillage());
                 break;
-            case 'Portrait': dispatch(setModalOpenPortrait());
-                break;
-            case 'Grossesse': dispatch(setModalOpenPregnancy());
+            case 'Solarium': dispatch(setModalOpenSolarium());
                 break;
             default:
                 break;
@@ -76,13 +74,12 @@ export default function Navbar({menuOpened, onLinkClick} :NavbarProps ){
                             <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" className='cursor-pointer absolute top-4 left-4' onClick={()=>setServicesAppear(false)}>
                                 <path d="M11 6L5 12M5 12L11 18M5 12H19" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
                             </svg>
-                            <button className='hover:scale-105 text-center' onClick={()=>handleModalOpen('Artistique')} aria-label="Lien vers la page portrait intimiste">Artistique</button>
-                            <button className='hover:scale-105 text-center' onClick={()=>handleModalOpen('Boudoir')} aria-label="Lien vers la page portrait émotionnel">Boudoir</button>
-                            <button className='hover:scale-105 text-center' onClick={()=>handleModalOpen('Boudoir Texture')} aria-label="Lien vers la page portrait événementiel">Boudoir & texture</button>
-                            <button className='hover:scale-105 text-center' onClick={()=>handleModalOpen('Moments de vie')} aria-label="Lien vers la page portrait intimiste">Moments de vie</button>
-                            <button className='hover:scale-105 text-center' onClick={()=>handleModalOpen('Extérieur')} aria-label="Lien vers la page portrait émotionnel">Extérieur</button>
-                            <button className='hover:scale-105 text-center' onClick={()=>handleModalOpen('Portrait')} aria-label="Lien vers la page portrait événementiel">Portrait</button>
-                            <button className='hover:scale-105 text-center' onClick={()=>handleModalOpen('Grossesse')} aria-label="Lien vers la page portrait émotionnel">Grossesse</button>                           
+                            <button className='hover:scale-105 text-center' onClick={()=>handleModalOpen('Les soins visages et corps')} aria-label="Lien vers la modal soins">Les soins visages et corps</button>
+                            <button className='hover:scale-105 text-center' onClick={()=>handleModalOpen('Manucure')} aria-label="Lien vers la modal Manucure">Manucure</button>
+                            <button className='hover:scale-105 text-center' onClick={()=>handleModalOpen('Épilation')} aria-label="Lien vers la modal Épilation">Épilation</button>
+                            <button className='hover:scale-105 text-center' onClick={()=>handleModalOpen('Cils et sourcils')} aria-label="Lien vers la modal Cils et sourcils">Cils et sourcils</button>
+                            <button className='hover:scale-105 text-center' onClick={()=>handleModalOpen('Maquillage')} aria-label="Lien vers la modal Maquillage">Maquillage</button>
+                            <button className='hover:scale-105 text-center' onClick={()=>handleModalOpen('Solarium')} aria-label="Lien vers la modal Solarium">Solarium</button>                       
                         </div>
                         <div className='flex gap-4'>
                         <Link href="https://www.instagram.com/littlequeenphotography/?hl=fr" className="hover:scale-[1.1] transition ease-in-out duration-100" onClick={handleLinkClick} target="blank">
@@ -127,7 +124,7 @@ export default function Navbar({menuOpened, onLinkClick} :NavbarProps ){
                     </motion.nav>
                 }
             </AnimatePresence>
-            <nav  className={`flex xl:absolute lg:absolute xl:left-[35%] lg:left-[30%] gap-6 sm:hidden md:hidden z-[9]`}>
+            <nav  className={`flex xl:absolute lg:absolute xl:left-[35%] lg:left-[30%] gap-6 sm:hidden md:hidden z-[9] text-3xl`}>
                 <Link href="/" aria-label="Lien vers la page d'accueil">Accueil</Link>
                 <Link href="/portfolio" aria-label="Lien vers la page portfolio">Portfolio</Link>
                 <Link href="/about" aria-label="Lien vers la page à propos">À propos</Link>
