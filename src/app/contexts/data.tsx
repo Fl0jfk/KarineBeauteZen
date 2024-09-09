@@ -1,13 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useState, PropsWithChildren } from "react";
 
-type Profile = {
-  firstname: string;
-  lastname: string;
-  profession: string;
-  profilePhoto: string;
-  memoji: string;
-};
-
 type Categories = {
   id: number;
   name: string;
@@ -16,68 +8,17 @@ type Categories = {
   description: string;
 };
 
-type ImageArtistic ={
+type Prestation = {
   id: number;
-  link:string;
-  cameraLink: string;
-  softwareLink: string;
-  latitude: string;
-  longitude:string;
-}
+  title: string;
+  price: number;
+  time: string;
+  description?: string;
+};
 
-type ImageBoudoirTexture ={
-  id: number;
-  link:string;
-  cameraLink: string;
-  softwareLink: string;
-  latitude: string;
-  longitude:string;
-}
-
-type ImageBoudoir ={
-  id: number;
-  link:string;
-  cameraLink: string;
-  softwareLink: string;
-  latitude: string;
-  longitude:string;
-}
-
-type ImageMomentsLife ={
-  id: number;
-  link:string;
-  cameraLink: string;
-  softwareLink: string;
-  latitude: string;
-  longitude:string;
-}
-
-type ImageOutside ={
-  id: number;
-  link:string;
-  cameraLink: string;
-  softwareLink: string;
-  latitude: string;
-  longitude:string;
-}
-
-type ImagePortrait ={
-  id: number;
-  link:string;
-  cameraLink: string;
-  softwareLink: string;
-  latitude: string;
-  longitude:string;
-}
-
-type ImagePregnancy ={
-  id: number;
-  link:string;
-  cameraLink: string;
-  softwareLink: string;
-  latitude: string;
-  longitude:string;
-}
+type CategoriePrestation = {
+  [categoryName: string]: Prestation[];
+};
 
 type Reviews = {
   id:number;
@@ -88,17 +29,22 @@ type Reviews = {
 }
 
 type Data = {
-  profile: Profile;
+  profile: {
+    firstname: string;
+  lastname: string;
+  profession: string;
+  enterprise: string;
+  logo: string;
+  telephone: string;
+  mobile: string;
+  adress: string;
+  postalcode: string;
+  city: string;
+  };
   categories: Categories[];
-  imageArtistic: ImageArtistic[];
-  imageBoudoirTexture: ImageBoudoirTexture[];
-  imageBoudoir: ImageBoudoir[];
-  imageMomentsLife: ImageMomentsLife[];
-  imageOutside: ImageOutside[];
-  imagePortrait: ImagePortrait[];
-  imagePregnancy: ImagePregnancy[];
+  prestations: CategoriePrestation[];
   reviews: Reviews[];
-  error: Error | null;
+  error: string | null;
 };
 
 const initialData: Data = {
@@ -106,17 +52,16 @@ const initialData: Data = {
     firstname: "",
     lastname: "",
     profession: "",
-    profilePhoto: "",
-    memoji:""
+    enterprise: "",
+    logo: "",
+    telephone: "",
+    mobile: "",
+    adress: "",
+    postalcode: "",
+    city: ""
   },
   categories: [],
-  imageArtistic: [],
-  imageBoudoirTexture:[],
-  imageBoudoir:[],
-  imageMomentsLife:[],
-  imageOutside:[],
-  imagePortrait:[],
-  imagePregnancy:[],
+  prestations:[],
   reviews:[],
   error: null
 };
