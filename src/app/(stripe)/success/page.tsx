@@ -2,51 +2,32 @@
 
 import axios from 'axios';
 
-function CustomerData({ customerData }: { customerData: any }) {
-  if (!customerData) {
-    return <p>Loading customer data...</p>;
+async function fetchCustomerData(token: string) {
+  try {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/success`, {
+      params: { token },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching customer data:', error);
+    return null;
   }
-  return (
-    <div>
-      <p>Merci pour votre achat, {customerData?.name}!</p>
-      <ul>
-        <li>Email: {customerData?.email}</li>
-      </ul>
-    </div>
-  );
 }
 
-export default function SuccessPage({ customerData }: { customerData: any }) {
+export default async function SuccessPage({ searchParams }: { searchParams: { token: string } }) {
+  const token = searchParams.token;
+  if (!token) { return <div>Token not found.</div>;}
+  const customerData = await fetchCustomerData(token);
+  if (!customerData) { return <div>Error loading customer data.</div>;}
   return (
     <div className='w-full h-screen flex items-center justify-center flex-col gap-3 text-center'>
       <h1>✅ Paiement réussi!</h1>
-      <CustomerData customerData={customerData} />
+      <div>
+        <p>Merci pour votre achat, {customerData?.name}!</p>
+        <ul>
+          <li>Email: {customerData?.email}</li>
+        </ul>
+      </div>
     </div>
   );
-}
-
-export async function getServerSideProps(context: any) {
-  const { token } = context.query;
-  if (!token) {
-    return {
-      notFound: true,
-    };
-  }
-  try {
-    const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/success`, {
-      params: { token },
-    });
-    return {
-      props: {
-        customerData: res.data || null,
-      },
-    };
-  } catch (error) {
-    console.error('Error fetching customer data:', error);
-    return {
-      props: {
-        customerData: null,
-      },
-    };
-  }
 }
