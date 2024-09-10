@@ -1,6 +1,6 @@
 import Card from "../Card/Card";
 
-interface Activity {
+interface Shop {
   id: number;
   title: string;
   price: number;
@@ -9,14 +9,14 @@ interface Activity {
 }
 
 interface ListCardsProps {
-  activity: Activity[];
+  shop: Shop[];
 }
 
-function ListCards({ activity }: ListCardsProps) {
+function ListCards({ shop }: ListCardsProps) {
   return (
     <section className="p-3">
-      <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-2 p-3">
-      {activity.map((item, index) => (
+      <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 p-4">
+      {shop.map((item, index) => (
         <Card key={index} item={item} />
       ))}
     </div>

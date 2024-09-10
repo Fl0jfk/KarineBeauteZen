@@ -28,6 +28,14 @@ type Reviews = {
   message:string;
 }
 
+type Shop = {
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  image: string;
+}
+
 type Data = {
   profile: {
     firstname: string;
@@ -44,6 +52,7 @@ type Data = {
   categories: Categories[];
   prestations: CategoriePrestation[];
   reviews: Reviews[];
+  shop: Shop[];
   error: string | null;
 };
 
@@ -62,6 +71,7 @@ const initialData: Data = {
   },
   categories: [],
   prestations:[],
+  shop: [],
   reviews:[],
   error: null
 };

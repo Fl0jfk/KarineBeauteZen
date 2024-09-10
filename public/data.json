@@ -663,5 +663,35 @@
                 }
             ]
         }
-    ]
+    ],
+    "shop":[
+        {
+            "id": 1,
+            "title": "Massage californien",
+            "price": 65,
+            "description": "Relaxant favorise la détente, manœuvres lentes et douces (1 heure)",
+            "image": "https://karinebeautezen.s3.eu-west-3.amazonaws.com/boutique/massage+californien.jpg"
+        },
+        {
+            "id": 2,
+            "title": "Pause ultra-relaxante",
+            "price": 50,
+            "description": "Nettoyage et gommage du visage gommage du corps enveloppement du corps, massage du corps et du visage masque visage, contour des yeux, crème de soin. (3 heures)",
+            "image": "https://karinebeautezen.s3.eu-west-3.amazonaws.com/boutique/massage+californien.jpg"
+        },
+        {
+            "id": 3,
+            "title": "Massage californien",
+            "price": 65,
+            "description": "Relaxant favorise la détente, manœuvres lentes et douces (1 heure)",
+            "image": "https://karinebeautezen.s3.eu-west-3.amazonaws.com/boutique/massage+californien.jpg"
+        },
+        {
+            "id": 4,
+            "title": "Pause ultra-relaxante",
+            "price": 50,
+            "description": "Nettoyage et gommage du visage gommage du corps enveloppement du corps, massage du corps et du visage masque visage, contour des yeux, crème de soin. (3 heures)",
+            "image": "https://karinebeautezen.s3.eu-west-3.amazonaws.com/boutique/massage+californien.jpg"
+        }
+     ]
 }

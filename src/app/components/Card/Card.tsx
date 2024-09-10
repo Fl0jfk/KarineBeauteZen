@@ -28,15 +28,15 @@ export default function Card({ item }: CardProps) {
     } finally { setLoading(false) }
   };
   return (
-    <div className="bg-[rgb(255,249,245)] rounded-lg shadow-lg overflow-hidden relative">
-      <Image src={item.image} alt={`Image of ${item.title}`} className="w-full h-64 object-cover" width={300} height={300}/>
+    <div className="rounded-lg shadow-lg overflow-hidden relative bg-white">
+      <Image src={item.image} alt={`Image de ${item.title}`} className="w-full h-48 object-cover" width={300} height={300}/>
       <div className="p-4">
         <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-        <p className="text-white bg-red-500 hover:bg-red-600 rounded-md p-2 absolute top-2 right-2 mb-2">
-          {item.price}€ / la place
+        <p className="text-black bg-[#F2E9EB] rounded-md p-2 absolute top-2 right-2 mb-2">
+          {item.price}€
         </p>
         <p className="text-gray-700 mb-4">{item.description}</p>
-        <button onClick={Checkout} disabled={loading} className="bg-green-500 hover:bg-green-600 p-2 rounded-md text-white">
+        <button onClick={Checkout} disabled={loading} className="bg-[#F2E9EB] p-2 rounded-md text-black">
           {loading ? "Chargement..." : "Acheter"}
         </button>
       </div>
