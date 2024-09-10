@@ -38,7 +38,7 @@ export default function Modal() {
                 {modalIsVisible && (
                     <>
                         <motion.section
-                            className="overflow-y-auto max-h-[90vh] w-[80vw] md:w-[90vw] md:left-[5vw] top-0 sm:w-[100vw] sm:left-[0vw] absolute left-[10vw] rounded-xl z-40 text-black p-6 sm:p-4 bg-white"
+                            className="overflow-y-auto max-h-[90vh] w-[80vw] md:w-[90vw] md:left-[5vw] top-0 sm:w-[100vw] sm:left-[0vw] absolute left-[10vw] rounded-xl z-40 text-black p-6 sm:p-4 bg-rose-50"
                             initial="hidden"
                             animate="visible"
                             exit="exit"

@@ -5,6 +5,7 @@ import { modalState, setModalClose } from "@/app/redux/reducers/modal";
 import { useData } from "@/app/contexts/data";
 import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 export default function ModalSolarium() {
   const modalIsVisible = useSelector((state: { modal: modalState }) => state.modal.modalSolarium);
@@ -54,6 +55,7 @@ export default function ModalSolarium() {
       <div className="w-full grid grid-cols-4 gap-4 mx-auto md:grid-cols-2 sm:grid-cols-1 p-6 rounded-3xl">
         {/* Contenu supplémentaire */}
       </div>
+      <p>Une prestation vous intéresse vous pouvez prendre rendez-vous en appelant le : <Link href={`tel:${data.profile.telephone}`}>{data.profile.telephone}</Link>, en nous contactant via le <Link className="underline" onClick={closeModal} href={"/contact"}>formulaire</Link>. Vous pouvez offrir une prestation en vous rendant sur notre <Link onClick={closeModal} className="underline" href="/boutique">boutique en ligne</Link>.</p>
     </motion.section>
   );
 }

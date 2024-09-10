@@ -5,6 +5,7 @@ import { modalState, setModalClose } from "@/app/redux/reducers/modal";
 import { useData } from "@/app/contexts/data";
 import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 export default function ModalCils() {
   const modalIsVisible = useSelector((state: { modal: modalState }) => state.modal.modalCils);
@@ -52,6 +53,7 @@ export default function ModalCils() {
       </div>
       {data.categories[3] && <p>{data.categories[3].shortDescription}</p>}
       {data.categories[3] && <p>{data.categories[3].description}</p>}
+      <p>Une prestation vous intéresse vous pouvez prendre rendez-vous en appelant le : <Link href={`tel:${data.profile.telephone}`}>{data.profile.telephone}</Link>, en nous contactant via le <Link className="underline" onClick={closeModal} href={"/contact"}>formulaire</Link>. Vous pouvez offrir une prestation en vous rendant sur notre <Link onClick={closeModal} className="underline" href="/boutique">boutique en ligne</Link>.</p>
     </motion.section>
   );
 }

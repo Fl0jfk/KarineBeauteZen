@@ -50,7 +50,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   }, [pathname, title, description]);
   return (
     <html lang="fr">
-      <body className={`antialiased text-black font-medium`}>
+      <body className={`antialiased text-black font-medium bg-[#F2E9EB]`}>
         <DataProvider>
           <Provider store={store}>
             <Header />
@@ -64,7 +64,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 }
 
 export const viewport: Viewport = {
-  themeColor: 'black',
+  themeColor: '#F2E9EB',
   width: 'device-width',
   initialScale: 1,
   viewportFit: 'cover',

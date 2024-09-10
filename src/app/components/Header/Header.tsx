@@ -5,7 +5,7 @@ import Image from 'next/image';
 import CrossButton from '../Buttons/CrossButton';
 import Navbar from '../Navbar/Navbar';
 import { motion, useScroll, useMotionValueEvent } from 'framer-motion';	
-import Logo from "../../assets/Logo.png"
+import Logo from "../../assets/Logo2.png"
 import Link from 'next/link';
 
 export default function Header(){
@@ -33,11 +33,11 @@ export default function Header(){
             variants={{ visible: { y: 0 }, hidden: { y: "-100%" }}} 
             animate={hidden ? "hidden" : "visible"}
             transition={{duration: 0.35, ease: "easeInOut"}}
-            className={`flex p-4 justify-between items-center w-full sm:fixed md:fixed z-[12] md:mb-[100px] bg-[#fff] ${opacityMenu} self-center text-2xl overflow-hidden max-w-[1500px] mx-auto`}>
+            className={`flex p-4 justify-between items-center w-full sm:fixed md:fixed z-[12] md:mb-[100px] ${opacityMenu} self-center text-2xl overflow-hidden max-w-[1500px] mx-auto bg-[#F2E9EB]`}>
                 <div className='w-2/12 flex items-center h-full sm:w-4/12 md:w-4/12'>
                     {Logo &&
                         <Link href="/">
-                            <Image src={Logo} alt='Mon memoji' width={70} height={70} className={`cursor-pointer z-[8] ${opacityLogo}`} onClick={()=>{window.scrollTo({top:0, left:0, behavior:'smooth'})}}/>
+                            <Image src={Logo} alt='Mon memoji' width={90} height={90} className={`cursor-pointer z-[8] ${opacityLogo}`} quality={100} onClick={()=>{window.scrollTo({top:0, left:0, behavior:'smooth'})}}/>
                         </Link>
                     }
                 </div>
