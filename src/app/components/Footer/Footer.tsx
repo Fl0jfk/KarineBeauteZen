@@ -13,7 +13,7 @@ export default function Footer (){
             <div className="w-full h-[450px] px-4">
                 <Map/>
             </div>
-            <p className="self-center text-xl">Horaires : du Lundi au Vendredi: 10:00-19:00 / Samedi : 10:00-18:00 / Dimanche : Fermé</p>
+            <p className="self-center text-xl px-4">Horaires : du Lundi au Vendredi: 10:00-19:00 / Samedi : 10:00-18:00 / Dimanche : Fermé</p>
             <div className="flex w-full max-w-[300px] mx-auto justify-between mt-4">
                 <Link href="https://www.instagram.com/littlequeenphotography/?hl=fr" className="hover:scale-[1.1] transition ease-in-out duration-100" target="blank">
                     <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none">
