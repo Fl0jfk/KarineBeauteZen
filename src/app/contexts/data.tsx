@@ -26,6 +26,7 @@ type Reviews = {
   nameUser:string;
   rating:number;
   message:string;
+  link:string;
 }
 
 type Shop = {

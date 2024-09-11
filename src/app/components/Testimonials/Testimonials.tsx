@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useData } from "@/app/contexts/data";
 import Image from "next/image";
+import Link from "next/link";
 
 interface Review {
     id: number;
@@ -10,6 +11,7 @@ interface Review {
     nameUser: string;
     rating: number;
     message: string;
+    link:string;
 }
 
 export default function Testimonials() {
@@ -23,14 +25,14 @@ export default function Testimonials() {
         }
     }, [data]);
     return (
-        <section className="p-8 flex flex-col items-center gap-8 text-white hidden">
+        <section className="p-4 flex flex-col items-center gap-8 text-black max-w-[1200px] mx-auto">
             <h2 className="text-4xl">Avis de nos clients</h2>
             {randomReviews.length > 0 && (
-                <div className="grid grid-cols-2 sm:grid-cols-1 gap-4 mx-auto w-3/4 md:w-4/4 sm:w-4/4">
+                <div className="grid grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4">
                     {randomReviews.map((review) => (
-                        <div key={review.id} className="flex-shrink-0 p-4 rounded-lg border-2 border-white w-full max-w-md">
+                        <Link key={review.id} href={review.link} className="p-4 rounded-xl bg-white w-full">
                             <div className="flex items-center mb-4">
-                                <Image src={review.imageUser}  alt={review.nameUser} width={40} height={40} className="w-16 h-16 rounded-full mr-4 border border-gray-300"/>
+                                <Image src={review.imageUser}  alt={review.nameUser} width={200} height={200} className="w-16 h-16 rounded-full mr-4 border border-gray-300"/>
                                 <div>
                                     <p className="font-semibold text-lg">{review.nameUser}</p>
                                     <div className="flex">
@@ -54,7 +56,7 @@ export default function Testimonials() {
                                 </div>
                             </div>
                             <p>{review.message}</p>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             )}
