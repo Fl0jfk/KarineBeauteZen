@@ -1,10 +1,12 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { configureStore } from '@reduxjs/toolkit';
 import modal from './reducers/modal';
+import buy from './reducers/buy';
 
 const store = configureStore({
   reducer: {
-    modal
+    modal,
+    buy
   },
 });
 
