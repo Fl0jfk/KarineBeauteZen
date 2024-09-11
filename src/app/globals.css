@@ -17,3 +17,16 @@ body.modal-open {
 ::-webkit-scrollbar {
     display: none;
 }
+
+.flip-card-front {
+    backface-visibility: hidden;
+}
+
+.flip-card-front,
+.flip-card-back {
+    perspective: 1000px;
+}
+
+.flip-card-back {
+    transform: rotateY(180deg);
+}

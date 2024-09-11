@@ -7,22 +7,26 @@ interface Data {
   title: string;
   price: number;
   image: string;
+  city:string;
+  cp:string;
+  address:string;
+  name:string;
+  mail:string;
 }
 
 export const POST = async (request: NextRequest) => {
   try {
     const data: Data = await request.json();
-  
     const customer = await stripe.customers.create({
-      email: 'customer@exemple.com',
+      email: data.mail,
       address: {
-        city: "Los Angeles",
-        country: "US",
-        postal_code: "00000",
-        line1: "rue de la paix",
-        state: "CA", 
+        city: data.city,
+        country: "FR",
+        postal_code: data.cp,
+        line1: data.address,
+        state: "", 
       },
-      name: "Jonathan MDC",
+      name: data.name,
     });
 
     // Conversion du prix en centimes (Stripe fonctionne avec des centimes)
