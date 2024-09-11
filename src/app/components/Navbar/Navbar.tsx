@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import Logo from "../../assets/Logo2.png";
 import { useDispatch } from "react-redux";
+import { useData } from '@/app/contexts/data';
 import { setModalOpenCils, setModalOpenEpilation, setModalOpenManucure, setModalOpenMaquillage, setModalOpenSoins, setModalOpenSolarium } from '@/app/redux/reducers/modal';
 
 export default function Navbar({menuOpened, onLinkClick} :NavbarProps ){
@@ -13,6 +14,7 @@ export default function Navbar({menuOpened, onLinkClick} :NavbarProps ){
     const servicesVisible = (servicesAppear ? "" : "hidden");
     const restOfMenu = (!servicesAppear ? "" : "hidden");
     const dispatch = useDispatch();
+    const data = useData()
     const handleModalOpen = (name:string) => {
         switch(name) {
             case 'Les soins visages et corps': dispatch(setModalOpenSoins());
@@ -59,11 +61,11 @@ export default function Navbar({menuOpened, onLinkClick} :NavbarProps ){
                         <div className='w-2/12 h-[10vh] flex items-center justify-center w-full'>
                             {Logo && 
                                 <Link className='hover:scale-110 flex items-center justify-center' href="/" onClick={handleLinkClick} aria-label="Link to top">
-                                    <Image src={Logo} alt='Logo de LittleQueenPhotography' width={120} height={120} quality={100} className='cursor-pointer z-[8]'/>
+                                    <Image src={Logo} alt='Logo de LittleQueenPhotography' width={100} height={100} quality={100} className='cursor-pointer z-[8]'/>
                                 </Link>
                             }
                         </div>
-                        <div className={`flex flex-col gap-10 justify-center items-center w-full ${restOfMenu}`}>
+                        <div className={`flex flex-col gap-6 justify-center items-center w-full ${restOfMenu}`}>
                             <Link className='hover:scale-110' href="/" onClick={handleLinkClick} aria-label="Lien vers la page d'accueil">Accueil</Link>
                             <div className='hover:scale-110 cursor-pointer' onClick={()=>setServicesAppear(true)} aria-label="Lien vers le sous menus mes services">Mes services</div>
                             <Link className='hover:scale-110' href="/boutique" onClick={handleLinkClick} aria-label="Lien vers la page boutique">Boutique</Link>
@@ -82,11 +84,9 @@ export default function Navbar({menuOpened, onLinkClick} :NavbarProps ){
                             <button className='hover:scale-105 text-center' onClick={()=>handleModalOpen('Solarium')} aria-label="Lien vers la modal Solarium">Solarium</button>                       
                         </div>
                         <div className='flex gap-4'>
-                        <Link href="https://www.instagram.com/littlequeenphotography/?hl=fr" className="hover:scale-[1.1] transition ease-in-out duration-100" onClick={handleLinkClick} target="blank">
-                                <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none">
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M12 18C15.3137 18 18 15.3137 18 12C18 8.68629 15.3137 6 12 6C8.68629 6 6 8.68629 6 12C6 15.3137 8.68629 18 12 18ZM12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z" fill="#000"/>
-                                    <path d="M18 5C17.4477 5 17 5.44772 17 6C17 6.55228 17.4477 7 18 7C18.5523 7 19 6.55228 19 6C19 5.44772 18.5523 5 18 5Z" fill="#000"/>
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M1.65396 4.27606C1 5.55953 1 7.23969 1 10.6V13.4C1 16.7603 1 18.4405 1.65396 19.7239C2.2292 20.8529 3.14708 21.7708 4.27606 22.346C5.55953 23 7.23969 23 10.6 23H13.4C16.7603 23 18.4405 23 19.7239 22.346C20.8529 21.7708 21.7708 20.8529 22.346 19.7239C23 18.4405 23 16.7603 23 13.4V10.6C23 7.23969 23 5.55953 22.346 4.27606C21.7708 3.14708 20.8529 2.2292 19.7239 1.65396C18.4405 1 16.7603 1 13.4 1H10.6C7.23969 1 5.55953 1 4.27606 1.65396C3.14708 2.2292 2.2292 3.14708 1.65396 4.27606ZM13.4 3H10.6C8.88684 3 7.72225 3.00156 6.82208 3.0751C5.94524 3.14674 5.49684 3.27659 5.18404 3.43597C4.43139 3.81947 3.81947 4.43139 3.43597 5.18404C3.27659 5.49684 3.14674 5.94524 3.0751 6.82208C3.00156 7.72225 3 8.88684 3 10.6V13.4C3 15.1132 3.00156 16.2777 3.0751 17.1779C3.14674 18.0548 3.27659 18.5032 3.43597 18.816C3.81947 19.5686 4.43139 20.1805 5.18404 20.564C5.49684 20.7234 5.94524 20.8533 6.82208 20.9249C7.72225 20.9984 8.88684 21 10.6 21H13.4C15.1132 21 16.2777 20.9984 17.1779 20.9249C18.0548 20.8533 18.5032 20.7234 18.816 20.564C19.5686 20.1805 20.1805 19.5686 20.564 18.816C20.7234 18.5032 20.8533 18.0548 20.9249 17.1779C20.9984 16.2777 21 15.1132 21 13.4V10.6C21 8.88684 20.9984 7.72225 20.9249 6.82208C20.8533 5.94524 20.7234 5.49684 20.564 5.18404C20.1805 4.43139 19.5686 3.81947 18.816 3.43597C18.5032 3.27659 18.0548 3.14674 17.1779 3.0751C16.2777 3.00156 15.1132 3 13.4 3Z" fill="#000"/>
+                            <Link href={`tel:${data.profile.telephone}`} className="hover:scale-[1.1] transition ease-in-out duration-100" onClick={handleLinkClick} target="blank">
+                                <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M14.3308 15.9402L15.6608 14.6101C15.8655 14.403 16.1092 14.2384 16.3778 14.1262C16.6465 14.014 16.9347 13.9563 17.2258 13.9563C17.517 13.9563 17.8052 14.014 18.0739 14.1262C18.3425 14.2384 18.5862 14.403 18.7908 14.6101L20.3508 16.1702C20.5579 16.3748 20.7224 16.6183 20.8346 16.887C20.9468 17.1556 21.0046 17.444 21.0046 17.7351C21.0046 18.0263 20.9468 18.3146 20.8346 18.5833C20.7224 18.8519 20.5579 19.0954 20.3508 19.3L19.6408 20.02C19.1516 20.514 18.5189 20.841 17.8329 20.9541C17.1469 21.0672 16.4427 20.9609 15.8208 20.6501C10.4691 17.8952 6.11008 13.5396 3.35083 8.19019C3.03976 7.56761 2.93414 6.86242 3.04914 6.17603C3.16414 5.48963 3.49384 4.85731 3.99085 4.37012L4.70081 3.65015C5.11674 3.23673 5.67937 3.00464 6.26581 3.00464C6.85225 3.00464 7.41488 3.23673 7.83081 3.65015L9.40082 5.22021C9.81424 5.63615 10.0463 6.19871 10.0463 6.78516C10.0463 7.3716 9.81424 7.93416 9.40082 8.3501L8.0708 9.68018C8.95021 10.8697 9.91617 11.9926 10.9608 13.04C11.9994 14.0804 13.116 15.04 14.3008 15.9102L14.3308 15.9402Z" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
                             </Link> 
                             <Link href="https://www.facebook.com/marine.guerrache.96/?paipv=0&eav=Afb2shS1Rw1mEwdD_hor9x99WYPK-0YDtNIAfiMy4sFGa9D_yHWiYrEOhXl0xE7AtTY&_rdr" className="hover:scale-[1.1] transition ease-in-out duration-100" onClick={handleLinkClick} target="blank">
