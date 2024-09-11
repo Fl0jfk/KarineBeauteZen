@@ -2,18 +2,19 @@ import Link from "next/link"
 import Image from "next/image"
 import LogoFl0jfk from "../../assets/LogoFl0jfk.webp"
 import Chat from "../Chat/Chat"
+import Map from "../Map/Map"
 
 export default function Footer (){
     return (
         <footer className="w-full h-full p-2 flex flex-col gap-4">
             <Chat/>
-            <Link href={"/contact"} className="self-center transition ease-in-out duration-100 rounded-full text-2xl hover:scale-105 p-4">Contactez-moi</Link>
-            <ul className="self-center text-2xl">Horaires :
-                <li className="mt-4 ml-4 text-xl">du Lundi au Vendredi: 10:00-19:00</li>
-                <li className="ml-4 text-xl">Samedi : 10:00-18:00</li>
-                <li className="ml-4 text-xl">Dimanche : Fermé</li>
-            </ul>
-            <div className="flex w-1/5 mx-auto justify-between sm:w-3/5 mt-4">
+            <Link href={"/contact"} className="self-center transition ease-in-out duration-100 rounded-full text-2xl hover:scale-105 p-4">Contactez-nous</Link>
+            <p className="text-xl px-4">Nous sommes situés sur la commune de Saint-Pierre-des-Fleurs au 40, route du Neubourg. Cliquez sur la carte pour trouver votre itinéraire.</p>
+            <div className="w-full h-[450px] px-4">
+                <Map/>
+            </div>
+            <p className="self-center text-xl">Horaires : du Lundi au Vendredi: 10:00-19:00 / Samedi : 10:00-18:00 / Dimanche : Fermé</p>
+            <div className="flex w-full max-w-[300px] mx-auto justify-between mt-4">
                 <Link href="https://www.instagram.com/littlequeenphotography/?hl=fr" className="hover:scale-[1.1] transition ease-in-out duration-100" target="blank">
                     <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none">
                         <path fillRule="evenodd" clipRule="evenodd" d="M12 18C15.3137 18 18 15.3137 18 12C18 8.68629 15.3137 6 12 6C8.68629 6 6 8.68629 6 12C6 15.3137 8.68629 18 12 18ZM12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z" fill="#000"/>

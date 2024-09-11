@@ -51,7 +51,7 @@ export default function Navbar({menuOpened, onLinkClick} :NavbarProps ){
             <AnimatePresence>
                 {menuOpened && 
                     <motion.nav 
-                            className={`md:${menuOpen} sm:${menuOpen} gap-10 text-3xl flex flex-col justify-center top-0 left-0 fixed pt-10 items-center w-full h-[100vh] z-[9] xl:hidden lg:hidden`}
+                            className={`md:${menuOpen} sm:${menuOpen} gap-8 text-3xl flex flex-col justify-center top-0 left-0 fixed items-center w-full h-[100vh] z-[9] xl:hidden lg:hidden`}
                             initial={{translateX:"100%"}}
                             animate={{translateX:"0%", transition:{duration: 0.5, ease: "easeInOut"}}}
                             exit={{translateX:"100%", transition:{duration: 0.5, ease: "easeInOut"}}}
@@ -114,6 +114,7 @@ export default function Navbar({menuOpened, onLinkClick} :NavbarProps ){
                                 </svg>
                             </Link>
                         </div>
+                        <p className="self-center text-xl px-12">Horaires : du Lundi au Vendredi: 10:00-19:00 / Samedi : 10:00-18:00 / Dimanche : Fermé</p>
                     </motion.nav>
                 }
             </AnimatePresence>

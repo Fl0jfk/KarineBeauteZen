@@ -33,36 +33,21 @@ export default function Modal() {
         exit: { opacity: 0, y: "100vh", transition: { duration: 0.6 } }
     };
     return (
-        <>
-            <AnimatePresence>
-                {modalIsVisible && (
-                    <>
-                        <motion.section
-                            className="overflow-y-auto max-h-[90vh] w-[80vw] md:w-[90vw] md:left-[5vw] top-0 sm:w-[100vw] sm:left-[0vw] absolute left-[10vw] rounded-xl z-40 text-black p-6 sm:p-4 bg-white"
-                            initial="hidden"
-                            animate="visible"
-                            exit="exit"
-                            variants={modalVariants}
-                        >
-                            <ModalCils />
-                            <ModalEpilation />
-                            <ModalManucure />
-                            <ModalSolarium />
-                            <ModalSoins />
-                            <ModalMaquillage />
-                        </motion.section>
-                        <motion.div
-                            className="fixed top-0 left-0 w-full h-full backdrop-blur-[2px] z-30"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.5 }}
-                            onClick={closeModal}
-                        ></motion.div>
-                    </>
-                )}
-            </AnimatePresence>
-        </>
+        <AnimatePresence>
+            {modalIsVisible && (
+                <>
+                    <motion.section className="overflow-y-auto max-h-[95vh] w-[80vw] md:w-[90vw] md:left-[5vw] top-0 sm:w-[100vw] sm:left-[0vw] absolute left-[10vw] rounded-xl z-40 text-black p-6 sm:p-4 bg-white" initial="hidden" animate="visible" exit="exit" variants={modalVariants}>
+                        <ModalCils />
+                        <ModalEpilation />
+                        <ModalManucure />
+                        <ModalSolarium />
+                        <ModalSoins />
+                        <ModalMaquillage />
+                    </motion.section>
+                    <motion.div className="fixed top-0 left-0 w-full h-full backdrop-blur-[2px] z-30" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5 }} onClick={closeModal}/>
+                </>
+            )}
+        </AnimatePresence>
     );
 }
 

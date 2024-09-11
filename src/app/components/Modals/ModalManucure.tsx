@@ -5,7 +5,9 @@ import { modalState, setModalClose } from "@/app/redux/reducers/modal";
 import { useData } from "@/app/contexts/data";
 import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import Dropdown from "../Dropdown/Dropdown";
 import Link from "next/link";
+import Map from "../Map/Map";
 
 export default function ModalManucure() {
   const modalIsVisible = useSelector((state: { modal: modalState }) => state.modal.modalManucure);
@@ -14,7 +16,10 @@ export default function ModalManucure() {
   const closeModal = () => { dispatch(setModalClose()) };
   const data = useData();
   const modalRef = useRef<HTMLDivElement>(null);
-
+  const manucure = data.prestations[0].Manucure[0] as any;
+  const gelEtSemi = manucure["Gel et Semi Permanent Mains et Pieds"];
+  const depose = manucure["Dépose Gel et Semi Permanent Mains et Pieds"];
+  const ongles = manucure["Pour les ongles naturels"];
   useEffect(() => {
     if (modalIsVisible) {
       setModalIsVisibleClass("");
@@ -27,22 +32,13 @@ export default function ModalManucure() {
           return () => clearTimeout(timer);
     }
   }, [modalIsVisible]);
-
   const modalVariants = {
     hidden: { opacity: 0, y: "-100vh" },
     visible: { opacity: 1, y: "0vh", transition: { duration: 0.4 } },
     exit: { opacity: 0, y: "100vh", transition: { duration: 0.6 } }
   };
-
   return (
-    <motion.section
-      ref={modalRef}
-      className={`w-full h-full relative flex flex-col gap-4 ${modalIsVisibleClass}`}
-      initial="hidden"
-      animate={modalIsVisible ? "visible" : "hidden"}
-      exit="exit"
-      variants={modalVariants}
-    >
+    <motion.section ref={modalRef} className={`w-full h-full relative flex flex-col gap-4 ${modalIsVisibleClass}`} initial="hidden" animate={modalIsVisible ? "visible" : "hidden"} exit="exit" variants={modalVariants}>
       <div className="flex w-full justify-between">
         {data.categories[1] && <h3 className="text-4xl">{data.categories[1].name}</h3>}
         <button className="w-[35px] h-[35px] z-[2] bg-gray-700 rounded-full z-[1] p-2 hover:scale-105 transition ease-in-out duration-300" onClick={closeModal}>
@@ -51,12 +47,13 @@ export default function ModalManucure() {
           </svg>
         </button>
       </div>
-      {data.categories[1] && <p>{data.categories[1].shortDescription}</p>}
-      {data.categories[1] && <p>{data.categories[1].description}</p>}
-      <div className="w-full grid grid-cols-4 gap-4 mx-auto md:grid-cols-2 sm:grid-cols-1 p-6 rounded-3xl">
-        {/* Contenu supplémentaire */}
-      </div>
+      <Dropdown title="Gel et Semi Permanent Mains et Pieds" items={gelEtSemi} />
+      <Dropdown title="Dépose Gel et Semi Permanent Mains et Pieds" items={depose} />
+      <Dropdown title="Pour les ongles naturels" items={ongles} />
       <p>Une prestation vous intéresse vous pouvez prendre rendez-vous en appelant le : <Link href={`tel:${data.profile.telephone}`}>{data.profile.telephone}</Link>, en nous contactant via le <Link className="underline" onClick={closeModal} href={"/contact"}>formulaire</Link>. Vous pouvez offrir une prestation en vous rendant sur notre <Link onClick={closeModal} className="underline" href="/boutique">boutique en ligne</Link>.</p>
+      <div className="w-full h-[400px]">
+        <Map/>
+      </div>
     </motion.section>
   );
 }

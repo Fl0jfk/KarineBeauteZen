@@ -6,6 +6,8 @@ import { useData } from "@/app/contexts/data";
 import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Dropdown from "../Dropdown/Dropdown";
+import Map from "../Map/Map";
 
 export default function ModalCils() {
   const modalIsVisible = useSelector((state: { modal: modalState }) => state.modal.modalCils);
@@ -14,7 +16,8 @@ export default function ModalCils() {
   const closeModal = () => { dispatch(setModalClose()) };
   const data = useData();
   const modalRef = useRef<HTMLDivElement>(null);
-
+  const teintureCils = data.prestations[0]["Teinture de sourcils et cils, réhaussement de cils"];
+  const extensionCils = data.prestations[0]["Extensions de cils"];
   useEffect(() => {
     if (modalIsVisible) {
       setModalIsVisibleClass("");
@@ -27,22 +30,13 @@ export default function ModalCils() {
           return () => clearTimeout(timer);
     }
   }, [modalIsVisible]);
-
   const modalVariants = {
     hidden: { opacity: 0, y: "-100vh" },
     visible: { opacity: 1, y: "0vh", transition: { duration: 0.4 } },
     exit: { opacity: 0, y: "100vh", transition: { duration: 0.6 } }
   };
-
   return (
-    <motion.section
-      ref={modalRef}
-      className={`w-full h-full relative flex flex-col gap-4 ${modalIsVisibleClass}`}
-      initial="hidden"
-      animate={modalIsVisible ? "visible" : "hidden"}
-      exit="exit"
-      variants={modalVariants}
-    >
+    <motion.section ref={modalRef} className={`w-full h-full relative flex flex-col gap-4 ${modalIsVisibleClass}`} initial="hidden" animate={modalIsVisible ? "visible" : "hidden"} exit="exit" variants={modalVariants}>
       <div className="flex relative w-full justify-between">
         {data.categories[3] && <h3 className="text-4xl">{data.categories[3].name}</h3>}
         <button className="w-[35px] h-[35px] z-[2] bg-gray-700 rounded-full z-[1] p-2 hover:scale-105 transition ease-in-out duration-300" onClick={closeModal}>
@@ -51,9 +45,12 @@ export default function ModalCils() {
           </svg>
         </button>
       </div>
-      {data.categories[3] && <p>{data.categories[3].shortDescription}</p>}
-      {data.categories[3] && <p>{data.categories[3].description}</p>}
+      <Dropdown title="Teinture de sourcils et cils, réhaussement de cils" items={teintureCils} />
+      <Dropdown title="Extensions de cils" items={extensionCils} />
       <p>Une prestation vous intéresse vous pouvez prendre rendez-vous en appelant le : <Link href={`tel:${data.profile.telephone}`}>{data.profile.telephone}</Link>, en nous contactant via le <Link className="underline" onClick={closeModal} href={"/contact"}>formulaire</Link>. Vous pouvez offrir une prestation en vous rendant sur notre <Link onClick={closeModal} className="underline" href="/boutique">boutique en ligne</Link>.</p>
+      <div className="w-full h-[400px]">
+        <Map/>
+      </div>
     </motion.section>
   );
 }

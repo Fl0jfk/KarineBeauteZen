@@ -7,6 +7,7 @@ import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Dropdown from "../Dropdown/Dropdown";
 import Link from "next/link";
+import Map from "../Map/Map";
 
 export default function ModalSoins() {
   const modalIsVisible = useSelector((state: { modal: modalState }) => state.modal.modalSoins);
@@ -34,14 +35,7 @@ export default function ModalSoins() {
     exit: { opacity: 0, y: "100vh", transition: { duration: 0.6 } }
   };
   return (
-    <motion.section
-      ref={modalRef}
-      className={`w-full h-full relative flex flex-col gap-4 ${modalIsVisibleClass}`}
-      initial="hidden"
-      animate={modalIsVisible ? "visible" : "hidden"}
-      exit="exit"
-      variants={modalVariants}
-    >
+    <motion.section ref={modalRef} className={`w-full h-full relative flex flex-col gap-4 ${modalIsVisibleClass}`} initial="hidden" animate={modalIsVisible ? "visible" : "hidden"} exit="exit" variants={modalVariants}>
       <div className="flex w-full justify-between">
         {data.categories[0] && <h3 className="text-4xl">{data.categories[0].name}</h3>}
         <button className="w-[35px] h-[35px] z-[2] bg-gray-700 rounded-full z-[1] p-2 hover:scale-105 transition ease-in-out duration-300" onClick={closeModal}>
@@ -50,12 +44,11 @@ export default function ModalSoins() {
           </svg>
         </button>
       </div>
-      {data.categories[0] && <p>{data.categories[0].shortDescription}</p>}
-      {data.categories[0] && <p>{data.categories[0].description}</p>}
-      <div className="w-full p-6 rounded-3xl">
-        <Dropdown title="Les soins visages et corps" items={soinsVisagesEtCorps} />
-      </div>
+      <Dropdown title="Les soins visages et corps" items={soinsVisagesEtCorps} />
       <p>Une prestation vous intéresse vous pouvez prendre rendez-vous en appelant le : <Link href={`tel:${data.profile.telephone}`}>{data.profile.telephone}</Link>, en nous contactant via le <Link className="underline" onClick={closeModal} href={"/contact"}>formulaire</Link>. Vous pouvez offrir une prestation en vous rendant sur notre <Link onClick={closeModal} className="underline" href="/boutique">boutique en ligne</Link>.</p>
+      <div className="w-full h-[400px]">
+        <Map/>
+      </div>
     </motion.section>
   );
 }
