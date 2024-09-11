@@ -72,7 +72,7 @@ export default function Navbar({menuOpened, onLinkClick} :NavbarProps ){
                             <Link className='hover:scale-110' href="/about" onClick={handleLinkClick} aria-label="Lien vers la page à propos">À propos</Link>
                             <Link className='hover:scale-110' href="/contact" onClick={handleLinkClick} aria-label="Lien vers la page contact">Contact</Link>
                         </div>
-                        <div  className={`flex flex-col gap-8 justify-center items-center w-full ${servicesVisible}`}>
+                        <div  className={`flex flex-col gap-4 justify-center items-center w-full ${servicesVisible}`}>
                             <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" className='cursor-pointer absolute top-4 left-4' onClick={()=>setServicesAppear(false)}>
                                 <path d="M11 6L5 12M5 12L11 18M5 12H19" stroke="#000" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
                             </svg>
@@ -89,7 +89,7 @@ export default function Navbar({menuOpened, onLinkClick} :NavbarProps ){
                                     <path d="M14.3308 15.9402L15.6608 14.6101C15.8655 14.403 16.1092 14.2384 16.3778 14.1262C16.6465 14.014 16.9347 13.9563 17.2258 13.9563C17.517 13.9563 17.8052 14.014 18.0739 14.1262C18.3425 14.2384 18.5862 14.403 18.7908 14.6101L20.3508 16.1702C20.5579 16.3748 20.7224 16.6183 20.8346 16.887C20.9468 17.1556 21.0046 17.444 21.0046 17.7351C21.0046 18.0263 20.9468 18.3146 20.8346 18.5833C20.7224 18.8519 20.5579 19.0954 20.3508 19.3L19.6408 20.02C19.1516 20.514 18.5189 20.841 17.8329 20.9541C17.1469 21.0672 16.4427 20.9609 15.8208 20.6501C10.4691 17.8952 6.11008 13.5396 3.35083 8.19019C3.03976 7.56761 2.93414 6.86242 3.04914 6.17603C3.16414 5.48963 3.49384 4.85731 3.99085 4.37012L4.70081 3.65015C5.11674 3.23673 5.67937 3.00464 6.26581 3.00464C6.85225 3.00464 7.41488 3.23673 7.83081 3.65015L9.40082 5.22021C9.81424 5.63615 10.0463 6.19871 10.0463 6.78516C10.0463 7.3716 9.81424 7.93416 9.40082 8.3501L8.0708 9.68018C8.95021 10.8697 9.91617 11.9926 10.9608 13.04C11.9994 14.0804 13.116 15.04 14.3008 15.9102L14.3308 15.9402Z" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
                             </Link> 
-                            <Link href="https://www.facebook.com/marine.guerrache.96/?paipv=0&eav=Afb2shS1Rw1mEwdD_hor9x99WYPK-0YDtNIAfiMy4sFGa9D_yHWiYrEOhXl0xE7AtTY&_rdr" className="hover:scale-[1.1] transition ease-in-out duration-100" onClick={handleLinkClick} target="blank">
+                            <Link href="https://www.facebook.com/karine.beautezen/?locale=fr_FR" className="hover:scale-[1.1] transition ease-in-out duration-100" onClick={handleLinkClick} target="blank">
                                 <svg width="30px" height="30px" viewBox="-5 0 20 20">
                                     <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
                                         <g transform="translate(-385.000000, -7399.000000)" fill="#000000">
@@ -105,7 +105,7 @@ export default function Navbar({menuOpened, onLinkClick} :NavbarProps ){
                                     <path d="M20.23 1.604c-0.008-0-0.017-0-0.027-0-5.961 0-10.793 4.832-10.793 10.793s4.832 10.793 10.793 10.793c5.955 0 10.783-4.822 10.793-10.775v-0.001c-0.004-5.953-4.816-10.781-10.763-10.809h-0.003zM1.004 1.604v28.792h5.274v-28.792z"></path>
                                 </svg>
                             </Link>  
-                            <Link href="https://www.linkedin.com/in/marine-guerrache-905b24141/?original_referer=https%3A%2F%2Fwww%2Egoogle%2Ecom%2F&originalSubdomain=fr" className="hover:scale-[1.1] transition ease-in-out duration-100" onClick={handleLinkClick} target="blank">
+                            <Link href="" className="hover:scale-[1.1] transition ease-in-out duration-100" onClick={handleLinkClick} target="blank">
                                 <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none">
                                     <path d="M6.5 8C7.32843 8 8 7.32843 8 6.5C8 5.67157 7.32843 5 6.5 5C5.67157 5 5 5.67157 5 6.5C5 7.32843 5.67157 8 6.5 8Z" fill="#000"/>
                                     <path d="M5 10C5 9.44772 5.44772 9 6 9H7C7.55228 9 8 9.44771 8 10V18C8 18.5523 7.55228 19 7 19H6C5.44772 19 5 18.5523 5 18V10Z" fill="#000"/>
