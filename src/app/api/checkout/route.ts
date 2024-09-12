@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
-import { UseSelector } from "react-redux";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET as string);
 
@@ -46,10 +45,10 @@ export const POST = async (request: NextRequest) => {
         quantity: 1,
         price_data: {
           product_data: {
-            name: data.title, // Nom du produit
+            name: data.title
           },
           currency: "EUR",
-          unit_amount: amountInCents, // Montant en centimes
+          unit_amount: amountInCents
         }
       }]
     });

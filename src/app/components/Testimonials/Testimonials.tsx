@@ -30,7 +30,7 @@ export default function Testimonials() {
             {randomReviews.length > 0 && (
                 <div className="grid grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4">
                     {randomReviews.map((review) => (
-                        <Link key={review.id} href={review.link} className="p-4 rounded-xl bg-white w-full">
+                        <Link key={review.id} href={review.link} className="p-4 rounded-xl bg-white w-full h-[200px] overflow-scroll">
                             <div className="flex items-center mb-4">
                                 <Image src={review.imageUser}  alt={review.nameUser} width={200} height={200} className="w-16 h-16 rounded-full mr-4 border border-gray-300"/>
                                 <div>

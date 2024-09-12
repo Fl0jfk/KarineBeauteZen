@@ -1,12 +1,8 @@
-'use client';
-
 import axios from 'axios';
 
 async function fetchCustomerData(token: string) {
   try {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/success`, {
-      params: { token },
-    });
+    const response = await axios.get(`http://localhost:3000/api/success`, {params: { token }});
     return response.data;
   } catch (error) {
     console.error('Error fetching customer data:', error);
@@ -18,9 +14,12 @@ export default async function SuccessPage({ searchParams }: { searchParams: { to
   const token = searchParams.token;
   if (!token) { return <div>Token not found.</div>;}
   const customerData = await fetchCustomerData(token);
-  if (!customerData) { return <div>Error loading customer data.</div>;}
+  if (!customerData) { return <div>Error loading customer data.</div>}
+  if (token && customerData){
+    
+  }
   return (
-    <div className='w-full h-screen flex items-center justify-center flex-col gap-3 text-center'>
+    <main className='w-full h-screen flex items-center justify-center flex-col gap-3 text-center sm:top-[10vh] md:top-[10vh]'>
       <h1>✅ Paiement réussi!</h1>
       <div>
         <p>Merci pour votre achat, {customerData?.name}!</p>
@@ -28,6 +27,6 @@ export default async function SuccessPage({ searchParams }: { searchParams: { to
           <li>Email: {customerData?.email}</li>
         </ul>
       </div>
-    </div>
+    </main>
   );
 }

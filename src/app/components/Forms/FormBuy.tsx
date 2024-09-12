@@ -14,32 +14,30 @@ export type FormData = {
   postal_code:string;
 };
 
-interface CardProps {
-    item: {
-      image: string;
-      title: string;
-      price: number;
-      description: string;
-    };
-  }
-
 interface FormBuyProps {
     amount: number;
   }
 
 export default function FormBuy({ amount }: FormBuyProps) {
-    const { register, handleSubmit } = useForm<FormData>();
+    const { register, handleSubmit, getValues } = useForm<FormData>();
     const dispatch = useDispatch();
     const itemTitle = useSelector((state: { buy: any }) => state.buy.title);
     const itemPrice = useSelector((state: { buy: any }) => state.buy.price);
     const itemImage = useSelector((state: { buy: any }) => state.buy.image);
     function onSubmit(data: FormData) { dispatch(setInfoUser(data))}
     const Checkout = async () => {
+        const formData = getValues();
         try {
           const response = await axios.post("/api/checkout", {
             title: itemTitle,
             price: itemPrice,
             image: itemImage,
+            name: formData.name,
+            mail: formData.email,
+            address: formData.line1,
+            city: formData.city,
+            cp: formData.postal_code, 
+            
           });
           const responseData = await response.data;
           window.location.href = responseData.url;
