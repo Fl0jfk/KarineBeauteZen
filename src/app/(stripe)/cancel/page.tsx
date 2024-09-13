@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 async function fetchCustomerData(token: string) {
   try {
-    const response = await axios.get(`http://localhost:3000/api/success`, {
+    const response = await axios.get(`${process.env.BASE_URL}/api/success`, {
       params: { token },
     });
     return response.data;

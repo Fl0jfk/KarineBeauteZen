@@ -39,8 +39,8 @@ export const POST = async (request: NextRequest) => {
       payment_method_types: ['card'], // Méthodes de paiement acceptées
       customer: customer.id,
       mode: "payment", // Mode de paiement unique
-      success_url: "http://localhost:3000/success?token=" + customer.id, // URL de succès
-      cancel_url: "http://localhost:3000/cancel?token=" + customer.id, // URL d'annulation
+      success_url: `${process.env.BASE_URL}/success?token=` + customer.id, // URL de succès
+      cancel_url: `${process.env.BASE_URL}/cancel?token=` + customer.id, // URL d'annulation
       line_items: [{
         quantity: 1,
         price_data: {
