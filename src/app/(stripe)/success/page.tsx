@@ -16,7 +16,6 @@ export default async function SuccessPage({ searchParams }: { searchParams: { to
   const customerData = await fetchCustomerData(token);
   if (!customerData) { return <div>Error loading customer data.</div>}
   if (token && customerData){
-    
   }
   return (
     <main className='w-full h-screen flex items-center justify-center flex-col gap-3 text-center sm:top-[10vh] md:top-[10vh]'>
@@ -24,7 +23,7 @@ export default async function SuccessPage({ searchParams }: { searchParams: { to
       <div>
         <p>Merci pour votre achat, {customerData?.name}!</p>
         <ul>
-          <li>Email: {customerData?.email}</li>
+          <li>Vous venez de recevoir votre email de confirmation à cette adresse: {customerData?.email}</li>
         </ul>
       </div>
     </main>
