@@ -20,8 +20,17 @@ export const GET = async (request: NextRequest) => {
     }
     const invoices = await stripe.invoices.list({ customer: customer.id, limit: 1 });
     const latestInvoice = invoices.data[0];
-    const productName = latestInvoice?.lines.data[0]?.description || "Produit non spécifié";
-    const amount = latestInvoice?.amount_paid ? (latestInvoice.amount_paid / 100).toFixed(2) + " €" : "Montant non disponible";
+    if (!latestInvoice || latestInvoice.status !== 'paid') {
+      return NextResponse.json({ error: 'No finalized invoice found for this customer' }, { status: 400 });
+    }
+    const metadata = latestInvoice.metadata || {};
+    if (metadata.emailSent === 'true') {
+      return NextResponse.json({ message: 'Email already sent' }, { status: 200 });
+    }
+    const productName = latestInvoice.lines.data[0]?.description || "Produit non spécifié";
+    const amount = latestInvoice.amount_paid
+      ? (latestInvoice.amount_paid / 100).toFixed(2) + " €"
+      : "Montant non disponible";
     const orderCode = Math.random().toString(36).substr(2, 8).toUpperCase();
     const transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -59,6 +68,9 @@ export const GET = async (request: NextRequest) => {
              <p><strong>Code de commande: ${orderCode}</strong>.</p>
              <p>Le client a été informé que le code est personnel et valable pour un an.</p>`
     });
+    await stripe.invoices.update(latestInvoice.id, {
+      metadata: { ...metadata, emailSent: 'true' }
+    });
     return NextResponse.json({
       name: customer.name,
       email: customer.email,
@@ -69,3 +81,4 @@ export const GET = async (request: NextRequest) => {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 };
+
