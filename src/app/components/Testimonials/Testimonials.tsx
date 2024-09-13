@@ -25,12 +25,12 @@ export default function Testimonials() {
         }
     }, [data]);
     return (
-        <section className="p-4 flex flex-col items-center gap-8 text-black max-w-[1200px] mx-auto">
+        <section className="p-4 flex flex-col items-center gap-8 text-black max-w-[1200px] mx-auto w-full">
             <h2 className="text-4xl">Avis de nos clients</h2>
             {randomReviews.length > 0 && (
-                <div className="grid grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4">
+                <div className="grid grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4 w-full">
                     {randomReviews.map((review) => (
-                        <Link key={review.id} href={review.link} className="p-4 rounded-xl bg-white w-full h-[200px] overflow-scroll">
+                        <Link key={review.id} href={review.link} className="p-4 rounded-xl bg-white w-full h-[200px] sm:h-[180px] overflow-scroll">
                             <div className="flex items-center mb-4">
                                 <Image src={review.imageUser}  alt={review.nameUser} width={200} height={200} className="w-16 h-16 rounded-full mr-4 border border-gray-300"/>
                                 <div>

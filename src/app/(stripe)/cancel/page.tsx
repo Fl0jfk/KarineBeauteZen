@@ -22,7 +22,7 @@ export default async function CancelPage({ searchParams }: { searchParams: { tok
     <main className='w-full h-screen flex items-center justify-center flex-col gap-3 text-center sm:top-[10vh] md:top-[10vh]'>
       <h1 className='text-6xl'>Paiement annulé</h1>
       <div>
-        <p>Votre paiement n'a pas été finalisé, {customerData?.name}.</p>
+        <p>Votre paiement n&apos;a pas été finalisé, {customerData?.name}.</p>
         <Link href={"/boutique"} className='underline'>Vous pouvez retourner sur la boutique en cliquant sur le lien.</Link>
       </div>
     </main>
