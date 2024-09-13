@@ -28,19 +28,16 @@ export const POST = async (request: NextRequest) => {
       },
       name: data.name,
     });
-
-    // Conversion du prix en centimes (Stripe fonctionne avec des centimes)
-    const amountInCents = Math.round(data.price * 100); // Convertir en centimes
-    if (amountInCents < 50) { // Vérification que le montant est au moins de 50 centimes
+    const amountInCents = Math.round(data.price * 100);
+    if (amountInCents < 50) {
       throw new Error("The price is too low, must be at least 0.50 in your currency.");
     }
-
     const checkOutSession = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'], // Méthodes de paiement acceptées
+      payment_method_types: ['card'],
       customer: customer.id,
       mode: "payment", // Mode de paiement unique
-      success_url: `${process.env.BASE_URL}/success?token=` + customer.id, // URL de succès
-      cancel_url: `${process.env.BASE_URL}/cancel?token=` + customer.id, // URL d'annulation
+      success_url: `${process.env.BASE_URL}/success?token=` + customer.id,
+      cancel_url: `${process.env.BASE_URL}/cancel?token=` + customer.id,
       line_items: [{
         quantity: 1,
         price_data: {
@@ -50,7 +47,11 @@ export const POST = async (request: NextRequest) => {
           currency: "EUR",
           unit_amount: amountInCents
         }
-      }]
+      }],
+      metadata: {
+        title: data.title,
+        amount: data.price.toFixed(2)
+      }
     });
     return NextResponse.json({ msg: checkOutSession, url: checkOutSession.url }, { status: 200 });
   } catch (error: any) {

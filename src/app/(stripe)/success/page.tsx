@@ -1,17 +1,8 @@
-"use client";
-
 import axios from 'axios';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 
-interface CustomerData {
-  name: string;
-  email: string;
-}
-
-async function fetchCustomerData(token: string): Promise<CustomerData | null> {
+async function fetchCustomerData(token: string) {
   try {
-    const response = await axios.get(`${process.env.BASE_URL}/api/success`, { params: { token } });
+    const response = await axios.get(`${process.env.BASE_URL}/api/success`, {params: { token }});
     return response.data;
   } catch (error) {
     console.error('Error fetching customer data:', error);
@@ -19,31 +10,21 @@ async function fetchCustomerData(token: string): Promise<CustomerData | null> {
   }
 }
 
-export default function SuccessPage({ searchParams }: { searchParams: { token: string } }) {
-  const [customerData, setCustomerData] = useState<CustomerData | null>(null);
-  const router = useRouter();
+export default async function SuccessPage({ searchParams }: { searchParams: { token: string } }) {
   const token = searchParams.token;
-  useEffect(() => {
-    if (token) {
-      fetchCustomerData(token).then((data) => {
-        if (data) {
-          setCustomerData(data);
-          const timer = setTimeout(() => {
-            router.push('/');
-          }, 10000);
-          return () => clearTimeout(timer);
-        }
-      });
-    }
-  }, [token, router]);
+  if (!token) { return <div>Token not found.</div>;}
+  const customerData = await fetchCustomerData(token);
+  if (!customerData) { return <div>Error loading customer data.</div>}
+  if (token && customerData){
+  }
   return (
     <main className='w-full h-screen flex items-center justify-center flex-col gap-3 text-center sm:top-[10vh] md:top-[10vh]'>
       <h1>✅ Paiement réussi!</h1>
       <div>
-        <p>Merci pour votre achat, {customerData?.name || 'client'}!</p>
+        <p>Merci pour votre achat, {customerData?.name}!</p>
         <ul>
-          <li>Vous venez de recevoir votre email de confirmation à l'adresse : {customerData?.email || 'votre adresse email'}.</li>
-          <li>Vous allez être redirigé vers la page d'accueil dans 10 secondes !</li>
+          <li>Vous venez de recevoir votre email de confirmation à cette adresse: {customerData?.email}</li>
+          <li>Vous allez être redirigé vers la page d'accueil !</li>
         </ul>
       </div>
     </main>
