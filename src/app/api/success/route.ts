@@ -18,18 +18,14 @@ export const GET = async (request: NextRequest) => {
     if (!customerEmail) {
       return NextResponse.json({ error: 'Customer email not available' }, { status: 400 });
     }
-    const invoices = await stripe.invoices.list({ customer: customer.id, limit: 1 });
-    const latestInvoice = invoices.data[0];
-    if (!latestInvoice || latestInvoice.status !== 'paid') {
-      return NextResponse.json({ error: 'No finalized invoice found for this customer' }, { status: 400 });
+    const paymentIntents = await stripe.paymentIntents.list({ customer: customer.id, limit: 1 });
+    const latestPaymentIntent = paymentIntents.data[0];
+    if (!latestPaymentIntent || latestPaymentIntent.status !== 'succeeded') {
+      return NextResponse.json({ error: 'No successful payment found for this customer' }, { status: 400 });
     }
-    const metadata = latestInvoice.metadata || {};
-    if (metadata.emailSent === 'true') {
-      return NextResponse.json({ message: 'Email already sent' }, { status: 200 });
-    }
-    const productName = latestInvoice.lines.data[0]?.description || "Produit non spécifié";
-    const amount = latestInvoice.amount_paid
-      ? (latestInvoice.amount_paid / 100).toFixed(2) + " €"
+    const productName = latestPaymentIntent.metadata.name || "Produit non spécifié";
+    const amount = latestPaymentIntent.amount
+      ? (latestPaymentIntent.amount / 100).toFixed(2) + " €"
       : "Montant non disponible";
     const orderCode = Math.random().toString(36).substr(2, 8).toUpperCase();
     const transporter = nodemailer.createTransport({
@@ -39,6 +35,10 @@ export const GET = async (request: NextRequest) => {
         pass: process.env.NEXT_PUBLIC_MY_PASSWORD_GMAIL
       }
     });
+    const metadata = latestPaymentIntent.metadata || {};
+    if (metadata.emailSent === 'true') {
+      return NextResponse.json({ message: 'Email already sent' }, { status: 200 });
+    }
     await transporter.sendMail({
       from: process.env.NEXT_PUBLIC_MY_EMAIL_GMAIL,
       to: customerEmail,
@@ -68,7 +68,7 @@ export const GET = async (request: NextRequest) => {
              <p><strong>Code de commande: ${orderCode}</strong>.</p>
              <p>Le client a été informé que le code est personnel et valable pour un an.</p>`
     });
-    await stripe.invoices.update(latestInvoice.id, {
+    await stripe.paymentIntents.update(latestPaymentIntent.id, {
       metadata: { ...metadata, emailSent: 'true' }
     });
     return NextResponse.json({
@@ -81,4 +81,3 @@ export const GET = async (request: NextRequest) => {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 };
-
