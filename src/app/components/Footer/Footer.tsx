@@ -8,7 +8,7 @@ import { useData } from "@/app/contexts/data"
 export default function Footer (){
     const data =useData();
     return (
-        <footer className="w-full h-full p-2 flex flex-col gap-4">
+        <footer className="w-full h-full p-2 flex flex-col gap-4 max-w-[1200px] mx-auto">
             <Chat/>
             <Link href={"/contact"} className="self-center transition ease-in-out duration-100 rounded-full text-2xl hover:scale-105 p-4">Contactez-nous</Link>
             <p className="text-xl px-4">Nous sommes situés sur la commune de Saint-Pierre-des-Fleurs au 40, route du Neubourg. Cliquez sur la carte pour trouver votre itinéraire.</p>
