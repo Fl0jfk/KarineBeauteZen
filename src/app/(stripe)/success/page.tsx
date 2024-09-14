@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-async function fetchCustomerData(token: string) {
+async function fetchCustomerData(token: string, title: string, amount: string) {
   try {
-    const response = await axios.get(`${process.env.BASE_URL}/api/success`, { params: { token } });
+    const response = await axios.get(`${process.env.BASE_URL}/api/success`, { params: { token, title, amount }});
     return response.data;
   } catch (error) {
     console.error('Error fetching customer data:', error);
@@ -10,26 +10,30 @@ async function fetchCustomerData(token: string) {
   }
 }
 
-export default async function SuccessPage({ searchParams }: { searchParams: { token: string } }) {
-  const token = searchParams.token;
-  if (!token) { return <div>Token not found.</div>; }
-  const customerData = await fetchCustomerData(token);
-  if (!customerData) { return <div>Error loading customer data.</div>; }
+export default async function SuccessPage({ searchParams }: { searchParams: { token: string; title: string; amount: string } }) {
+  const { token, title, amount } = searchParams;
+  if (!token || !title || !amount) {
+    return <div>Missing parameters.</div>;
+  }
+  const customerData = await fetchCustomerData(token, title, amount);
+  if (!customerData) {
+    return <div>Error loading customer data.</div>;
+  }
   return (
-    <main className='w-full h-screen flex items-center justify-center flex-col gap-3 text-center sm:top-[10vh] md:top-[10vh]'>
+    <main className='w-full h-[70vh] flex items-center justify-center flex-col gap-3 text-center sm:top-[10vh] md:top-[10vh] p-4'>
       <h1>✅ Paiement réussi!</h1>
       <div>
         <p>Merci pour votre achat, {customerData?.name}!</p>
         <ul>
           <li>Vous venez de recevoir votre email de confirmation à cette adresse: {customerData?.email}</li>
-          <li>Vous allez être redirigé vers la page d&apos;accueil dans 10 secondes !</li>
+          <li>Vous allez être redirigé vers la page d&apos;accueil dans 15 secondes !</li>
         </ul>
       </div>
       <script dangerouslySetInnerHTML={{
         __html: `
           setTimeout(function() {
             window.location.href = '/';
-          }, 10000);
+          }, 15000);
         `,
       }} />
     </main>

@@ -37,12 +37,13 @@ export default function FormBuy({ amount }: FormBuyProps) {
             address: formData.line1,
             city: formData.city,
             cp: formData.postal_code, 
-            
           });
           const responseData = await response.data;
           window.location.href = responseData.url;
         } catch (error) {
-        } finally { }
+        } finally { 
+
+        }
       };
     return (
         <form onSubmit={handleSubmit(onSubmit)} name='form email' className='flex flex-col gap-3'>

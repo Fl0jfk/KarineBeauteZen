@@ -6,7 +6,14 @@ const stripe = new Stripe(process.env.STRIPE_SECRET as string);
 
 export const GET = async (request: NextRequest) => {
   try {
-    const token = request.nextUrl.searchParams.get('token');
+    const url = new URL(request.url);
+    console.log(url)
+    const token = url.searchParams.get('token');
+    const titleFromQuery = url.searchParams.get('title');
+    const amountFromQuery = url.searchParams.get('amount');
+    console.log(token)
+    console.log(titleFromQuery)
+    console.log(amountFromQuery)
     if (!token) {
       return NextResponse.json({ error: 'No token provided' }, { status: 400 });
     }
@@ -24,7 +31,8 @@ export const GET = async (request: NextRequest) => {
       return NextResponse.json({ error: 'No successful payment found for this customer' }, { status: 400 });
     }
     const metadata = latestPaymentIntent.metadata || {};
-
+    const title = titleFromQuery || 'Titre non disponible';
+    const amount = amountFromQuery || 'Montant non disponible';
     if (metadata.emailSent === 'true') {
       return NextResponse.json({ message: 'Email already sent' }, { status: 200 });
     }
@@ -40,12 +48,12 @@ export const GET = async (request: NextRequest) => {
       from: process.env.NEXT_PUBLIC_MY_EMAIL_GMAIL,
       to: customerEmail,
       subject: 'Confirmation de commande',
-      text: `Merci pour votre achat, ${customer.name}! Votre commande pour ${metadata.title} d'un montant de ${metadata.amount} a été bien reçue. 
+      text: `Merci pour votre achat, ${customer.name}! Votre commande pour ${title} d'un montant de ${amount} a été bien reçue. 
              Votre code de commande est: ${orderCode}.
              Ce code est valable pour une durée d'un an. Il est personnel et attaché à votre identité.
              Si vous souhaitez offrir ce bon, vous pouvez contacter l'institut pour changer l'identité rattachée, ou fournir à la personne une photocopie de votre pièce d'identité.`,
       html: `<p>Merci pour votre achat, ${customer.name}!</p>
-             <p>Votre commande pour <strong>${metadata.title}</strong> d'un montant de <strong>${metadata.amount}</strong> a été bien reçue.</p>
+             <p>Votre commande pour <strong>${title}</strong> d'un montant de <strong>${amount}</strong> a été bien reçue.</p>
              <p><strong>Votre code de commande est: ${orderCode}</strong></p>
              <p>Ce code est valable pour une durée d'un an. Il est personnel et attaché à votre identité.</p>
              <p>Si vous souhaitez offrir ce bon, vous pouvez contacter l'institut pour changer l'identité rattachée, ou fournir à la personne une photocopie de votre pièce d'identité.</p>`
@@ -55,13 +63,13 @@ export const GET = async (request: NextRequest) => {
       to: process.env.NEXT_PUBLIC_MY_EMAIL_GMAIL,
       subject: 'Nouvelle commande reçue',
       text: `Une nouvelle commande a été reçue de ${customer.name} (${customer.email}).
-             Produit commandé: ${metadata.title}.
-             Montant: ${metadata.amount}.
+             Produit commandé: ${title}.
+             Montant: ${amount}.
              Code de commande: ${orderCode}.
              Le client a été informé que le code est personnel et valable pour un an.`,
       html: `<p>Une nouvelle commande a été reçue de <strong>${customer.name}</strong> (${customer.email}).</p>
-             <p>Produit commandé: <strong>${metadata.title}</strong>.</p>
-             <p>Montant: <strong>${metadata.amount}</strong>.</p>
+             <p>Produit commandé: <strong>${title}</strong>.</p>
+             <p>Montant: <strong>${amount}</strong>.</p>
              <p><strong>Code de commande: ${orderCode}</strong>.</p>
              <p>Le client a été informé que le code est personnel et valable pour un an.</p>`
     });
