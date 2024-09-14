@@ -29,10 +29,7 @@ export default function Card({ item }: CardProps) {
     }
   }
   function handlePriceChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const value = Number(event.target.value);
-    if (value >= 10) {
-      setCustomPrice(value);
-    }
+      setCustomPrice(Number(event.target.value));
   }
   const isButtonDisabled = customPrice < 10;
   return (
