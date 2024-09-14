@@ -24,7 +24,7 @@ export default async function SuccessPage({ searchParams }: { searchParams: { to
         <p>Merci pour votre achat, {customerData?.name}!</p>
         <ul>
           <li>Vous venez de recevoir votre email de confirmation à cette adresse: {customerData?.email}</li>
-          <li>Vous allez être redirigé vers la page d'accueil !</li>
+          <li>Vous allez être redirigé vers la page d&apos;accueil !</li>
         </ul>
       </div>
     </main>
