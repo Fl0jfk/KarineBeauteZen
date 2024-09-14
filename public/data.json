@@ -674,24 +674,38 @@
         },
         {
             "id": 2,
-            "title": "Pause ultra-relaxante",
-            "price": 50,
-            "description": "Nettoyage et gommage du visage gommage du corps enveloppement du corps, massage du corps et du visage masque visage, contour des yeux, crème de soin. (3 heures)",
-            "image": "https://karinebeautezen.s3.eu-west-3.amazonaws.com/boutique/massage+californien.jpg"
+            "title": "Massage ayurvédique",
+            "price": 65,
+            "description": "Ènergétique, détend tensions et muscles. (1 heure)",
+            "image": "https://karinebeautezen.s3.eu-west-3.amazonaws.com/boutique/ayurve%CC%81dique.jpg"
         },
         {
             "id": 3,
-            "title": "Massage californien",
-            "price": 65,
-            "description": "Relaxant favorise la détente, manœuvres lentes et douces (1 heure)",
-            "image": "https://karinebeautezen.s3.eu-west-3.amazonaws.com/boutique/massage+californien.jpg"
+            "title": "Manucure complète",
+            "price": 36,
+            "description": "Gommage + entretien des Ongles + Masque + Massage (1 heure 30 minutes)",
+            "image": "https://karinebeautezen.s3.eu-west-3.amazonaws.com/boutique/manucure.jpg"
         },
         {
             "id": 4,
-            "title": "Pause ultra-relaxante",
-            "price": 50,
-            "description": "Nettoyage et gommage du visage gommage du corps enveloppement du corps, massage du corps et du visage masque visage, contour des yeux, crème de soin. (3 heures)",
-            "image": "https://karinebeautezen.s3.eu-west-3.amazonaws.com/boutique/massage+californien.jpg"
+            "title": "Massage balinais",
+            "price": 65,
+            "description": "Relaxant, dénoue les contractions, avec des étirements de type Thaï doux. (1 heure)",
+            "image": "https://karinebeautezen.s3.eu-west-3.amazonaws.com/boutique/balinais.jpg"
+        },
+        {
+            "id": 5,
+            "title": "Massage hawaien",
+            "price": 65,
+            "description": "Délassant, permet de relâcher les tensions, inspiré du Lomi-Lomi. (1 heure)",
+            "image": "https://karinebeautezen.s3.eu-west-3.amazonaws.com/boutique/hawaien.jpg"
+        },
+        {
+            "id": 6,
+            "title": "Carte cadeau",
+            "price": 10,
+            "description": "Choisissez le montant et offrez votre carte cadeau.",
+            "image": "https://karinebeautezen.s3.eu-west-3.amazonaws.com/boutique/carte+kdo.jpg"
         }
     ],
     "reviews":[
