@@ -35,7 +35,7 @@ export default function ModalSolarium() {
     exit: { opacity: 0, y: "100vh", transition: { duration: 0.6 } }
   };
   return (
-    <motion.section ref={modalRef} className={`w-full h-full relative flex flex-col gap-4 ${modalClass}`} initial="hidden" animate={modalIsVisible ? "visible" : "hidden"} exit="exit" variants={modalVariants}>
+    <motion.section ref={modalRef} className={`w-full h-full flex flex-col gap-4 ${modalClass}`} initial="hidden" animate={modalIsVisible ? "visible" : "hidden"} exit="exit" variants={modalVariants}>
       <div className="flex w-full justify-between">
         {data.categories[5] && <h3 className="text-4xl">{data.categories[5].name}</h3>}
         <button className="w-[35px] h-[35px] z-[2] bg-gray-700 rounded-full z-[1] p-2 hover:scale-105 transition ease-in-out duration-300" onClick={closeModal}>

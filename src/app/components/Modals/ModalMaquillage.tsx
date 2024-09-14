@@ -11,7 +11,7 @@ import Map from "../Map/Map";
 
 export default function ModalMaquillage() {
   const modalIsVisible = useSelector((state: { modal: modalState }) => state.modal.modalMaquillage);
-  const [modalIsVisibleClass, setModalIsVisibleClass] = useState<string>(modalIsVisible ? "" : "hidden");
+  const [modalClass, setModalClass] = useState<string>(modalIsVisible ? "" : "hidden");
   const dispatch = useDispatch();
   const closeModal = () => { dispatch(setModalClose()) };
   const data = useData();
@@ -19,12 +19,12 @@ export default function ModalMaquillage() {
   const maquillage = data.prestations[0]["Maquillage"];
   useEffect(() => {
     if (modalIsVisible) {
-      setModalIsVisibleClass("");
+      setModalClass("");
       modalRef.current?.scrollIntoView({ behavior: "smooth" });
       modalRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
         const timer = setTimeout(() => {
-            setModalIsVisibleClass("hidden");
+            setModalClass("hidden");
         }, 500);
           return () => clearTimeout(timer);
     }
@@ -35,8 +35,8 @@ export default function ModalMaquillage() {
     exit: { opacity: 0, y: "100vh", transition: { duration: 0.6 } }
   };
   return (
-    <motion.section ref={modalRef} className={`w-full h-full relative flex flex-col gap-4 ${modalIsVisibleClass}`} initial="hidden" animate={modalIsVisible ? "visible" : "hidden"} exit="exit" variants={modalVariants}>
-      <div className="flex relative w-full justify-between">
+    <motion.section ref={modalRef} className={`w-full h-full flex flex-col gap-4 ${modalClass}`} initial="hidden" animate={modalIsVisible ? "visible" : "hidden"} exit="exit" variants={modalVariants}>
+      <div className="flex w-full justify-between">
         {data.categories[4] && <h3 className="text-4xl">{data.categories[4].name}</h3>}
         <button className="w-[35px] h-[35px] z-[2] bg-gray-700 rounded-full z-[1] p-2 hover:scale-105 transition ease-in-out duration-300" onClick={closeModal}>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
