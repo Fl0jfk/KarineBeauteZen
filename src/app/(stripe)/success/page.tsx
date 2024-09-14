@@ -1,8 +1,9 @@
+import { useEffect } from 'react';
 import axios from 'axios';
 
 async function fetchCustomerData(token: string) {
   try {
-    const response = await axios.get(`${process.env.BASE_URL}/api/success`, {params: { token }});
+    const response = await axios.get(`${process.env.BASE_URL}/api/success`, { params: { token } });
     return response.data;
   } catch (error) {
     console.error('Error fetching customer data:', error);
@@ -12,11 +13,15 @@ async function fetchCustomerData(token: string) {
 
 export default async function SuccessPage({ searchParams }: { searchParams: { token: string } }) {
   const token = searchParams.token;
-  if (!token) { return <div>Token not found.</div>;}
+  if (!token) { return <div>Token not found.</div>; }
   const customerData = await fetchCustomerData(token);
-  if (!customerData) { return <div>Error loading customer data.</div>}
-  if (token && customerData){
-  }
+  if (!customerData) { return <div>Error loading customer data.</div>; }
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      window.location.href = '/';
+    }, 10000);
+    return () => clearTimeout(timer);
+  }, []);
   return (
     <main className='w-full h-screen flex items-center justify-center flex-col gap-3 text-center sm:top-[10vh] md:top-[10vh]'>
       <h1>✅ Paiement réussi!</h1>
@@ -24,7 +29,7 @@ export default async function SuccessPage({ searchParams }: { searchParams: { to
         <p>Merci pour votre achat, {customerData?.name}!</p>
         <ul>
           <li>Vous venez de recevoir votre email de confirmation à cette adresse: {customerData?.email}</li>
-          <li>Vous allez être redirigé vers la page d&apos;accueil !</li>
+          <li>Vous allez être redirigé vers la page d&apos;accueil dans 10 secondes !</li>
         </ul>
       </div>
     </main>
