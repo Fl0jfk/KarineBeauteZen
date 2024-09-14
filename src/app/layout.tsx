@@ -20,17 +20,25 @@ const metaDetails: Record<string, { title: string; description: string }> = {
     description: '',
   },
   '/contact': {
-    title: '',
+    title: 'Formulaire de contact KBZ',
     description: '',
   },
-  '/portfolio': {
-    title: '',
+  '/boutique': {
+    title: 'Boutique en ligne KBZ',
     description: '',
   },
   '/about': {
     title: '',
     description: '',
   },
+  '/success': {
+    title: 'Paiement validé !',
+    description: '',
+  },
+  '/cancel': {
+    title: 'Paiement échoué',
+    description: '',
+  }
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
