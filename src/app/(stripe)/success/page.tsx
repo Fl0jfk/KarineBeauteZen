@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import axios from 'axios';
 
 async function fetchCustomerData(token: string) {
@@ -16,12 +15,6 @@ export default async function SuccessPage({ searchParams }: { searchParams: { to
   if (!token) { return <div>Token not found.</div>; }
   const customerData = await fetchCustomerData(token);
   if (!customerData) { return <div>Error loading customer data.</div>; }
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      window.location.href = '/';
-    }, 10000);
-    return () => clearTimeout(timer);
-  }, []);
   return (
     <main className='w-full h-screen flex items-center justify-center flex-col gap-3 text-center sm:top-[10vh] md:top-[10vh]'>
       <h1>✅ Paiement réussi!</h1>
@@ -32,6 +25,13 @@ export default async function SuccessPage({ searchParams }: { searchParams: { to
           <li>Vous allez être redirigé vers la page d&apos;accueil dans 10 secondes !</li>
         </ul>
       </div>
+      <script dangerouslySetInnerHTML={{
+        __html: `
+          setTimeout(function() {
+            window.location.href = '/';
+          }, 10000);
+        `,
+      }} />
     </main>
   );
 }
