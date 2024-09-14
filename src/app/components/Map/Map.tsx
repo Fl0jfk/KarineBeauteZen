@@ -19,7 +19,7 @@ export default function Map() {
   const { isLoaded } = useLoadScript({ googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string,});
   if (!isLoaded) return <div>Loading...</div>;
   const deviceType = detectDeviceType();
-  const mapLink = deviceType === 'iOS' ? "https://maps.apple.com/?q=49.248597376102744,0.9611038272688814" : "https://maps.app.goo.gl/MLh4h36hFrPHHxjP7";
+  const mapLink = deviceType === 'iOS' ? "https://maps.apple.com/?address=40%20Route%20du%20Neubourg,%2027370%20Saint-Pierre-des-Fleurs,%20France&auid=7312967961999577381&ll=49.248613,0.961462&lsp=9902&q=Karine%20Beauté%20Zen&t=m" : "https://maps.app.goo.gl/MLh4h36hFrPHHxjP7";
   return <MapKit mapLink={mapLink} />;
 }
 
