@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { setInfoUser } from '@/app/redux/reducers/buy';
 import axios from 'axios';
-import { useEffect } from 'react';
 
 export type FormData = {
   name: string;
@@ -20,7 +19,7 @@ interface FormBuyProps {
 }
 
 export default function FormBuy({ amount }: FormBuyProps) {
-  const { register, handleSubmit, getValues, formState: { isValid }, reset } = useForm<FormData>({
+  const { register, handleSubmit, getValues, formState: { isValid } } = useForm<FormData>({
     mode: 'onChange'
   });
   const dispatch = useDispatch();
@@ -81,13 +80,3 @@ export default function FormBuy({ amount }: FormBuyProps) {
     </form>
   );
 }
-
-
-
-
-
-
-
-
-
-

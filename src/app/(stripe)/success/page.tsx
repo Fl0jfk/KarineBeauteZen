@@ -29,13 +29,7 @@ export default async function SuccessPage({ searchParams }: { searchParams: { to
           <li>Vous allez être redirigé vers la page d&apos;accueil dans 15 secondes !</li>
         </ul>
       </div>
-      <script dangerouslySetInnerHTML={{
-        __html: `
-          setTimeout(function() {
-            window.location.href = '/';
-          }, 15000);
-        `,
-      }} />
+      <script dangerouslySetInnerHTML={{__html: `if (window.location.pathname === '/success'){ setTimeout(function() { window.location.href = '/'; }, 15000)}`}}/>
     </main>
   );
 }
