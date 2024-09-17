@@ -49,6 +49,11 @@ export default function ModalEpilation() {
       <div className="w-full h-[400px]">
         <Map/>
       </div>
+      <button  onClick={()=>modalRef.current?.scrollIntoView({ behavior:'smooth'})}  className="border-2 mx-auto rounded-xl p-2 fixed bottom-4 right-4 bg-[#F2E9EB]">
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
+      </button>
     </motion.section>
   );
 }
