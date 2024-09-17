@@ -29,6 +29,14 @@ type Reviews = {
   link:string;
 }
 
+type Team = {
+  id:number;
+  firstname:string;
+  lastname:string;
+  profession:string;
+  pp:string;
+}
+
 type Shop = {
   id: number;
   title: string;
@@ -53,6 +61,7 @@ type Data = {
   categories: Categories[];
   prestations: CategoriePrestation[];
   reviews: Reviews[];
+  team:Team[];
   shop: Shop[];
   error: string | null;
 };
@@ -73,6 +82,7 @@ const initialData: Data = {
   categories: [],
   prestations:[],
   shop: [],
+  team:[],
   reviews:[],
   error: null
 };

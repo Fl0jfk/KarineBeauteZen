@@ -12,11 +12,11 @@ import { Viewport } from 'next';
 
 const metaDetails: Record<string, { title: string; description: string }> = {
   '/': {
-    title: '',
+    title: 'Bienvenue chez Karine-Beauté-Zen',
     description: '',
   },
   '/mentionslegales': {
-    title: '',
+    title: 'Mentions légales de KBZ',
     description: '',
   },
   '/contact': {

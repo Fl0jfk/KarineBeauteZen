@@ -917,5 +917,28 @@
             "message":"",
             "link": "https://maps.app.goo.gl/73jn2DVVWb84Dxji6"
         }
+    ],
+    "team":[
+        {
+            "id":1,
+            "lastname": "Guerrache",
+            "firstname": "Karine",
+            "pp": "",
+            "profession": "Propriétaire, esthéticienne, spécialiste de l'onglerie"
+        },
+        {
+            "id":2,
+            "lastname": "Nom de famille2",
+            "firstname": "Etc",
+            "pp": "",
+            "profession": "Massage"
+        },
+        {
+            "id":3,
+            "lastname": "Nom de famille2",
+            "firstname": "Karine",
+            "pp": "",
+            "profession": "profession"
+        }
     ]
 }
