@@ -69,7 +69,7 @@ export default function Navbar({menuOpened, onLinkClick} :NavbarProps ){
                             <Link className='hover:scale-110' href="/" onClick={handleLinkClick} aria-label="Lien vers la page d'accueil">Accueil</Link>
                             <div className='hover:scale-110 cursor-pointer' onClick={()=>setServicesAppear(true)} aria-label="Lien vers le sous menus mes services">Mes services</div>
                             <Link className='hover:scale-110' href="/boutique" onClick={handleLinkClick} aria-label="Lien vers la page boutique">Boutique</Link>
-                            <Link className='hover:scale-110' href="/about" onClick={handleLinkClick} aria-label="Lien vers la page à propos">À propos</Link>
+                            <Link className='hover:scale-110' href="/notreequipe" onClick={handleLinkClick} aria-label="Lien vers la page Notre Equipe">Notre Équipe</Link>
                             <Link className='hover:scale-110' href="/contact" onClick={handleLinkClick} aria-label="Lien vers la page contact">Contact</Link>
                         </div>
                         <div  className={`flex flex-col gap-4 justify-center items-center w-full ${servicesVisible}`}>
@@ -121,7 +121,7 @@ export default function Navbar({menuOpened, onLinkClick} :NavbarProps ){
             <nav  className={`flex xl:absolute lg:absolute xl:left-[35%] lg:left-[30%] gap-6 sm:hidden md:hidden z-[9] text-3xl`}>
                 <Link href="/" aria-label="Lien vers la page d'accueil">Accueil</Link>
                 <Link href="/boutique" aria-label="Lien vers la page boutique">Boutique</Link>
-                <Link href="/about" aria-label="Lien vers la page à propos">À propos</Link>
+                <Link href="/notreequipe" aria-label="Lien vers la page Notre Equipe">Notre Équipe</Link>
                 <Link href="/contact" aria-label="Lien vers la page contact">Contact</Link>
             </nav>
         </>

@@ -27,8 +27,8 @@ const metaDetails: Record<string, { title: string; description: string }> = {
     title: 'Boutique en ligne KBZ',
     description: '',
   },
-  '/about': {
-    title: '',
+  '/notreequipe': {
+    title: 'Notre équipe !',
     description: '',
   },
   '/success': {
