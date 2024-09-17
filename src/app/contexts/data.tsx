@@ -37,6 +37,12 @@ type Team = {
   pp:string;
 }
 
+type Brands = {
+  id:number;
+  name:string;
+  logo:string;
+}
+
 type Shop = {
   id: number;
   title: string;
@@ -62,6 +68,7 @@ type Data = {
   prestations: CategoriePrestation[];
   reviews: Reviews[];
   team:Team[];
+  brands:Brands[];
   shop: Shop[];
   error: string | null;
 };
@@ -83,6 +90,7 @@ const initialData: Data = {
   prestations:[],
   shop: [],
   team:[],
+  brands:[],
   reviews:[],
   error: null
 };

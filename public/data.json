@@ -940,5 +940,32 @@
             "pp": "",
             "profession": "profession"
         }
+    ],
+    "brands":[
+        {
+            "id":1,
+            "name": "Couleur Caramel",
+            "logo": "https://karinebeautezen.s3.eu-west-3.amazonaws.com/brands/maquillage-bio-professionnel-couleur-caramel.png.webp"
+        },
+        {
+            "id":2,
+            "name": "Green Skincare",
+            "logo": "https://karinebeautezen.s3.eu-west-3.amazonaws.com/brands/marque-maquillage-professionnelle-2.png.webp"
+        },
+        {
+            "id":3,
+            "name": "Les Senteurs Gourmandes",
+            "logo": "https://karinebeautezen.s3.eu-west-3.amazonaws.com/brands/marque-soin-institut-beaute.png.webp"
+        },
+        {
+            "id":4,
+            "name": "Too Fruit",
+            "logo": "https://karinebeautezen.s3.eu-west-3.amazonaws.com/brands/produits-soin-bio-enfant.png.webp"
+        },
+        {
+            "id":5,
+            "name": "Miss W Pro",
+            "logo": "https://karinebeautezen.s3.eu-west-3.amazonaws.com/brands/parfum-naturel-institut-beaute.png.webp"
+        }
     ]
 }
