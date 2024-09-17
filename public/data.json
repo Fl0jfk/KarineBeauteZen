@@ -16,7 +16,7 @@
         {
             "id":1,
             "name":"Les soins visages et corps",
-            "img":"https://karinebeautezen.s3.eu-west-3.amazonaws.com/soins+visages+et+corps/soinscover.jpg",
+            "img":"https://karinebeautezen.s3.eu-west-3.amazonaws.com/soins/soinscover.jpg",
             "shortDescription":"",
             "description":""
         },
@@ -37,7 +37,7 @@
         {
             "id":4,
             "name":"Cils et sourcils",
-            "img":"https://karinebeautezen.s3.eu-west-3.amazonaws.com/cils+et+sourcils/cilscover.jpg",
+            "img":"https://karinebeautezen.s3.eu-west-3.amazonaws.com/cils/cilscover.jpg",
             "shortDescription":"",
             "description":""
         },
