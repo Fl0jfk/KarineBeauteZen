@@ -30,9 +30,12 @@ export default function Card({ item }: CardProps) {
     }
   }
   function handlePriceChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setCustomPrice(Number(event.target.value));
+    const newPrice = Number(event.target.value);
+    if (newPrice <= 200) {
+      setCustomPrice(newPrice);
+    }
   }
-  const isButtonDisabled = customPrice < 10;
+  const isButtonDisabled = customPrice < 10 || customPrice > 200;
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (cardRef.current && !cardRef.current.contains(event.target as Node)) {
@@ -48,7 +51,7 @@ export default function Card({ item }: CardProps) {
     };
   }, [isFlipped]);
   return (
-    <motion.div className="h-[400px] w-full" layout animate={{ opacity: 1, rotateY: isFlipped ? 180 : 360 }} transition={{ duration: 0.3 }} initial={false} exit={{ opacity: 0 }} onAnimationComplete={() => setIsAnimating(false)} ref={cardRef}>
+    <motion.div className="h-[400px] w-full" layout  animate={{ opacity: 1, rotateY: isFlipped ? 180 : 360 }} transition={{ duration: 0.3 }} initial={false} exit={{ opacity: 0 }} onAnimationComplete={() => setIsAnimating(false)} ref={cardRef}>
       <div className={`h-[400px] rounded-xl overflow-hidden relative bg-white flip-card-front ${whatFace ? "" : "hidden"}`}>
         <Image src={item.image} alt={`Image de ${item.title}`} className="w-full h-48 object-cover" width={300} height={300}/>
         <div className="p-4">
@@ -56,13 +59,13 @@ export default function Card({ item }: CardProps) {
           {item.title === "Carte cadeau" ? (
             <>
               <p className="text-black bg-[#F2E9EB] rounded-md p-2 absolute top-2 right-2 mb-2">À partir de {item.price}€</p>
-              <input type="number" value={customPrice} onChange={handlePriceChange} className="bg-[#F2E9EB] p-2 rounded-md text-black w-full mb-2" min="10"/>
+              <input type="number" value={customPrice} onChange={handlePriceChange} className="bg-[#F2E9EB] p-2 rounded-md text-black w-full mb-2" min="10" max="200"/>
             </>
           ) : (
             <p className="text-black bg-[#F2E9EB] rounded-md p-2 absolute top-2 right-2 mb-2">{item.price}€</p>
           )}
           <p className="text-gray-700 mb-4">{item.description}</p>
-          <button onClick={() => handleFlip()} className={`bg-[#F2E9EB] p-2 rounded-md text-black ${ isButtonDisabled ? "opacity-50 cursor-not-allowed" : ""}`} disabled={isButtonDisabled}>Acheter</button>
+          <button onClick={handleFlip} className={`bg-[#F2E9EB] p-2 rounded-md text-black ${isButtonDisabled ? "opacity-50 cursor-not-allowed" : ""}`} disabled={isButtonDisabled}>Acheter</button>
         </div>
       </div>
       <div className={`h-[400px] rounded-xl overflow-hidden flex flex-col gap-4 bg-white flip-card-back p-4 ${whatFace ? "hidden" : ""}`}>
