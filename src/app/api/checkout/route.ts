@@ -18,6 +18,10 @@ export const POST = async (request: NextRequest) => {
   console.log("500")
   try {
     const data: Data = await request.json();
+    const amountInCents = Math.round(data.price * 100);
+    if (amountInCents < 1000) {
+      throw new Error("Le prix doit être d'au moins 10€.");
+    }
     const customer = await stripe.customers.create({
       email: data.mail,
       address: {
@@ -30,10 +34,6 @@ export const POST = async (request: NextRequest) => {
       name: data.name,
     });
     console.log("406")
-    const amountInCents = Math.round(data.price * 100);
-    if (amountInCents < 1000) {
-      throw new Error("Le prix doit être d'au moins 10€.");
-    }
     console.log("408")
     console.log("Données avant Stripe:", data);
     const checkoutSession = await stripe.checkout.sessions.create({
@@ -58,7 +58,7 @@ export const POST = async (request: NextRequest) => {
       },
     });
     console.log("Session de paiement Stripe créée:", checkoutSession);
-    return NextResponse.json({ msg: checkoutSession, url: checkoutSession.url }, { status: 200 });
+    return NextResponse.json({ msg: checkoutSession, url: checkoutSession.url },{ status: 200 });
   } catch (error: any) {
     console.error("Erreur de traitement de la commande:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });

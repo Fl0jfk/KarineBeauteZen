@@ -30,6 +30,10 @@ export default function FormBuy({ amount }: FormBuyProps) {
   const Checkout = async () => {
     const formData = getValues();
     console.log("399")
+    if (!isValid) {
+      alert("Veuillez remplir tous les champs correctement.");
+      return;
+    }
     try {
       console.log("401")
       const response = await axios.post("/api/checkout", {

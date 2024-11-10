@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  target: 'serverless',
   images: {
       formats : ['image/webp'],
       remotePatterns: [
