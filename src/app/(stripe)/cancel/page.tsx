@@ -14,7 +14,6 @@ async function fetchCustomerData(token: string) {
         <p>Votre paiement n&apos;a pas été finalisé.</p>
         <Link href={"/boutique"} className='underline'>Vous pouvez retourner sur la boutique en cliquant sur le lien.</Link>
       </div>
-      <script dangerouslySetInnerHTML={{__html: `if (window.location.pathname === '/cancel'){ setTimeout(function() { window.location.href = '/'; }, 15000)}`}}/>
     </main>
     );
   }
@@ -32,7 +31,6 @@ export default async function CancelPage({ searchParams }: { searchParams: { tok
         <p>Votre paiement n&apos;a pas été finalisé, {customerData?.name}.</p>
         <Link href={"/boutique"} className='underline'>Vous pouvez retourner sur la boutique en cliquant sur le lien.</Link>
       </div>
-      <script dangerouslySetInnerHTML={{__html: `if (window.location.pathname === '/cancel'){ setTimeout(function() { window.location.href = '/'; }, 15000)}`}}/>
     </main>
   );
 }
