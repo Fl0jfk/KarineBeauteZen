@@ -29,7 +29,9 @@ export default function FormBuy({ amount }: FormBuyProps) {
   }
   const Checkout = async () => {
     const formData = getValues();
+    console.log("399")
     try {
+      console.log("401")
       const response = await axios.post("/api/checkout", {
         title: itemTitle,
         price: itemPrice,
@@ -40,7 +42,9 @@ export default function FormBuy({ amount }: FormBuyProps) {
         city: formData.city,
         cp: formData.postal_code,
       });
+      console.log("402")
       window.location.href = response.data.url;
+      console.log("403")
     } catch (error) {
       console.error("Checkout error:", error);
     }
