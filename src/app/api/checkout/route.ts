@@ -30,7 +30,7 @@ export const POST = async (request: NextRequest) => {
     });
     const amountInCents = Math.round(data.price * 100);
     if (amountInCents < 50) {
-      throw new Error("The price is too low, must be at least 0.50 in your currency.");
+      throw new Error("The price is too low, must be at least 10 in your currency.");
     }
     const checkOutSession = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
