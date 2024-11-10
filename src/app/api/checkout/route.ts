@@ -16,7 +16,6 @@ interface Data {
 
 export const POST = async (request: NextRequest) => {
   try {
-    console.log(process.env.BASE_URL)
     const data: Data = await request.json();
     const customer = await stripe.customers.create({
       email: data.mail,
@@ -37,8 +36,8 @@ export const POST = async (request: NextRequest) => {
       payment_method_types: ['card'],
       customer: customer.id,
       mode: "payment",
-      success_url: `${process.env.BASE_URL}/success?token=${customer.id}&title=${encodeURIComponent(data.title)}&amount=${data.price}`,
-      cancel_url: `${process.env.BASE_URL}/cancel?token=` + customer.id,
+      success_url: `https://karine-beaute-zen.com/success?token=${customer.id}&title=${encodeURIComponent(data.title)}&amount=${data.price}`,
+      cancel_url: `https://karine-beaute-zen.com/cancel?token=` + customer.id,
       line_items: [{
         quantity: 1,
         price_data: {

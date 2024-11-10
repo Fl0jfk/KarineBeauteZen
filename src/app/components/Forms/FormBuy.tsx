@@ -19,9 +19,7 @@ interface FormBuyProps {
 }
 
 export default function FormBuy({ amount }: FormBuyProps) {
-  const { register, handleSubmit, getValues, formState: { isValid } } = useForm<FormData>({
-    mode: 'onChange'
-  });
+  const { register, handleSubmit, getValues, formState: { isValid } } = useForm<FormData>({mode: 'onChange'});
   const dispatch = useDispatch();
   const itemTitle = useSelector((state: { buy: any }) => state.buy.title);
   const itemPrice = useSelector((state: { buy: any }) => state.buy.price);
@@ -31,6 +29,7 @@ export default function FormBuy({ amount }: FormBuyProps) {
   }
   const Checkout = async () => {
     const formData = getValues();
+    console.log("1")
     try {
       const response = await axios.post("/api/checkout", {
         title: itemTitle,
@@ -42,8 +41,11 @@ export default function FormBuy({ amount }: FormBuyProps) {
         city: formData.city,
         cp: formData.postal_code,
       });
+      console.log("2")
       const responseData = await response.data;
       window.location.href = responseData.url;
+      console.log(responseData)
+      console.log("3")
     } catch (error) {
       console.error("Checkout error:", error);
     }
