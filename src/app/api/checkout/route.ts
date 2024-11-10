@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 
+console.log("400")
 const stripe = new Stripe(process.env.STRIPE_SECRET as string);
 console.log('Stripe API Key:', process.env.STRIPE_SECRET);
 
