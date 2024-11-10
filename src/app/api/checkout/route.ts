@@ -34,8 +34,6 @@ export const POST = async (request: NextRequest) => {
       name: data.name,
     });
     console.log("406")
-    console.log("408")
-    console.log("Données avant Stripe:", data);
     const checkoutSession = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       customer: customer.id,
