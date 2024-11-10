@@ -1,10 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 
-console.log("400")
-const stripe = new Stripe(process.env.STRIPE_SECRET as string);
-console.log('Stripe API Key:', process.env.STRIPE_SECRET);
-
 interface Data {
   title: string;
   price: number;
@@ -17,6 +13,9 @@ interface Data {
 }
 
 export const POST = async (request: NextRequest) => {
+  console.log("400")
+  const stripe = new Stripe(process.env.STRIPE_SECRET as string);
+  console.log("500")
   try {
     const data: Data = await request.json();
     const customer = await stripe.customers.create({
@@ -30,10 +29,12 @@ export const POST = async (request: NextRequest) => {
       },
       name: data.name,
     });
+    console.log("406")
     const amountInCents = Math.round(data.price * 100);
     if (amountInCents < 1000) {
       throw new Error("Le prix doit être d'au moins 10€.");
     }
+    console.log("408")
     console.log("Données avant Stripe:", data);
     const checkoutSession = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
