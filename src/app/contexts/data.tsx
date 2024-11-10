@@ -100,7 +100,6 @@ const DataContext = createContext<Data | undefined>(undefined);
 export const DataProvider = ({ children }: PropsWithChildren<{}>) => {
   const [error, setError] = useState<Error | null>(null);
   const [data, setData] = useState<Data | undefined>(undefined);
-
   const fetchData = useCallback(async () => {
     try {
       const response = await fetch("/data.json");
@@ -113,11 +112,9 @@ export const DataProvider = ({ children }: PropsWithChildren<{}>) => {
       setError(err instanceof Error ? err : new Error("An error occurred"));
     }
   }, []);
-
   useEffect(() => {
     fetchData();
   }, [fetchData]);
-
   return (
     <DataContext.Provider value={data || initialData}>
       {children}

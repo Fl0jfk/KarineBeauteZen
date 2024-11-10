@@ -4,8 +4,7 @@ import { useData } from "@/app/contexts/data"
 import Image from "next/image"
 
 export default function PersonalList (){
-    const data = useData()
-    const team = data.team;
+    const { team } = useData()
     return (
         <section>
             <div className="grid grid-cols-2 grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4">

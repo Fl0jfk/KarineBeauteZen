@@ -3,11 +3,9 @@
 import { useEffect, useState } from 'react';
 import './crossbutton.css';
 
-function CrossButton({menuOpened}: CrossButton ){
+export default function CrossButton({menuOpened}: CrossButton ){
     const [buttonGo, setButtonGo ] = useState(true);
-    const clickOnButton = () => {
-        setButtonGo(!buttonGo);
-    }
+    const clickOnButton = () => { setButtonGo(!buttonGo)}
     const hambOrCross = (buttonGo ? "menu ": "menu opened fixed z-[10]");
     useEffect(() => {
         if(menuOpened === false){
@@ -28,5 +26,3 @@ function CrossButton({menuOpened}: CrossButton ){
 type CrossButton = {
     menuOpened: boolean
 }
-
-export default CrossButton;

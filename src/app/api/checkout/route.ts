@@ -13,9 +13,7 @@ interface Data {
 }
 
 export const POST = async (request: NextRequest) => {
-  console.log("400")
   const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET as string);
-  console.log("500")
   try {
     const data: Data = await request.json();
     const amountInCents = Math.round(data.price * 100);
@@ -33,7 +31,6 @@ export const POST = async (request: NextRequest) => {
       },
       name: data.name,
     });
-    console.log("406")
     const checkoutSession = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       customer: customer.id,
@@ -55,7 +52,6 @@ export const POST = async (request: NextRequest) => {
         amount: data.price.toFixed(2),
       },
     });
-    console.log("Session de paiement Stripe créée:", checkoutSession);
     return NextResponse.json({ msg: checkoutSession, url: checkoutSession.url },{ status: 200 });
   } catch (error: any) {
     console.error("Erreur de traitement de la commande:", error);

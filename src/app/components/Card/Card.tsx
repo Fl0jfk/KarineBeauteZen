@@ -31,9 +31,7 @@ export default function Card({ item }: CardProps) {
   }
   function handlePriceChange(event: React.ChangeEvent<HTMLInputElement>) {
     const newPrice = Number(event.target.value);
-    if (newPrice <= 200) {
-      setCustomPrice(newPrice);
-    }
+    if (newPrice <= 200) { setCustomPrice(newPrice)}
   }
   const isButtonDisabled = customPrice < 10 || customPrice > 200;
   useEffect(() => {
@@ -50,7 +48,6 @@ export default function Card({ item }: CardProps) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isFlipped]);
-  console.log("0")
   return (
     <motion.div className="h-[400px] w-full" layout  animate={{ opacity: 1, rotateY: isFlipped ? 180 : 360 }} transition={{ duration: 0.3 }} initial={false} exit={{ opacity: 0 }} onAnimationComplete={() => setIsAnimating(false)} ref={cardRef}>
       <div className={`h-[400px] rounded-xl overflow-hidden relative bg-white flip-card-front ${whatFace ? "" : "hidden"}`}>

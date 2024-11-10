@@ -6,7 +6,7 @@ import Map from "../Map/Map"
 import { useData } from "@/app/contexts/data"
 
 export default function Footer (){
-    const data =useData();
+    const data = useData();
     return (
         <footer className="w-full h-full p-2 flex flex-col gap-4 max-w-[1200px] mx-auto">
             <Chat/>

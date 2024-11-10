@@ -52,12 +52,7 @@ export default function Navbar({menuOpened, onLinkClick} :NavbarProps ){
         <>
             <AnimatePresence>
                 {menuOpened && 
-                    <motion.nav 
-                            className={`md:${menuOpen} sm:${menuOpen} gap-6 text-2xl flex flex-col justify-center top-0 left-0 fixed items-center w-full h-[100vh] z-[9] xl:hidden lg:hidden`}
-                            initial={{translateX:"100%"}}
-                            animate={{translateX:"0%", transition:{duration: 0.5, ease: "easeInOut"}}}
-                            exit={{translateX:"100%", transition:{duration: 0.5, ease: "easeInOut"}}}
-                        >
+                    <motion.nav  className={`md:${menuOpen} sm:${menuOpen} gap-6 text-2xl flex flex-col justify-center top-0 left-0 fixed items-center w-full h-[100vh] z-[9] xl:hidden lg:hidden`} initial={{translateX:"100%"}} animate={{translateX:"0%", transition:{duration: 0.5, ease: "easeInOut"}}} exit={{translateX:"100%", transition:{duration: 0.5, ease: "easeInOut"}}}>
                         <div className='w-2/12 h-[10vh] flex items-center justify-center w-full'>
                             {Logo && 
                                 <Link className='hover:scale-110 flex items-center justify-center' href="/" onClick={handleLinkClick} aria-label="Link to top">
