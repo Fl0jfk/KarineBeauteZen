@@ -6,10 +6,10 @@ const stripe = new Stripe(process.env.STRIPE_SECRET as string);
 
 export const GET = async (request: NextRequest) => {
   try {
-    const url = new URL(request.url);
-    const token = url.searchParams.get('token');
-    const titleFromQuery = url.searchParams.get('title');
-    const amountFromQuery = url.searchParams.get('amount');
+    const { searchParams } = request.nextUrl; 
+    const token = searchParams.get('token');
+    const titleFromQuery = searchParams.get('title');
+    const amountFromQuery = searchParams.get('amount');
     if (!token) {
       return NextResponse.json({ error: 'No token provided' }, { status: 400 });
     }
