@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import Stripe from "stripe";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET as string);
+const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET as string);
 
 export const GET = async (request: NextRequest) => {
   try {
@@ -37,12 +37,12 @@ export const GET = async (request: NextRequest) => {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: process.env.NEXT_PUBLIC_MY_EMAIL_GMAIL,
+        user: "karinebeautezen@gmail.com",
         pass: process.env.NEXT_PUBLIC_MY_PASSWORD_GMAIL
       }
     });
     await transporter.sendMail({
-      from: process.env.NEXT_PUBLIC_MY_EMAIL_GMAIL,
+      from: "karinebeautezen@gmail.com",
       to: customerEmail,
       subject: 'Confirmation de commande',
       text: `Merci pour votre achat, ${customerName}! Votre commande pour ${title} d'un montant de ${amount}€ a été bien reçue. 
@@ -56,8 +56,8 @@ export const GET = async (request: NextRequest) => {
              <p>Si vous souhaitez offrir ce bon, vous pouvez contacter l'institut pour changer l'identité rattachée, ou fournir à la personne une photocopie de votre pièce d'identité.</p>`
     });
     await transporter.sendMail({
-      from: process.env.NEXT_PUBLIC_MY_EMAIL_GMAIL,
-      to: process.env.NEXT_PUBLIC_MY_EMAIL_GMAIL,
+      from: "karinebeautezen@gmail.com",
+      to: "karinebeautezen@gmail.com",
       subject: 'Nouvelle commande reçue',
       text: `Une nouvelle commande a été reçue de ${customerName} (${customerEmail}).
              Produit commandé: ${title}.

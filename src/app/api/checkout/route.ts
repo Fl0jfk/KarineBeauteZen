@@ -14,7 +14,7 @@ interface Data {
 
 export const POST = async (request: NextRequest) => {
   console.log("400")
-  const stripe = new Stripe(process.env.STRIPE_SECRET as string);
+  const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET as string);
   console.log("500")
   try {
     const data: Data = await request.json();

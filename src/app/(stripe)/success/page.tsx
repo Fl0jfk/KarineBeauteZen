@@ -2,7 +2,7 @@ import axios from 'axios';
 
 async function fetchCustomerData(token: string, title: string, amount: string) {
   try {
-    const response = await axios.get(`${process.env.BASE_URL}/api/success`, { params: { token, title, amount }});
+    const response = await axios.get(`https://karine-beaute-zen.com/api/success`, { params: { token, title, amount }});
     return response.data;
   } catch (error) {
     console.error('Error fetching customer data:', error);
