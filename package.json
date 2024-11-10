@@ -26,6 +26,7 @@
     "react-icons": "latest",
     "react-map-gl": "latest",
     "react-redux": "latest",
+    "sharp": "latest",
     "stripe": "latest"
   },
   "devDependencies": {
