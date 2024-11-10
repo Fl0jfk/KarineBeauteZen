@@ -17,8 +17,6 @@ interface Data {
 export const POST = async (request: NextRequest) => {
   try {
     const data: Data = await request.json();
-
-    // Création d'un client Stripe
     const customer = await stripe.customers.create({
       email: data.mail,
       address: {
@@ -30,15 +28,11 @@ export const POST = async (request: NextRequest) => {
       },
       name: data.name,
     });
-
     const amountInCents = Math.round(data.price * 100);
-
-    // Vérification que le prix est valide
     if (amountInCents < 1000) {
       throw new Error("Le prix doit être d'au moins 10€.");
     }
-
-    // Création de la session de paiement
+    console.log("Données avant Stripe:", data);
     const checkoutSession = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       customer: customer.id,
@@ -60,9 +54,8 @@ export const POST = async (request: NextRequest) => {
         amount: data.price.toFixed(2),
       },
     });
-
+    console.log("Session de paiement Stripe créée:", checkoutSession);
     return NextResponse.json({ msg: checkoutSession, url: checkoutSession.url }, { status: 200 });
-
   } catch (error: any) {
     console.error("Erreur de traitement de la commande:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
