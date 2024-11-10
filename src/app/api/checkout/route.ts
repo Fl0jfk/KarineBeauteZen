@@ -7,16 +7,18 @@ interface Data {
   title: string;
   price: number;
   image: string;
-  city:string;
-  cp:string;
-  address:string;
-  name:string;
-  mail:string;
+  city: string;
+  cp: string;
+  address: string;
+  name: string;
+  mail: string;
 }
 
 export const POST = async (request: NextRequest) => {
   try {
     const data: Data = await request.json();
+
+    // Création d'un client Stripe
     const customer = await stripe.customers.create({
       email: data.mail,
       address: {
@@ -24,38 +26,45 @@ export const POST = async (request: NextRequest) => {
         country: "FR",
         postal_code: data.cp,
         line1: data.address,
-        state: "", 
+        state: "",
       },
       name: data.name,
     });
+
     const amountInCents = Math.round(data.price * 100);
-    if (amountInCents < 50) {
-      throw new Error("The price is too low, must be at least 10 in your currency.");
+
+    // Vérification que le prix est valide
+    if (amountInCents < 1000) {
+      throw new Error("Le prix doit être d'au moins 10€.");
     }
-    const checkOutSession = await stripe.checkout.sessions.create({
+
+    // Création de la session de paiement
+    const checkoutSession = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       customer: customer.id,
       mode: "payment",
       success_url: `https://karine-beaute-zen.com/success?token=${customer.id}&title=${encodeURIComponent(data.title)}&amount=${data.price}`,
-      cancel_url: `https://karine-beaute-zen.com/cancel?token=` + customer.id,
+      cancel_url: `https://karine-beaute-zen.com/cancel?token=${customer.id}`,
       line_items: [{
         quantity: 1,
         price_data: {
           product_data: {
-            name: data.title
+            name: data.title,
           },
-          currency: "EUR",
-          unit_amount: amountInCents
-        }
+          currency: "eur",
+          unit_amount: amountInCents,
+        },
       }],
       metadata: {
         title: data.title,
-        amount: data.price.toFixed(2)
-      }
+        amount: data.price.toFixed(2),
+      },
     });
-    return NextResponse.json({ msg: checkOutSession, url: checkOutSession.url }, { status: 200 });
+
+    return NextResponse.json({ msg: checkoutSession, url: checkoutSession.url }, { status: 200 });
+
   } catch (error: any) {
-    console.error("Error occurred:", error);
+    console.error("Erreur de traitement de la commande:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 };
