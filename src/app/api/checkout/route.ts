@@ -16,6 +16,7 @@ interface Data {
 
 export const POST = async (request: NextRequest) => {
   try {
+    console.log(process.env.BASE_URL)
     const data: Data = await request.json();
     const customer = await stripe.customers.create({
       email: data.mail,
