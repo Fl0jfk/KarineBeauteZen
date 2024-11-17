@@ -51,10 +51,10 @@ export default function ModalManucure() {
       <Dropdown title="Dépose Gel et Semi Permanent Mains et Pieds" items={depose} />
       <Dropdown title="Pour les ongles naturels" items={ongles} />
       <p>Une prestation vous intéresse vous pouvez prendre rendez-vous en appelant le : <Link href={`tel:${data.profile.telephone}`}>{data.profile.telephone}</Link>, en nous contactant via le <Link className="underline" onClick={closeModal} href={"/contact"}>formulaire</Link>. Vous pouvez offrir une prestation en vous rendant sur notre <Link onClick={closeModal} className="underline" href="/boutique">boutique en ligne</Link>.</p>
-      <div className="w-full h-[400px]">
+      <div className="w-full h-[400px] mb-10">
         <Map/>
       </div>
-      <button  onClick={()=>modalRef.current?.scrollIntoView({ behavior:'smooth'})}  className="border-2 mx-auto rounded-xl p-2 fixed bottom-4 right-4 bg-[#F2E9EB]">
+      <button  onClick={()=>modalRef.current?.scrollIntoView({ behavior:'smooth'})}  className="border-2 mx-auto rounded-xl p-2 fixed bottom-16 right-4 bg-[#F2E9EB]">
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
         </svg>
