@@ -12,6 +12,8 @@ export type FormData = {
   message: string;
   line1: string;
   postal_code: string;
+  namedes?:string;
+  emaildes?:string;
 };
 
 interface FormBuyProps {
@@ -68,6 +70,14 @@ export default function FormBuy({ amount }: FormBuyProps) {
       <div className="flex gap-4">
         <label htmlFor="city" className="text-sm">Votre ville</label>
         <input type="text" id="city" autoComplete="city" placeholder="Saint-Pierre-des-Fleurs" className="w-full rounded-full border border-gray-300 px-6 outline-none focus:border-black-500 focus:shadow-md" {...register('city', { required: true })}/>
+      </div>
+      <div className="flex gap-4">
+        <label htmlFor="namdes" className="text-sm">Nom et prénom du destinataire</label>
+        <input id="namedes"  type="text"  placeholder="Nom et prénom"  className="w-full rounded-full border border-gray-300 px-6 outline-none focus:border-black-500 focus:shadow-md" {...register('namedes')}/>
+      </div>
+      <div className="flex gap-4">
+        <label htmlFor="emaildes" className="text-sm">Mail du destinataire</label>
+        <input  type="email"  id="emaildes"  placeholder="exemple@domaine.fr"  className="w-full rounded-full border border-gray-300 px-6 outline-none focus:border-black-500 focus:shadow-md" {...register('emaildes')}/>
       </div>
       <button  type="button"  className={`bg-[#F2E9EB] p-2 rounded-md text-black ${!isValid ? "opacity-50 cursor-not-allowed" : ""}`}  onClick={Checkout}  disabled={!isValid}>Payer : {amount}€</button>
       <p className="text-xs">Vous allez être redirigé vers

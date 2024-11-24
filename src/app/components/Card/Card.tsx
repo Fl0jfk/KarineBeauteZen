@@ -49,9 +49,9 @@ export default function Card({ item }: CardProps) {
     };
   }, [isFlipped]);
   return (
-    <motion.div className="h-[400px] w-full" layout  animate={{ opacity: 1, rotateY: isFlipped ? 180 : 360 }} transition={{ duration: 0.3 }} initial={false} exit={{ opacity: 0 }} onAnimationComplete={() => setIsAnimating(false)} ref={cardRef}>
-      <div className={`h-[400px] rounded-xl overflow-hidden relative bg-white flip-card-front ${whatFace ? "" : "hidden"}`}>
-        <Image src={item.image} alt={`Image de ${item.title}`} className="w-full h-48 object-cover" width={300} height={300}/>
+    <motion.div className="h-[530px] w-full" layout  animate={{ opacity: 1, rotateY: isFlipped ? 180 : 360 }} transition={{ duration: 0.3 }} initial={false} exit={{ opacity: 0 }} onAnimationComplete={() => setIsAnimating(false)} ref={cardRef}>
+      <div className={`h-[530px] rounded-xl overflow-hidden relative bg-white flip-card-front ${whatFace ? "" : "hidden"}`}>
+        <Image src={item.image} alt={`Image de ${item.title}`} className="w-full h-72 object-cover" width={300} height={300}/>
         <div className="p-4">
           <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
           {item.title === "Carte cadeau" ? (
@@ -66,7 +66,7 @@ export default function Card({ item }: CardProps) {
           <button onClick={handleFlip} className={`bg-[#F2E9EB] p-2 rounded-md text-black ${isButtonDisabled ? "opacity-50 cursor-not-allowed" : ""}`} disabled={isButtonDisabled}>Acheter</button>
         </div>
       </div>
-      <div className={`h-[400px] rounded-xl overflow-hidden flex flex-col gap-4 bg-white flip-card-back p-4 ${whatFace ? "hidden" : ""}`}>
+      <div className={`h-[530px] rounded-xl overflow-hidden flex flex-col gap-4 bg-white flip-card-back p-4 ${whatFace ? "hidden" : ""}`}>
         <h3 className="text-lg font-bold">Vous avez choisi : {item.title}</h3>
         <FormBuy amount={customPrice} />
       </div>
