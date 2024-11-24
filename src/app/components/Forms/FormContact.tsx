@@ -35,7 +35,7 @@ function FormContact () {
                     <textarea rows={4} id='message' placeholder='Écrivez votre message ici ...' className='w-full resize-none rounded-xl border border-gray-300 bg-white py-3 px-6 text-base font-medium text-gray-700 outline-none focus:border-black-500 focus:shadow-md text-black' {...register('message', { required: true })}/>
                 </div>
                 <div>
-                    <button className='hover:shadow-form rounded-full border-[1px] border-[#ffffff8f] font-thin py-3 px-8 text-base uppercase text-white outline-none transition duration-300 ease-in-out hover:bg-white hover:text-black'>Envoyer</button>
+                    <button className='hover:shadow-form rounded-full border-[1px] border-[#000] font-thin py-3 px-8 text-base uppercase outline-none transition duration-300 ease-in-out hover:bg-white text-black'>Envoyer</button>
                 </div>
             </form>
         </section>
