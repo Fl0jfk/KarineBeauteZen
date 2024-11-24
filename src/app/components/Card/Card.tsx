@@ -64,7 +64,7 @@ export default function Card({ item }: CardProps) {
           )}
           <p className="text-gray-700 mb-4">{item.description}</p>
           <button onClick={handleFlip} className={`bg-[#F2E9EB] p-2 rounded-md text-black w-1/3 ${isButtonDisabled ? "opacity-50 cursor-not-allowed" : ""}`} disabled={isButtonDisabled}>Acheter</button>
-          <p className="text-[12px] self-end justify-self-end place-self-end">Si vous remplissez l'email du destinataire, celui-ci recevra directement son bon par mail.</p>
+          <p className="text-[12px] self-end justify-self-end place-self-end">Si vous remplissez l&apos;email du destinataire, celui-ci recevra directement son bon par mail.</p>
         </div>
       </div>
       <div className={`h-[550px] rounded-xl overflow-hidden flex flex-col justify-between gap-4 bg-white flip-card-back p-4 ${whatFace ? "hidden" : ""}`}>
