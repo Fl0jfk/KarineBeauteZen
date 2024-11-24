@@ -10,6 +10,8 @@ interface Data {
   address: string;
   name: string;
   mail: string;
+  maildes?:string;
+  namedes?:string;
 }
 
 export const POST = async (request: NextRequest) => {
@@ -50,6 +52,8 @@ export const POST = async (request: NextRequest) => {
       metadata: {
         title: data.title,
         amount: data.price.toFixed(2),
+        ...(data.maildes ? { maildes: data.maildes } : {}),
+        ...(data.namedes ? { namedes: data.namedes } : {})
       },
     });
     return NextResponse.json({ msg: checkoutSession, url: checkoutSession.url },{ status: 200 });

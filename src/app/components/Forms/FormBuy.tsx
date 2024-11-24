@@ -43,6 +43,8 @@ export default function FormBuy({ amount }: FormBuyProps) {
         address: formData.line1,
         city: formData.city,
         cp: formData.postal_code,
+        maildes: formData.emaildes,
+        namedes: formData.namedes
       });
       window.location.href = response.data.url;
     } catch (error) {
