@@ -6,7 +6,7 @@ import { PDFDocument } from "pdf-lib";
 
 const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET as string);
 
-const createPDF = async (orderCode: string, title: string, amount: string) => {
+const createPDF = async (orderCode: string, title: string, amount: string, customerName:string) => {
   const pdfDoc = await PDFDocument.create();
   const page = pdfDoc.addPage([600, 400]);
   const { height } = page.getSize();
@@ -15,10 +15,11 @@ const createPDF = async (orderCode: string, title: string, amount: string) => {
   const logoWidth = 150;
   const logoHeight = (logoImage.height / logoImage.width) * logoWidth;
   page.drawImage(logoImage, { x: 50, y: height - logoHeight - 50, width: logoWidth, height: logoHeight});
-  page.drawText(`Votre chèque cadeau : ${orderCode}`, { x: 50, y: height - logoHeight - 100, size: 24 });
-  page.drawText(`Nom du service : ${title}`, { x: 50, y: height - logoHeight - 150 });
+  page.drawText(`${customerName} vous a offert : ${title}`, { x: 50, y: height - logoHeight - 100, size: 24 });
+  page.drawText(`Le code de votre chèque cadeau est : ${orderCode}`, { x: 50, y: height - logoHeight - 150 });
   page.drawText(`Valeur de votre chèque : ${amount}€`, { x: 50, y: height - logoHeight - 200 });
-  page.drawText(`Valide 1 an.`, { x: 50, y: height - logoHeight - 250 });
+  page.drawText(`Votre chèque est valide 1 an.`, { x: 50, y: height - logoHeight - 250 });
+  page.drawText(`Pour réserver votre prestation appelez-le : 02.78.81.63.07`, { x: 50, y: height - logoHeight - 300 });
   const pdfBytes = await pdfDoc.save();
   return pdfBytes;
 };
@@ -96,8 +97,8 @@ export const GET = async (request: NextRequest) => {
                <p>Ce code est valable pour une durée d'un an.</p>`
       });
     }
-    else if (namedesFromQuery && !maildesFromQuery) {
-      const pdfBytes = await createPDF(orderCode, title, amount);
+    else if (namedesFromQuery && !maildesFromQuery && customerName) {
+      const pdfBytes = await createPDF(orderCode, title, amount, customerName);
       const pdfAttachment = {
         filename: `gift_card_${orderCode}.pdf`,
         content: Buffer.from(pdfBytes),
@@ -135,4 +136,3 @@ export const GET = async (request: NextRequest) => {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 };
-
