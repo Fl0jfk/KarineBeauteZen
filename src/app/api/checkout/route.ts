@@ -18,6 +18,7 @@ export const POST = async (request: NextRequest) => {
   const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET as string);
   try {
     const data: Data = await request.json();
+    console.log(data)
     const amountInCents = Math.round(data.price * 100);
     if (amountInCents < 1000) {
       throw new Error("Le prix doit être d'au moins 10€.");
