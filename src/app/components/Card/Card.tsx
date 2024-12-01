@@ -49,25 +49,24 @@ export default function Card({ item }: CardProps) {
     };
   }, [isFlipped]);
   return (
-    <motion.div className="h-[650px] w-full" layout  animate={{ opacity: 1, rotateY: isFlipped ? 180 : 360 }} transition={{ duration: 0.3 }} initial={false} exit={{ opacity: 0 }} onAnimationComplete={() => setIsAnimating(false)} ref={cardRef} style={{ transformStyle: "preserve-3d" }}>
-      <div className={`h-[650px] rounded-xl overflow-hidden relative flex flex-col bg-white flip-card-front ${whatFace ? "" : "hidden"}`} style={{ backfaceVisibility: "hidden" }}>
-        <Image src={item.image} alt={`Image de ${item.title}`} className="w-full min-h-[250px] object-cover" width={300} height={300}/>
+    <motion.div className="h-[700px] w-full" layout  animate={{ opacity: 1, rotateY: isFlipped ? 180 : 360 }} transition={{ duration: 0.3 }} initial={false} exit={{ opacity: 0 }} onAnimationComplete={() => setIsAnimating(false)} ref={cardRef} style={{ transformStyle: "preserve-3d" }}>
+      <div className={`h-[700px] rounded-xl overflow-hidden relative flex flex-col bg-white flip-card-front ${whatFace ? "" : "hidden"}`} style={{ backfaceVisibility: "hidden" }}>
+        <Image src={item.image} alt={`Image de ${item.title}`} className="w-full min-h-[300px] object-cover" width={300} height={300}/>
         <div className="p-4 flex flex-col justify-between h-full">
-          <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
+          <h3 className="text-2xl font-semibold mb-2">{item.title}</h3>
           {item.title === "Carte cadeau" ? (
             <>
               <p className="text-black bg-[#F2E9EB] rounded-md p-2 absolute top-2 right-2 mb-2">À partir de {item.price}€</p>
-              <input type="number" value={customPrice} onChange={handlePriceChange} className="bg-[#F2E9EB] p-2 rounded-md text-black w-full mb-2" min="10" max="200"/>
+              <input type="number" value={customPrice} onChange={handlePriceChange} className="bg-[#F2E9EB] p-2 rounded-md text-black w-full text-xl mb-2" min="10" max="200"/>
             </>
           ) : (
-            <p className="text-black bg-[#F2E9EB] rounded-md p-2 absolute top-2 right-2 mb-2">{item.price}€</p>
+            <p className="text-black bg-[#F2E9EB] rounded-md p-2 absolute top-2 right-2 mb-2 text-xl">{item.price}€</p>
           )}
-          <p className="text-gray-700 mb-4">{item.description}</p>
-          <button onClick={handleFlip} className={`bg-[#F2E9EB] p-2 rounded-md text-black w-1/3 ${isButtonDisabled ? "opacity-50 cursor-not-allowed" : ""}`} disabled={isButtonDisabled}>Acheter</button>
-          <p className="text-[12px] self-end justify-self-end place-self-end">Si vous remplissez l&apos;email du destinataire, celui-ci recevra directement son bon par mail.</p>
+          <p className="text-gray-700 mb-4 text-xl">{item.description}</p>
+          <button onClick={handleFlip} className={`bg-[#F2E9EB] p-2 rounded-md text-black w-1/3 text-xl ${isButtonDisabled ? "opacity-50 cursor-not-allowed" : ""}`} disabled={isButtonDisabled}>Acheter</button>
         </div>
       </div>
-      <div className={`h-[650px] rounded-xl overflow-hidden flex flex-col justify-between gap-4 bg-white flip-card-back p-4 ${whatFace ? "hidden" : ""}`} style={{ backfaceVisibility: "hidden" }}>
+      <div className={`h-[700px] rounded-xl overflow-hidden flex flex-col justify-between gap-4 bg-white flip-card-back p-4 ${whatFace ? "hidden" : ""}`} style={{ backfaceVisibility: "hidden" }}>
         <h3 className="text-lg font-bold">Vous avez choisi : {item.title}</h3>
         <FormBuy amount={customPrice}/>
       </div>
