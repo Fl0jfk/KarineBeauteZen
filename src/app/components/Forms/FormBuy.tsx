@@ -1,6 +1,7 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setInfoUser } from '@/app/redux/reducers/buy';
 import axios from 'axios';
@@ -26,6 +27,8 @@ export default function FormBuy({ amount }: FormBuyProps) {
   const itemTitle = useSelector((state: { buy: any }) => state.buy.title);
   const itemPrice = useSelector((state: { buy: any }) => state.buy.price);
   const itemImage = useSelector((state: { buy: any }) => state.buy.image);
+  const [isGift, setIsGift] = useState(false); // Choix initial : Pour soi ou cadeau
+  const [giftOption, setGiftOption] = useState<'print' | 'email' | null>(null);
   function onSubmit(data: FormData) { dispatch(setInfoUser(data));}
   const Checkout = async () => {
     const formData = getValues();
@@ -52,7 +55,7 @@ export default function FormBuy({ amount }: FormBuyProps) {
     }
   };
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3 justify-center my-auto">
       <div className="flex gap-4">
         <label htmlFor="name" className="text-sm">Votre nom et prénom</label>
         <input   autoComplete="name"  id="name"  type="text"  placeholder="Nom et prénom"  className="w-full rounded-full border border-gray-300 px-6 outline-none focus:border-black-500 focus:shadow-md" {...register('name', { required: true })}/>
@@ -73,14 +76,46 @@ export default function FormBuy({ amount }: FormBuyProps) {
         <label htmlFor="city" className="text-sm">Votre ville</label>
         <input type="text" id="city" autoComplete="city" placeholder="Saint-Pierre-des-Fleurs" className="w-full rounded-full border border-gray-300 px-6 outline-none focus:border-black-500 focus:shadow-md" {...register('city', { required: true })}/>
       </div>
-      <div className="flex gap-4">
-        <label htmlFor="namdes" className="text-sm">Nom et prénom du destinataire</label>
-        <input id="namedes"  type="text"  placeholder="Nom et prénom"  className="w-full rounded-full border border-gray-300 px-6 outline-none focus:border-black-500 focus:shadow-md" {...register('namedes')}/>
+      <div className="flex gap-5 items-center">
+        <span className="text-sm">Est-ce un cadeau ?</span>
+        <div className="flex gap-4">
+          <label className='flex gap-2 items-center'>
+            <input type="radio" name="gift" value="no" onChange={() => { setIsGift(false); setGiftOption(null)}} defaultChecked/>
+            <span>Non</span>
+          </label>
+          <label className='flex gap-2 items-center'>
+            <input type="radio" name="gift" value="yes" onChange={() => setIsGift(true)}/>
+            <span>Oui</span>
+          </label>
+        </div>
       </div>
-      <div className="flex gap-4">
-        <label htmlFor="emaildes" className="text-sm">Mail du destinataire</label>
-        <input  type="email"  id="emaildes"  placeholder="exemple@domaine.fr"  className="w-full rounded-full border border-gray-300 px-6 outline-none focus:border-black-500 focus:shadow-md" {...register('emaildes')}/>
-      </div>
+      {isGift && ( 
+        <>
+          <div className="flex gap-4">
+            <label htmlFor="namdes" className="text-sm">Nom et prénom du destinataire</label>
+            <input id="namedes"  type="text"  placeholder="Nom et prénom"  className="w-full rounded-full border border-gray-300 px-6 outline-none focus:border-black-500 focus:shadow-md" {...register('namedes')}/>
+          </div>
+          <div className="flex flex-col gap-2">
+            <span className="text-sm">Souhaitez-vous imprimer ou envoyer le bon cadeau ?</span>
+            <div className="flex gap-4">
+              <label className='flex gap-2 items-center'>
+                <input type="radio" name="giftOption" value="print" onChange={() => setGiftOption('print')} defaultChecked/>
+                <span> Imprimer</span>
+              </label>
+              <label className='flex gap-2 items-center'>
+                <input type="radio" name="giftOption" value="email" onChange={() => setGiftOption('email')} />
+                <span>Envoyer par mail</span>
+              </label>
+            </div>
+          </div>
+          {giftOption === 'email' && (
+            <div className="flex gap-4">
+              <label htmlFor="emaildes" className="text-sm">Mail du destinataire</label>
+              <input  type="email"  id="emaildes"  placeholder="exemple@domaine.fr"  className="w-full rounded-full border border-gray-300 px-6 outline-none focus:border-black-500 focus:shadow-md" {...register('emaildes')}/>
+            </div>
+          )}
+        </>
+      )}
       <button  type="button"  className={`bg-[#F2E9EB] p-2 rounded-md text-black ${!isValid ? "opacity-50 cursor-not-allowed" : ""}`}  onClick={Checkout}  disabled={!isValid}>Payer : {amount}€</button>
       <p className="text-xs">Vous allez être redirigé vers
         <svg className="mx-1 inline" width="30px" height="30px" viewBox="0 -149 512 512" xmlns="http://www.w3.org/2000/svg" fill="#6772E5">

@@ -49,8 +49,8 @@ export default function Card({ item }: CardProps) {
     };
   }, [isFlipped]);
   return (
-    <motion.div className="h-[550px] w-full" layout  animate={{ opacity: 1, rotateY: isFlipped ? 180 : 360 }} transition={{ duration: 0.3 }} initial={false} exit={{ opacity: 0 }} onAnimationComplete={() => setIsAnimating(false)} ref={cardRef}>
-      <div className={`h-[550px] rounded-xl overflow-hidden relative flex flex-col bg-white flip-card-front ${whatFace ? "" : "hidden"}`}>
+    <motion.div className="h-[650px] w-full" layout  animate={{ opacity: 1, rotateY: isFlipped ? 180 : 360 }} transition={{ duration: 0.3 }} initial={false} exit={{ opacity: 0 }} onAnimationComplete={() => setIsAnimating(false)} ref={cardRef} style={{ transformStyle: "preserve-3d" }}>
+      <div className={`h-[650px] rounded-xl overflow-hidden relative flex flex-col bg-white flip-card-front ${whatFace ? "" : "hidden"}`} style={{ backfaceVisibility: "hidden" }}>
         <Image src={item.image} alt={`Image de ${item.title}`} className="w-full min-h-[250px] object-cover" width={300} height={300}/>
         <div className="p-4 flex flex-col justify-between h-full">
           <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
@@ -67,9 +67,9 @@ export default function Card({ item }: CardProps) {
           <p className="text-[12px] self-end justify-self-end place-self-end">Si vous remplissez l&apos;email du destinataire, celui-ci recevra directement son bon par mail.</p>
         </div>
       </div>
-      <div className={`h-[550px] rounded-xl overflow-hidden flex flex-col justify-between gap-4 bg-white flip-card-back p-4 ${whatFace ? "hidden" : ""}`}>
+      <div className={`h-[650px] rounded-xl overflow-hidden flex flex-col justify-between gap-4 bg-white flip-card-back p-4 ${whatFace ? "hidden" : ""}`} style={{ backfaceVisibility: "hidden" }}>
         <h3 className="text-lg font-bold">Vous avez choisi : {item.title}</h3>
-        <FormBuy amount={customPrice} />
+        <FormBuy amount={customPrice}/>
       </div>
     </motion.div>
   );
