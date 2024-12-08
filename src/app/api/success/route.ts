@@ -8,7 +8,7 @@ const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET as string);
 
 const createPDF = async (orderCode: string, title: string, amount: string, customerName:string) => {
   const pdfDoc = await PDFDocument.create();
-  const page = pdfDoc.addPage([600, 400]);
+  const page = pdfDoc.addPage([800, 800]);
   const { height } = page.getSize();
   const logoBytes = fs.readFileSync('./public/logo.png');
   const logoImage = await pdfDoc.embedPng(logoBytes);
@@ -88,7 +88,7 @@ export const GET = async (request: NextRequest) => {
       await transporter.sendMail({
         from: "karinebeautezen@gmail.com",
         to: maildesFromQuery,
-        subject: 'Vous avez reçu un bon d&apos;achat Karine-Beauté-Zen',
+        subject: 'Vous avez reçu un bon d`achat Karine-Beauté-Zen',
         text: `${customerName} vous a offert un bon d'achat d'un montant de ${amount} dans notre institut ! 
         Votre code est: ${orderCode}. Ne le partagez pas. Ce code est valable pour une durée d'un an.`,
         html: `<p>${customerName} vous a offert un bon d'achat d'un montant de ${amount} dans notre institut ! </p>
