@@ -3,21 +3,32 @@ import nodemailer from "nodemailer";
 import fs from 'fs';
 import { PDFDocument } from "pdf-lib";
 
+const loadImageAsUint8Array = (path: string): Uint8Array => {
+  const buffer = fs.readFileSync(path);
+  return new Uint8Array(buffer);
+};
+
 const createPDF = async (orderCode: string) => {
   const pdfDoc = await PDFDocument.create();
   const page = pdfDoc.addPage([800, 800]);
   const { height } = page.getSize();
-  const logoBytes = fs.readFileSync('./public/logo.png');
+  const logoBytes = loadImageAsUint8Array('./public/logo.png');
+  const kdoBytes = loadImageAsUint8Array('./public/kdo.png');
   const logoImage = await pdfDoc.embedPng(logoBytes);
+  const kdoImage = await pdfDoc.embedPng(kdoBytes);
   const logoWidth = 150;
+  const kdoWidth = 800;
+  const kdoHeight = (kdoImage.height / kdoImage.width) * kdoWidth;
   const logoHeight = (logoImage.height / logoImage.width) * logoWidth;
   page.drawImage(logoImage, { x: 50, y: height - logoHeight - 50, width: logoWidth, height: logoHeight});
-  page.drawText(`flo vous a offert : test1`, { x: 50, y: height - logoHeight - 100, size: 24 });
-  page.drawText(`Le code de votre chèque cadeau est : ${orderCode}`, { x: 50, y: height - logoHeight - 150 });
-  page.drawText(`Valeur de votre chèque : 10€`, { x: 50, y: height - logoHeight - 200 });
-  page.drawText(`Votre chèque est valide 1 an.`, { x: 50, y: height - logoHeight - 250 });
-  page.drawText(`Pour réserver votre prestation appelez-le : 02.78.81.63.07`, { x: 50, y: height - logoHeight - 300 });
-  const pdfBytes = await pdfDoc.save();1
+  page.drawText(`Vous avez une carte cadeau Karine-Beauté-Zen !`, { x: 50, y: height - logoHeight - 100, size: 24 });
+  page.drawText(`Le code de votre carte cadeau est : GQUBWYC8`, { x: 50, y: height - logoHeight - 150 });
+  page.drawText(`Valeur de votre carte : 100€`, { x: 50, y: height - logoHeight - 200 });
+  page.drawText(`Votre carte est valide 1 an.`, { x: 50, y: height - logoHeight - 250 });
+  page.drawText(`Pour réserver votre prestation ou tout autre renseignement,`, { x: 50, y: height - logoHeight - 300 });
+  page.drawText(`appelez-le : 02.78.81.63.07`, { x: 50, y: height - logoHeight - 350 });
+  page.drawImage(kdoImage, { x: 0, y: height - kdoHeight - 550, width: kdoWidth, height: kdoHeight});
+  const pdfBytes = await pdfDoc.save();
   return pdfBytes;
 };
 
@@ -43,8 +54,8 @@ export const POST = async (request: NextRequest) => {
     };
  
       await sendEmailToCustomer(
-        `Merci pour votre achat, Flo! Votre commande pour test1 d'un montant de 10€ a été bien reçue. 
-        Votre code de commande est: ${orderCode}. Ce code est valable pour une durée d'un an. Il est personnel et attaché à votre identité.`,
+        `Merci pour votre achat, Hélène! Votre commande pour d'un montant de 65€ a été bien reçue. 
+        Votre code de commande est: ${orderCode}.`,
         'Confirmation de commande',
         `<p>Merci pour votre achat, flo!</p>
          <p>Votre commande pour <strong>test1</strong> d'un montant de <strong>10€</strong> a été bien reçue.</p>

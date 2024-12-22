@@ -6,20 +6,55 @@ import { PDFDocument } from "pdf-lib";
 
 const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET as string);
 
-const createPDF = async (orderCode: string, title: string, amount: string, customerName:string) => {
+const loadImageAsUint8Array = (path: string): Uint8Array => {
+  const buffer = fs.readFileSync(path);
+  return new Uint8Array(buffer);
+};
+
+const createPDF = async (orderCode: string, amount:string, title:string) => {
   const pdfDoc = await PDFDocument.create();
   const page = pdfDoc.addPage([800, 800]);
   const { height } = page.getSize();
-  const logoBytes = fs.readFileSync('./public/logo.png');
+  const logoBytes = loadImageAsUint8Array('./public/logo.png');
+  const kdoBytes = loadImageAsUint8Array('./public/kdo.png');
   const logoImage = await pdfDoc.embedPng(logoBytes);
+  const kdoImage = await pdfDoc.embedPng(kdoBytes);
   const logoWidth = 150;
+  const kdoWidth = 800;
+  const kdoHeight = (kdoImage.height / kdoImage.width) * kdoWidth;
+  const logoHeight = (logoImage.height / logoImage.width) * logoWidth;
+  page.drawImage(logoImage, { x: 50, y: height - logoHeight - 50, width: logoWidth, height: logoHeight});
+  page.drawText(`Vous avez une carte cadeau Karine-Beauté-Zen ! (${title})`, { x: 50, y: height - logoHeight - 100, size: 24 });
+  page.drawText(`Le code de votre carte cadeau est : ${orderCode}`, { x: 50, y: height - logoHeight - 150 });
+  page.drawText(`Valeur de votre carte : ${amount}`, { x: 50, y: height - logoHeight - 200 });
+  page.drawText(`Votre carte est valide 1 an.`, { x: 50, y: height - logoHeight - 250 });
+  page.drawText(`Pour réserver votre prestation ou tout autre renseignement,`, { x: 50, y: height - logoHeight - 300 });
+  page.drawText(`appelez-le : 02.78.81.63.07`, { x: 50, y: height - logoHeight - 350 });
+  page.drawImage(kdoImage, { x: 0, y: height - kdoHeight - 550, width: kdoWidth, height: kdoHeight});
+  const pdfBytes = await pdfDoc.save();
+  return pdfBytes;
+};
+
+const offerPDF = async (orderCode: string, title: string, amount: string, customerName:string) => {
+  const pdfDoc = await PDFDocument.create();
+  const page = pdfDoc.addPage([800, 800]);
+  const { height } = page.getSize();
+  const logoBytes = loadImageAsUint8Array('./public/logo.png');
+  const kdoBytes = loadImageAsUint8Array('./public/kdo.png');
+  const logoImage = await pdfDoc.embedPng(logoBytes);
+  const kdoImage = await pdfDoc.embedPng(kdoBytes);
+  const logoWidth = 150;
+  const kdoWidth = 800;
+  const kdoHeight = (kdoImage.height / kdoImage.width) * kdoWidth;
   const logoHeight = (logoImage.height / logoImage.width) * logoWidth;
   page.drawImage(logoImage, { x: 50, y: height - logoHeight - 50, width: logoWidth, height: logoHeight});
   page.drawText(`${customerName} vous a offert : ${title}`, { x: 50, y: height - logoHeight - 100, size: 24 });
   page.drawText(`Le code de votre chèque cadeau est : ${orderCode}`, { x: 50, y: height - logoHeight - 150 });
   page.drawText(`Valeur de votre chèque : ${amount}€`, { x: 50, y: height - logoHeight - 200 });
   page.drawText(`Votre chèque est valide 1 an.`, { x: 50, y: height - logoHeight - 250 });
-  page.drawText(`Pour réserver votre prestation appelez-le : 02.78.81.63.07`, { x: 50, y: height - logoHeight - 300 });
+  page.drawText(`Pour réserver votre prestation ou tout autre renseignement,`, { x: 50, y: height - logoHeight - 300 });
+  page.drawText(`appelez-le : 02.78.81.63.07`, { x: 50, y: height - logoHeight - 350 });
+  page.drawImage(kdoImage, { x: 0, y: height - kdoHeight - 550, width: kdoWidth, height: kdoHeight});
   const pdfBytes = await pdfDoc.save();
   return pdfBytes;
 };
@@ -53,12 +88,19 @@ export const GET = async (request: NextRequest) => {
       }
     });
     const sendEmailToCustomer = async (message: string, subject: string, htmlMessage: string) => {
+      const pdfBytes = await createPDF(orderCode, title, amount);
+      const pdfAttachment = {
+        filename: `gift_card_${orderCode}.pdf`,
+        content: Buffer.from(pdfBytes),
+        encoding: 'base64'
+      };
       await transporter.sendMail({
         from: "karinebeautezen@gmail.com",
         to: customerEmail,
         subject,
         text: message,
         html: htmlMessage,
+        attachments: [pdfAttachment]
       });
     };
     if (!maildesFromQuery && !namedesFromQuery) {
@@ -98,7 +140,7 @@ export const GET = async (request: NextRequest) => {
       });
     }
     else if (namedesFromQuery && !maildesFromQuery && customerName) {
-      const pdfBytes = await createPDF(orderCode, title, amount, customerName);
+      const pdfBytes = await offerPDF(orderCode, title, amount, customerName);
       const pdfAttachment = {
         filename: `gift_card_${orderCode}.pdf`,
         content: Buffer.from(pdfBytes),
