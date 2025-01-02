@@ -8,7 +8,7 @@ async function fetchCustomerData(token: string) {
   } catch (error) {
     console.error('Error fetching customer data:', error);
     return (
-      <main className='w-full h-[40vh] flex items-center justify-center flex-col gap-3 text-center sm:top-[15vh] md:top-[15vh]  p-4'>
+      <main className='w-full h-[40vh] flex items-center justify-center flex-col gap-3 text-center sm:top-[25vh] md:top-[25vh]  p-4'>
       <h1 className='text-6xl'>Paiement annulé</h1>
       <div>
         <p>Votre paiement n&apos;a pas été finalisé.</p>

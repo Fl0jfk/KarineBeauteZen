@@ -20,7 +20,7 @@ export default async function SuccessPage({ searchParams }: { searchParams: { to
     return <div>Error loading customer data.</div>;
   }
   return (
-    <main className='w-full h-[70vh] flex items-center justify-center flex-col gap-3 text-center sm:top-[15vh] md:top-[15vh] p-4'>
+    <main className='w-full h-[70vh] flex items-center justify-center flex-col gap-3 text-center sm:top-[25vh] md:top-[25vh] p-4'>
       <h1>✅ Paiement réussi!</h1>
       <div>
         <p>Merci pour votre achat, {customerData?.name}!</p>
