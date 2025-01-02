@@ -49,9 +49,9 @@ export default function Card({ item }: CardProps) {
     };
   }, [isFlipped]);
   return (
-    <motion.div className="h-[700px] w-full" layout  animate={{ opacity: 1, rotateY: isFlipped ? 180 : 360 }} transition={{ duration: 0.3 }} initial={false} exit={{ opacity: 0 }} onAnimationComplete={() => setIsAnimating(false)} ref={cardRef} style={{ transformStyle: "preserve-3d" }}>
-      <div className={`h-[700px] rounded-xl overflow-hidden relative flex flex-col bg-white flip-card-front ${whatFace ? "" : "hidden"}`} style={{ backfaceVisibility: "hidden" }}>
-        <Image src={item.image} alt={`Image de ${item.title}`} className="w-full min-h-[300px] object-cover" width={300} height={300}/>
+    <motion.div className="h-[500px] w-full" layout  animate={{ opacity: 1, rotateY: isFlipped ? 180 : 360 }} transition={{ duration: 0.3 }} initial={false} exit={{ opacity: 0 }} onAnimationComplete={() => setIsAnimating(false)} ref={cardRef} style={{ transformStyle: "preserve-3d" }}>
+      <div className={`h-[500px] rounded-xl overflow-hidden relative flex flex-col bg-white flip-card-front ${whatFace ? "" : "hidden"}`} style={{ backfaceVisibility: "hidden" }}>
+        <Image src={item.image} alt={`Image de ${item.title}`} className="w-full min-h-[250px] object-cover" width={250} height={250}/>
         <div className="p-4 flex flex-col justify-between h-full">
           <h3 className="text-2xl font-semibold mb-2">{item.title}</h3>
           {item.title === "Carte cadeau" ? (
@@ -66,7 +66,7 @@ export default function Card({ item }: CardProps) {
           <button onClick={handleFlip} className={`bg-[#F2E9EB] p-2 rounded-md text-black w-1/3 text-xl ${isButtonDisabled ? "opacity-50 cursor-not-allowed" : ""}`} disabled={isButtonDisabled}>Acheter</button>
         </div>
       </div>
-      <div className={`h-[700px] rounded-xl overflow-hidden flex flex-col justify-between gap-4 bg-white flip-card-back p-4 ${whatFace ? "hidden" : ""}`} style={{ backfaceVisibility: "hidden" }}>
+      <div className={`h-[500px] rounded-xl overflow-hidden flex flex-col justify-between gap-4 bg-white flip-card-back p-4 ${whatFace ? "hidden" : ""}`} style={{ backfaceVisibility: "hidden" }}>
         <h3 className="text-lg font-bold">Vous avez choisi : {item.title}</h3>
         <FormBuy amount={customPrice}/>
       </div>

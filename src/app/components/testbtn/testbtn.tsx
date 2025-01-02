@@ -11,6 +11,5 @@ export default function TestBtn() {
             console.error("Error:", error.response?.data || error.message);
         }
     };
-
     return <button onClick={handleCheckout}>Test</button>;
 }
