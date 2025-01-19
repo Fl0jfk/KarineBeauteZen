@@ -1,7 +1,6 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setInfoUser } from '@/app/redux/reducers/buy';
 import axios from 'axios';
@@ -13,6 +12,7 @@ export type FormData = {
   message: string;
   line1: string;
   postal_code: string;
+  nameDes: string;
 };
 
 interface FormBuyProps {
@@ -42,8 +42,10 @@ export default function FormBuy({ amount }: FormBuyProps) {
         address: formData.line1,
         city: formData.city,
         cp: formData.postal_code,
+        nameDes: formData.nameDes
       };
       const response = await axios.post("/api/checkout", requestData);
+      console.log(response)
       window.location.href = response.data.url;
     } catch (error) {
       console.error("Checkout error:", error);
@@ -70,6 +72,10 @@ export default function FormBuy({ amount }: FormBuyProps) {
       <div className="flex gap-4">
         <label htmlFor="city" className="text-sm">Votre ville</label>
         <input type="text" id="city" autoComplete="city" placeholder="Saint-Pierre-des-Fleurs" className="w-full rounded-full border border-gray-300 px-6 outline-none focus:border-black-500 focus:shadow-md" {...register('city', { required: true })}/>
+      </div>
+      <div className="flex gap-4">
+        <label htmlFor="name" className="text-sm">Les infos du destinataire</label>
+        <input   autoComplete="name"  id="name"  type="text"  placeholder="Nom et prénom"  className="w-full rounded-full border border-gray-300 px-6 outline-none focus:border-black-500 focus:shadow-md" {...register('nameDes', { required: true })}/>
       </div>
       <button  type="button"  className={`bg-[#F2E9EB] p-2 rounded-md text-black ${!isValid ? "opacity-50 cursor-not-allowed" : ""}`}  onClick={Checkout}  disabled={!isValid}>Payer : {amount}€</button>
       <p className="text-xs">Vous allez être redirigé vers

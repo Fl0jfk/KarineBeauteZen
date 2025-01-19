@@ -21,9 +21,9 @@ const createPDF = async () => {
   const kdoHeight = (kdoImage.height / kdoImage.width) * kdoWidth;
   const logoHeight = (logoImage.height / logoImage.width) * logoWidth;
   page.drawImage(logoImage, { x: 50, y: height - logoHeight - 50, width: logoWidth, height: logoHeight});
-  page.drawText(`Vous avez une carte cadeau Karine-Beauté-Zen ! (test1)`, { x: 50, y: height - logoHeight - 100, size: 24 });
-  page.drawText(`Le code de votre carte cadeau est : 1234`, { x: 50, y: height - logoHeight - 150 });
-  page.drawText(`Valeur de votre carte : 50`, { x: 50, y: height - logoHeight - 200 });
+  page.drawText(`Dominique Duval, vous avez une carte cadeau Karine-Beauté-Zen !`, { x: 50, y: height - logoHeight - 100, size: 24 });
+  page.drawText(`Le code de votre carte cadeau est : RB64VR485965`, { x: 50, y: height - logoHeight - 150 });
+  page.drawText(`Valeur de votre carte : 150€`, { x: 50, y: height - logoHeight - 200 });
   page.drawText(`Votre carte est valide 1 an.`, { x: 50, y: height - logoHeight - 250 });
   page.drawText(`Pour réserver votre prestation ou tout autre renseignement,`, { x: 50, y: height - logoHeight - 300 });
   page.drawText(`appelez-le : 02.78.81.63.07`, { x: 50, y: height - logoHeight - 350 });

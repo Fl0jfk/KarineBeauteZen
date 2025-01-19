@@ -10,12 +10,14 @@ interface Data {
   address: string;
   name: string;
   mail: string;
+  nameDes: string;
 }
 
 export const POST = async (request: NextRequest) => {
   const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET as string);
   try {
     const data: Data = await request.json();
+    console.log(data)
     const amountInCents = Math.round(data.price * 100);
     if (amountInCents < 1000) {
       throw new Error("Le prix doit être d'au moins 10€.");
@@ -49,7 +51,10 @@ export const POST = async (request: NextRequest) => {
       }],
       metadata: {
         title: data.title,
-        amount: data.price.toFixed(2)
+        amount: data.price.toFixed(2),
+        namecos: data.name,
+        namedes: data.nameDes,
+        mailcos: data.mail
       },
     });
     return NextResponse.json({ msg: checkoutSession, url: checkoutSession.url },{ status: 200 });
