@@ -14,7 +14,7 @@ interface Data {
 }
 
 export const POST = async (request: NextRequest) => {
-  const stripe = new Stripe(process.env.STRIPE_SECRET as string);
+  const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET as string);
   try {
     const data: Data = await request.json();
     const amountInCents = Math.round(data.price * 100);
