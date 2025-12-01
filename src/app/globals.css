@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+a {
+    cursor: pointer;
+}
+
+button {
+    cursor: pointer;
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.flip-card-front {
+    backface-visibility: hidden;
+}
+
+.flip-card-front,
+.flip-card-back {
+    perspective: 1000px;
+}
+
+.flip-card-back {
+    transform: rotateY(180deg);
+}

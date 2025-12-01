@@ -1,0 +1,38 @@
+{
+  "name": "kbz",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@react-google-maps/api": "latest",
+    "@reduxjs/toolkit": "latest",
+    "@types/nodemailer": "latest",
+    "framer-motion": "latest",
+    "fs": "latest",
+    "next": "latest",
+    "nodemailer": "latest",
+    "pdf-lib": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-hook-form": "latest",
+    "react-icons": "latest",
+    "react-map-gl": "latest",
+    "react-redux": "latest",
+    "stripe": "latest"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.17",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "eslint": "latest",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.17",
+    "typescript": "latest"
+  }
+}
