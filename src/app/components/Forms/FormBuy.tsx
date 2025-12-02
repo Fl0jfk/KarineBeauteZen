@@ -14,34 +14,21 @@ export type FormData = {
   nameDes: string;
 };
 
-interface FormBuyProps {
-  amount: number;
-}
+interface FormBuyProps { amount: number;}
 
 export default function FormBuy({ amount }: FormBuyProps) {
-  const {
-    register,
-    handleSubmit,
-    getValues,
-    formState: { isValid },
-  } = useForm<FormData>({ mode: 'onChange' });
-
+  const { register, handleSubmit, getValues, formState: { isValid }} = useForm<FormData>({ mode: 'onChange' });
   const dispatch = useDispatch();
   const itemTitle = useSelector((state: { buy: any }) => state.buy.title);
   const itemPrice = useSelector((state: { buy: any }) => state.buy.price);
   const itemImage = useSelector((state: { buy: any }) => state.buy.image);
-
-  function onSubmit(data: FormData) {
-    dispatch(setInfoUser(data));
-  }
-
+  function onSubmit(data: FormData) { dispatch(setInfoUser(data));}
   const Checkout = async () => {
     const formData = getValues();
     if (!isValid) {
       alert('Veuillez remplir tous les champs correctement.');
       return;
     }
-
     try {
       const requestData: any = {
         title: itemTitle,
@@ -54,25 +41,16 @@ export default function FormBuy({ amount }: FormBuyProps) {
         cp: formData.postal_code,
         nameDes: formData.nameDes,
       };
-
       const res = await fetch('/api/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(requestData),
       });
-
-      if (!res.ok) {
-        throw new Error('Erreur lors de la création de la session de paiement');
-      }
-
+      if (!res.ok) { throw new Error('Erreur lors de la création de la session de paiement')}
       const data = await res.json();
-      console.log(data);
       window.location.href = data.url;
-    } catch (error) {
-      console.error('Checkout error:', error);
-    }
+    } catch (error) { console.error('Checkout error:', error);}
   };
-
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -92,9 +70,7 @@ export default function FormBuy({ amount }: FormBuyProps) {
         />
       </div>
       <div className="flex gap-4">
-        <label htmlFor="email" className="text-sm">
-          Votre mail
-        </label>
+        <label htmlFor="email" className="text-sm">Votre mail</label>
         <input
           type="email"
           id="email"

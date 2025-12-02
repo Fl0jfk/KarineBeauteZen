@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <main>
+    <main className="pt-[5vh]">
       <RollingSlider/>
       <Link href="/boutique" className="mx-auto block text-center text-4xl font-semibold mb-14 underline">Lien vers notre boutique !</Link>
       <BrandList/>

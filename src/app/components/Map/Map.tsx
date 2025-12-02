@@ -7,10 +7,8 @@ import Link from "next/link";
 
 function detectDeviceType() {
   const userAgent = typeof window !== 'undefined' ? window.navigator.userAgent : '';
-  if (/iPhone|iPad|iPod/i.test(userAgent)) {
-    return 'iOS';
-  } else if (/Android/i.test(userAgent)) {
-    return 'Android';
+  if (/iPhone|iPad|iPod/i.test(userAgent)) { return 'iOS';
+  } else if (/Android/i.test(userAgent)) { return 'Android';
   }
   return 'Unknown';
 }

@@ -14,7 +14,7 @@ interface Data {
 }
 
 export const POST = async (request: NextRequest) => {
-  const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET as string);
+  const stripe = new Stripe(process.env.STRIPE_SECRET as string);
   try {
     const data: Data = await request.json();
     const amountInCents = Math.round(data.price * 100);
@@ -60,6 +60,7 @@ export const POST = async (request: NextRequest) => {
     });
     return NextResponse.json({ msg: checkoutSession, url: checkoutSession.url },{ status: 200 });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  console.error('Erreur Stripe /checkout:', error);
+  return NextResponse.json({ error: error.message ?? 'Erreur inconnue' },{ status: 500 });
   }
 };

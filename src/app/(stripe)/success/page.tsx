@@ -10,11 +10,7 @@ type SearchParams = {
   mailcos?: string;
 };
 
-export default function SuccessPage({
-  searchParams,
-}: {
-  searchParams: Promise<SearchParams>;
-}) {
+export default function SuccessPage({ searchParams}: { searchParams: Promise<SearchParams>}) {
   return (
     <Suspense fallback={<div>Chargement...</div>}>
       <SuccessContent searchParams={searchParams} />

@@ -53,7 +53,7 @@ export const GET = async (request: NextRequest) => {
       service: "gmail",
       auth: {
         user: "karinebeautezen@gmail.com",
-        pass: process.env.NEXT_PUBLIC_MY_PASSWORD_GMAIL,
+        pass: process.env.MY_PASSWORD_GMAIL,
       },
     });
     const pdfBytes = await createPDF( orderCode, amountFromQuery, titleFromQuery, nameCosFromQuery, nameDesFromQuery);
@@ -77,7 +77,7 @@ Ce code est valable pour une durée d'un an.`,
     });
     await transporter.sendMail({
       from: "karinebeautezen@gmail.com",
-      to: "karinebeautezen@gmail.com",
+      to: "karinebeautezen@yahoo.fr",
       subject: "Nouvelle commande reçue",
       text: `Une nouvelle commande a été reçue de ${nameCosFromQuery} (${mailCosFromQuery}).
 Produit commandé: ${titleFromQuery}.

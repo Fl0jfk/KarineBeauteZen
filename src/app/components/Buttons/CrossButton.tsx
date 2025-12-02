@@ -23,6 +23,4 @@ export default function CrossButton({menuOpened}: CrossButton ){
     )
 }
 
-type CrossButton = {
-    menuOpened: boolean
-}
+type CrossButton = { menuOpened: boolean}

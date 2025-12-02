@@ -28,7 +28,7 @@ export default function Testimonials() {
         <section className="p-4 flex flex-col items-center gap-8 text-black max-w-[1200px] mx-auto w-full">
             <h2 className="text-4xl">Avis de nos clients</h2>
             {randomReviews.length > 0 && (
-                <div className="grid grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4 w-full">
+                <div className="grid grid-cols-2 xl:grid-cols-3 sm:grid-cols-1 gap-4 w-full">
                     {randomReviews.map((review) => (
                         <Link key={review.id} href={review.link} className="p-4 rounded-xl bg-white w-full h-[250px] sm:h-[220px] overflow-scroll">
                             <div className="flex items-center mb-4">
