@@ -29,12 +29,7 @@ const createPDF = async (
   const kdoWidth = 800;
   const kdoHeight = (kdoImage.height / kdoImage.width) * kdoWidth;
   const logoHeight = (logoImage.height / logoImage.width) * logoWidth;
-  page.drawImage(logoImage, {
-    x: 25,
-    y: height - logoHeight - 50,
-    width: logoWidth,
-    height: logoHeight,
-  });
+  page.drawImage(logoImage, { x: 25, y: height - logoHeight - 50, width: logoWidth, height: logoHeight});
   page.drawText(`Bonjour ${nameDes},`, {
     x: 25,
     y: height - logoHeight - 100,
