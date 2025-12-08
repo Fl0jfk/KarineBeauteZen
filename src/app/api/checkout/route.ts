@@ -36,8 +36,8 @@ export const POST = async (request: NextRequest) => {
       payment_method_types: ["card"],
       customer: customer.id,
       mode: "payment",
-      success_url:`${process.env.BASE_URL}/success`+`?token=${customer.id}`+`&title=${encodeURIComponent(data.title)}`+`&amount=${data.price}`+`&namecos=${encodeURIComponent(data.name)}`+`&namedes=${encodeURIComponent(data.nameDes)}`+`&mailcos=${encodeURIComponent(data.mail)}`,
-      cancel_url: `${process.env.BASE_URL}/cancel?token=${customer.id}`,
+      success_url: `${process.env.BASE_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.BASE_URL}/cancel?session_id={CHECKOUT_SESSION_ID}`,
       line_items: [
         {
           quantity: 1,
@@ -58,9 +58,15 @@ export const POST = async (request: NextRequest) => {
         mailcos: data.mail,
       },
     });
-    return NextResponse.json({ msg: checkoutSession, url: checkoutSession.url },{ status: 200 });
+    return NextResponse.json(
+      { msg: checkoutSession, url: checkoutSession.url },
+      { status: 200 }
+    );
   } catch (error: any) {
-  console.error('Erreur Stripe /checkout:', error);
-  return NextResponse.json({ error: error.message ?? 'Erreur inconnue' },{ status: 500 });
+    console.error("Erreur Stripe /checkout:", error);
+    return NextResponse.json(
+      { error: error.message ?? "Erreur inconnue" },
+      { status: 500 }
+    );
   }
 };

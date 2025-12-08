@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
     });
     await transporter.sendMail({
       from: `"Formulaire site" <karinebeautezen@gmail.com>`,
-      to: 'karinebeautezen@yahoo.fr',
+      to: 'karinebeautezen@aol.fr',
       replyTo: email,
       subject: `Nouveau message de ${name}`,
       text: `
