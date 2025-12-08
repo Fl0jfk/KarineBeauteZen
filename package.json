@@ -17,7 +17,7 @@
     "@types/nodemailer": "latest",
     "framer-motion": "latest",
     "fs": "latest",
-    "next": "latest",
+    "next": "^16.0.7",
     "nodemailer": "latest",
     "pdf-lib": "latest",
     "react": "latest",
