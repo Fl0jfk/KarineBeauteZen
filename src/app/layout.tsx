@@ -10,7 +10,7 @@ export const viewport: Viewport = { themeColor: '#F2E9EB', width: 'device-width'
 export default function RootLayout({ children,}: { children: React.ReactNode;}) {
   return (
     <html lang="fr">
-      <body className="antialiased text-black pt-[5vh] font-medium bg-[#F2E9EB] max-w-[1500px] mx-auto">
+      <body className="antialiased text-black font-medium bg-[#F2E9EB] max-w-[1500px] mx-auto">
         <Providers>
           <Header/>
           {children}
