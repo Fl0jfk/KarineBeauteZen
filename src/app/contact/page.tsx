@@ -2,7 +2,7 @@ import FormContact from "../components/Forms/FormContact"
 
 export default function Contact (){
     return (
-        <main className="pt-[5vh]">
+        <main className="pt-[10vh]">
             <section id="contact" className="p-4 flex flex-col items-center justify-center gap-10 w-full mx-auto max-w-[600px]">
                 <h1 className='text-7xl text-center'>Contact</h1>
                 <div className="flex items-center w-full justify-center">

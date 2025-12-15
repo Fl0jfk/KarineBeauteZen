@@ -36,7 +36,7 @@ export const POST = async (request: NextRequest) => {
       payment_method_types: ["card"],
       customer: customer.id,
       mode: "payment",
-      success_url: `${process.env.BASE_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${process.env.BASE_URL}/api/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.BASE_URL}/cancel?session_id={CHECKOUT_SESSION_ID}`,
       line_items: [
         {

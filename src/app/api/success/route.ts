@@ -98,7 +98,7 @@ const createPDF = async (
 };
 
 export const GET = async (request: NextRequest) => {
-  console.log(">>> /gift-card handler CALLED");
+  console.log(">>> /api/success handler CALLED");
 
   try {
     console.log(
@@ -120,7 +120,7 @@ export const GET = async (request: NextRequest) => {
       );
     }
 
-    // ----- BRANCHE MANUELLE (tu m’as dit de l’ignorer pour debug, je la laisse mais avec logs) -----
+    // ----- BRANCHE MANUELLE -----
     if (sessionId.startsWith("MANUAL_")) {
       console.log("[ROUTE] Branche MANUAL déclenchée");
       const titleFromMeta = searchParams.get("title") || "Carte cadeau";
@@ -202,10 +202,11 @@ Code : ${orderCode}.`,
       });
       console.log("[MAIL][MANUAL] Mail karine OK");
 
-      return NextResponse.json(
-        { name: nameCosFromMeta, email: mailCosFromMeta, orderCode },
-        { status: 200 }
-      );
+      // Après traitement manuel, rediriger vers /success aussi
+      const redirectUrl = new URL("/success", process.env.BASE_URL);
+      redirectUrl.searchParams.set("session_id", sessionId);
+      console.log("[ROUTE][MANUAL] Redirection vers", redirectUrl.toString());
+      return NextResponse.redirect(redirectUrl.toString(), 302);
     }
 
     // ----- BRANCHE STRIPE CLASSIQUE -----
@@ -268,16 +269,6 @@ Code : ${orderCode}.`,
       debug: false,
     });
 
-    // TEST simple : tu peux le garder au début pour vérifier que le mail part, puis le commenter
-    console.log("[MAIL][TEST] Envoi mail de test simple");
-    await transporter.sendMail({
-      from: "karinebeautezen@gmail.com",
-      to: "ton-adresse-de-test@exemple.com",
-      subject: "TEST depuis route Stripe",
-      text: "Si tu reçois ce mail, Nodemailer marche bien dans cette route.",
-    });
-    console.log("[MAIL][TEST] Mail de test OK");
-
     console.log("[MAIL][STRIPE] Envoi mail client");
     await transporter.sendMail({
       from: "karinebeautezen@gmail.com",
@@ -309,15 +300,27 @@ Code de commande: ${orderCode}.`,
 <p><strong>Code de commande: ${orderCode}</strong>.</p>`,
       attachments: [pdfAttachment],
     });
+    await transporter.sendMail({
+      from: "karinebeautezen@gmail.com",
+      to: "karinebeautezen@aol.fr",
+      subject: "Nouvelle commande reçue",
+      text: `Une nouvelle commande a été reçue de ${nameCosFromMeta} (${mailCosFromMeta}).
+Produit commandé: ${titleFromMeta}.
+Montant: ${amountFromMeta}€.
+Code de commande: ${orderCode}.`,
+      html: `<p>Une nouvelle commande a été reçue de <strong>${nameCosFromMeta}</strong> (${mailCosFromMeta}).</p>
+<p>Produit commandé: <strong>${titleFromMeta}</strong>.</p>
+<p>Montant: <strong>${amountFromMeta}€</strong>.</p>
+<p><strong>Code de commande: ${orderCode}</strong>.</p>`,
+      attachments: [pdfAttachment],
+    });
     console.log("[MAIL][STRIPE] Mail karine OK");
-
-    console.log("[ROUTE] Réponse JSON 200");
-    return NextResponse.json(
-      { name: nameCosFromMeta, email: mailCosFromMeta, orderCode },
-      { status: 200 }
-    );
+    const redirectUrl = new URL("/success", process.env.BASE_URL);
+    redirectUrl.searchParams.set("session_id", sessionId);
+    console.log("[ROUTE][STRIPE] Redirection vers", redirectUrl.toString());
+    return NextResponse.redirect(redirectUrl.toString(), 302);
   } catch (error: any) {
-    console.error("[ROUTE] Erreur finale /gift-card:", error);
+    console.error("[ROUTE] Erreur finale /api/success:", error);
     return NextResponse.json(
       { error: error.message ?? "Erreur inconnue" },
       { status: 500 }

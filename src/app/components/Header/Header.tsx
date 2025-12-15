@@ -21,7 +21,7 @@ export default function Header(){
     });
     const handleLinkClick = ({ clickOnLink } : handleLinkClickProps) => { setMenuOpened(clickOnLink)};
     return (
-        <motion.header  variants={{ visible: { y: 0 }, hidden: { y: "-100%" }}}  animate={hidden ? "hidden" : "visible"} transition={{duration: 0.35, ease: "easeInOut"}} className={`flex p-4 justify-between items-center w-full fixed z-[12] ${opacityMenu} self-center text-2xl overflow-hidden mx-auto max-w-[1500px] bg-[#F2E9EB]`}>
+        <motion.header  variants={{ visible: { y: 0 }, hidden: { y: "-100%" }}}  animate={hidden ? "hidden" : "visible"} transition={{duration: 0.35, ease: "easeInOut"}} className={`flex mt-[10vh] p-4 justify-between items-center w-full fixed z-[12] ${opacityMenu} self-center text-2xl overflow-hidden mx-auto max-w-[1500px] bg-[#F2E9EB]`}>
                 <div className='w-2/12 flex items-center h-full'>
                     <Link href="/">
                         <Image src="/Logo2.png" alt='Logo du site web' width={80} height={80} className="cursor-pointer z-[8]" onClick={()=>{window.scrollTo({top:0, left:0, behavior:'smooth'})}}/>

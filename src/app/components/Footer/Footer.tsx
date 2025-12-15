@@ -36,7 +36,6 @@ export default function Footer (){
                     </svg>
                 </Link>
             </div>
-            <Link href={"/mentionslegales"} className="self-center text-xl transition ease-in-out duration-100 hover:scale-105">Mentions légales</Link>
             <p className="self-center text-lg mt-4">&copy; 2025
                 <Link href={"/"}> Karine Beauté Zen </Link>
                   - Tous droits réservés 
