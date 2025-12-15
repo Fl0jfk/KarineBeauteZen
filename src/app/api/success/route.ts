@@ -11,155 +11,55 @@ const stripe = new Stripe(process.env.STRIPE_SECRET as string);
 
 const loadImageAsUint8Array = (fileName: string): Uint8Array => {
   const absolutePath = path.join(process.cwd(), "public", fileName);
-  console.log("[PDF] Lecture fichier :", absolutePath);
   const buffer = fs.readFileSync(absolutePath);
   return new Uint8Array(buffer);
 };
 
-const createPDF = async (
-  orderCode: string,
-  amount: string,
-  title: string,
-  nameCos: string,
-  nameDes: string
-) => {
+const createPDF = async ( orderCode: string, amount: string, title: string, nameCos: string, nameDes: string) => {
   try {
-    console.log("[PDF] Début création PDF");
     const pdfDoc = await PDFDocument.create();
     const page = pdfDoc.addPage([800, 800]);
     const { height } = page.getSize();
-
     const logoBytes = loadImageAsUint8Array("logo.png");
     const kdoBytes = loadImageAsUint8Array("kdo.png");
-
     const logoImage = await pdfDoc.embedPng(logoBytes);
     const kdoImage = await pdfDoc.embedPng(kdoBytes);
-
     const logoWidth = 150;
     const kdoWidth = 800;
     const kdoHeight = (kdoImage.height / kdoImage.width) * kdoWidth;
     const logoHeight = (logoImage.height / logoImage.width) * logoWidth;
-
-    page.drawImage(logoImage, {
-      x: 25,
-      y: height - logoHeight - 50,
-      width: logoWidth,
-      height: logoHeight,
-    });
-    page.drawText(`Bonjour ${nameDes},`, {
-      x: 25,
-      y: height - logoHeight - 100,
-      size: 24,
-    });
-    page.drawText(
-      `${nameCos} vous a offert une carte cadeau Karine-Beauté-Zen`,
-      { x: 25, y: height - logoHeight - 150, size: 24 }
-    );
-    page.drawText(`(${title})`, {
-      x: 25,
-      y: height - logoHeight - 200,
-      size: 24,
-    });
-    page.drawText(`Le code de votre carte cadeau est : ${orderCode}`, {
-      x: 25,
-      y: height - logoHeight - 250,
-      size: 32,
-    });
-    page.drawText(`Valeur de votre carte : ${amount}€`, {
-      x: 25,
-      y: height - logoHeight - 300,
-    });
-    page.drawText(`Votre carte est valide 1 an.`, {
-      x: 25,
-      y: height - logoHeight - 350,
-    });
-    page.drawText(
-      `Pour réserver votre prestation ou tout autre renseignement,`,
-      { x: 25, y: height - logoHeight - 400 }
-    );
-    page.drawText(`appelez-le : 02.78.81.63.07`, {
-      x: 25,
-      y: height - logoHeight - 450,
-    });
-    page.drawImage(kdoImage, {
-      x: 0,
-      y: height - kdoHeight - 650,
-      width: kdoWidth,
-      height: kdoHeight,
-    });
-
+    page.drawImage(logoImage, { x: 25, y: height - logoHeight - 50, width: logoWidth, height: logoHeight});
+    page.drawText(`Bonjour ${nameDes},`, { x: 25, y: height - logoHeight - 100, size: 24,});
+    page.drawText(`${nameCos} vous a offert une carte cadeau Karine-Beauté-Zen`,{ x: 25, y: height - logoHeight - 150, size: 24 });
+    page.drawText(`(${title})`, { x: 25, y: height - logoHeight - 200, size: 24,});
+    page.drawText(`Le code de votre carte cadeau est : ${orderCode}`, { x: 25, y: height - logoHeight - 250, size: 32,});
+    page.drawText(`Valeur de votre carte : ${amount}€`, { x: 25, y: height - logoHeight - 300,});
+    page.drawText(`Votre carte est valide 1 an.`, { x: 25, y: height - logoHeight - 350,});
+    page.drawText(`Pour réserver votre prestation ou tout autre renseignement,`, { x: 25, y: height - logoHeight - 400 });
+    page.drawText(`appelez-le : 02.78.81.63.07`, { x: 25, y: height - logoHeight - 450,});
+    page.drawImage(kdoImage, { x: 0, y: height - kdoHeight - 650, width: kdoWidth, height: kdoHeight,});
     const pdfBytes = await pdfDoc.save();
-    console.log("[PDF] PDF généré, taille =", pdfBytes.length);
     return pdfBytes;
   } catch (err) {
-    console.error("[PDF] Erreur création PDF :", err);
     throw err;
   }
 };
-
 export const GET = async (request: NextRequest) => {
-  console.log(">>> /api/success handler CALLED");
-
   try {
-    console.log(
-      "[ENV] STRIPE_SECRET ?",
-      !!process.env.STRIPE_SECRET,
-      "| MY_PASSWORD_GMAIL ?",
-      !!process.env.MY_PASSWORD_GMAIL
-    );
-
     const { searchParams } = request.nextUrl;
     const sessionId = searchParams.get("session_id");
-    console.log("[ROUTE] session_id =", sessionId);
-
     if (!sessionId) {
-      console.warn("[ROUTE] session_id manquant dans l'URL");
-      return NextResponse.json(
-        { error: "session_id manquant dans l'URL" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "session_id manquant dans l'URL" },{ status: 400 });
     }
-
-    // ----- BRANCHE MANUELLE -----
     if (sessionId.startsWith("MANUAL_")) {
-      console.log("[ROUTE] Branche MANUAL déclenchée");
       const titleFromMeta = searchParams.get("title") || "Carte cadeau";
       const amountFromMeta = searchParams.get("amount") || "0";
-      const nameCosFromMeta =
-        searchParams.get("namecos") || "Nom acheteur";
-      const nameDesFromMeta =
-        searchParams.get("namedes") || "Nom bénéficiaire";
-      const mailCosFromMeta =
-        searchParams.get("mailcos") || "Mail acheteur";
-
-      const orderCode = Math.random()
-        .toString(36)
-        .substr(2, 8)
-        .toUpperCase();
-      console.log("[ROUTE][MANUAL] orderCode =", orderCode);
-
-      const pdfBytes = await createPDF(
-        orderCode,
-        amountFromMeta,
-        titleFromMeta,
-        nameCosFromMeta,
-        nameDesFromMeta
-      );
-
-      const pdfAttachment = {
-        filename: `gift_card_${orderCode}.pdf`,
-        content: Buffer.from(pdfBytes),
-        encoding: "base64",
-      };
-
-      if (!process.env.MY_PASSWORD_GMAIL) {
-        console.error("[MAIL] Config email manquante (MY_PASSWORD_GMAIL)");
-        return NextResponse.json(
-          { error: "Config email manquante" },
-          { status: 500 }
-        );
-      }
-
+      const nameCosFromMeta = searchParams.get("namecos") || "Nom acheteur";
+      const nameDesFromMeta = searchParams.get("namedes") || "Nom bénéficiaire";
+      const mailCosFromMeta = searchParams.get("mailcos") || "Mail acheteur";
+      const orderCode = Math.random().toString(36).substr(2, 8).toUpperCase();
+      const pdfBytes = await createPDF( orderCode, amountFromMeta, titleFromMeta, nameCosFromMeta, nameDesFromMeta);
+      const pdfAttachment = { filename: `gift_card_${orderCode}.pdf`, content: Buffer.from(pdfBytes), encoding: "base64"};
       const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
@@ -167,8 +67,6 @@ export const GET = async (request: NextRequest) => {
           pass: process.env.MY_PASSWORD_GMAIL,
         },
       });
-
-      console.log("[MAIL][MANUAL] Envoi mail client");
       await transporter.sendMail({
         from: "karinebeautezen@gmail.com",
         to: mailCosFromMeta,
@@ -179,9 +77,6 @@ export const GET = async (request: NextRequest) => {
 <p><strong>Code : ${orderCode}</strong></p>`,
         attachments: [pdfAttachment],
       });
-      console.log("[MAIL][MANUAL] Mail client OK");
-
-      console.log("[MAIL][MANUAL] Envoi mail karine");
       await transporter.sendMail({
         from: "karinebeautezen@gmail.com",
         to: "karinebeautezen@aol.fr",
@@ -200,76 +95,27 @@ Code : ${orderCode}.`,
 <p><strong>Code : ${orderCode}</strong></p>`,
         attachments: [pdfAttachment],
       });
-      console.log("[MAIL][MANUAL] Mail karine OK");
-
-      // Après traitement manuel, rediriger vers /success aussi
       const redirectUrl = new URL("/success", process.env.BASE_URL);
       redirectUrl.searchParams.set("session_id", sessionId);
-      console.log("[ROUTE][MANUAL] Redirection vers", redirectUrl.toString());
       return NextResponse.redirect(redirectUrl.toString(), 302);
     }
-
-    // ----- BRANCHE STRIPE CLASSIQUE -----
-    console.log("[STRIPE] Récupération session Stripe");
-    const session = await stripe.checkout.sessions.retrieve(sessionId, {
-      expand: ["customer"],
-    });
-    console.log("[STRIPE] Session OK:", session.id, "| mode =", session.mode);
-
+    const session = await stripe.checkout.sessions.retrieve(sessionId, { expand: ["customer"]});
     const metadata = session.metadata || {};
-    console.log("[STRIPE] metadata récupérée =", metadata);
-
     const titleFromMeta = metadata.title ?? "Titre non disponible";
     const amountFromMeta = metadata.amount ?? "0";
     const nameCosFromMeta = metadata.namecos ?? "Nom inconnu";
     const nameDesFromMeta = metadata.namedes ?? "Nom inconnu";
     const mailCosFromMeta = metadata.mailcos ?? "Mail inconnu";
-
-    console.log("[DATA] title =", titleFromMeta);
-    console.log("[DATA] amount =", amountFromMeta);
-    console.log("[DATA] nameCos =", nameCosFromMeta);
-    console.log("[DATA] nameDes =", nameDesFromMeta);
-    console.log("[DATA] mailCos =", mailCosFromMeta);
-
-    const orderCode = Math.random()
-      .toString(36)
-      .substr(2, 8)
-      .toUpperCase();
-    console.log("[ROUTE][STRIPE] orderCode =", orderCode);
-
-    const pdfBytes = await createPDF(
-      orderCode,
-      amountFromMeta,
-      titleFromMeta,
-      nameCosFromMeta,
-      nameDesFromMeta
-    );
-
-    const pdfAttachment = {
-      filename: `gift_card_${orderCode}.pdf`,
-      content: Buffer.from(pdfBytes),
-      encoding: "base64",
-    };
-
-    if (!process.env.MY_PASSWORD_GMAIL) {
-      console.error("[MAIL] Config email manquante (MY_PASSWORD_GMAIL)");
-      return NextResponse.json(
-        { error: "Config email manquante" },
-        { status: 500 }
-      );
-    }
-
+    const orderCode = Math.random().toString(36).substr(2, 8).toUpperCase();
+    const pdfBytes = await createPDF( orderCode, amountFromMeta, titleFromMeta, nameCosFromMeta, nameDesFromMeta);
+    const pdfAttachment = { filename: `gift_card_${orderCode}.pdf`, content: Buffer.from(pdfBytes), encoding: "base64"};
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
         user: "karinebeautezen@gmail.com",
         pass: process.env.MY_PASSWORD_GMAIL,
-      },
-      logger: false,
-      debug: false,
+      }
     });
-
-    console.log("[MAIL][STRIPE] Envoi mail client");
     await transporter.sendMail({
       from: "karinebeautezen@gmail.com",
       to: mailCosFromMeta,
@@ -283,9 +129,6 @@ Ce code est valable pour une durée d'un an.`,
 <p>Ce code est valable pour une durée d'un an.</p>`,
       attachments: [pdfAttachment],
     });
-    console.log("[MAIL][STRIPE] Mail client OK");
-
-    console.log("[MAIL][STRIPE] Envoi mail karine");
     await transporter.sendMail({
       from: "karinebeautezen@gmail.com",
       to: "karinebeautezen@aol.fr",
@@ -302,7 +145,7 @@ Code de commande: ${orderCode}.`,
     });
     await transporter.sendMail({
       from: "karinebeautezen@gmail.com",
-      to: "karinebeautezen@aol.fr",
+      to: "marineguerrache@aol.fr",
       subject: "Nouvelle commande reçue",
       text: `Une nouvelle commande a été reçue de ${nameCosFromMeta} (${mailCosFromMeta}).
 Produit commandé: ${titleFromMeta}.
@@ -314,16 +157,11 @@ Code de commande: ${orderCode}.`,
 <p><strong>Code de commande: ${orderCode}</strong>.</p>`,
       attachments: [pdfAttachment],
     });
-    console.log("[MAIL][STRIPE] Mail karine OK");
     const redirectUrl = new URL("/success", process.env.BASE_URL);
     redirectUrl.searchParams.set("session_id", sessionId);
-    console.log("[ROUTE][STRIPE] Redirection vers", redirectUrl.toString());
     return NextResponse.redirect(redirectUrl.toString(), 302);
   } catch (error: any) {
-    console.error("[ROUTE] Erreur finale /api/success:", error);
-    return NextResponse.json(
-      { error: error.message ?? "Erreur inconnue" },
-      { status: 500 }
+    return NextResponse.json({ error: error.message ?? "Erreur inconnue" },{ status: 500 }
     );
   }
 };

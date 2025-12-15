@@ -18,9 +18,7 @@ export const POST = async (request: NextRequest) => {
   try {
     const data: Data = await request.json();
     const amountInCents = Math.round(data.price * 100);
-    if (amountInCents < 1000) {
-      throw new Error("Le prix doit être d'au moins 10€.");
-    }
+    if (amountInCents < 1000) { throw new Error("Le prix doit être d'au moins 10€.")}
     const customer = await stripe.customers.create({
       email: data.mail,
       address: {
