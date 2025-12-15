@@ -37,8 +37,7 @@ export default function Footer (){
                 </Link>
             </div>
             <p className="self-center text-lg mt-4">&copy; 2025
-                <Link href={"/"}> Karine Beauté Zen </Link>
-                  - Tous droits réservés 
+                <Link href={"/"}> Karine Beauté Zen </Link>- Tous droits réservés 
             </p>
         </footer>
     )
