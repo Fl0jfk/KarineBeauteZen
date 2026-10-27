@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { sendEmail } from "@/app/utils/send-email";
 
@@ -8,20 +9,52 @@ export type FormData = {
   email: string;
   telephone: string;
   message: string;
+  website?: string;
+  formStartedAt: number;
 };
 
 const fieldClass =
   "w-full border border-blush-deep bg-surface px-4 py-3 text-ink outline-none transition focus:border-accent";
 
 function FormContact() {
-  const { register, handleSubmit } = useForm<FormData>();
+  const startedAt = useRef(Date.now());
+  const { register, handleSubmit, setValue } = useForm<FormData>({
+    defaultValues: {
+      website: "",
+      formStartedAt: startedAt.current,
+    },
+  });
+
+  useEffect(() => {
+    startedAt.current = Date.now();
+    setValue("formStartedAt", startedAt.current);
+  }, [setValue]);
 
   function onSubmit(data: FormData) {
-    sendEmail(data);
+    sendEmail({
+      ...data,
+      formStartedAt: startedAt.current,
+    });
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} name="form email" className="flex w-full flex-col gap-5">
+    <form onSubmit={handleSubmit(onSubmit)} name="form email" className="relative flex w-full flex-col gap-5" noValidate>
+      {/* Honeypot anti-bot : invisible pour les humains, souvent rempli par les scripts */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-[9999px] top-auto h-0 w-0 overflow-hidden opacity-0"
+      >
+        <label htmlFor="website">Site web</label>
+        <input
+          id="website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          {...register("website")}
+        />
+      </div>
+      <input type="hidden" {...register("formStartedAt", { valueAsNumber: true })} />
+
       <div className="flex flex-col gap-1.5">
         <label htmlFor="name" className="text-sm text-ink-soft">
           Votre nom et prénom
