@@ -1,72 +1,27 @@
 "use client";
 
-import { useSelector, useDispatch } from "react-redux";
-import { modalState, setModalClose } from "@/app/redux/reducers/modal";
+import { useSelector } from "react-redux";
+import { modalState } from "@/app/redux/reducers/modal";
 import { useData } from "@/app/contexts/data";
-import { useRef, useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import Link from "next/link";
 import Dropdown from "../Dropdown/Dropdown";
-import Map from "../Map/Map";
+import ModalFrame from "./ModalFrame";
+
+const solariumWarning =
+  "L'exposition aux rayonnements d'un appareil de bronzage peut provoquer des cancers de la peau et des yeux et est responsable d'un vieillissement cutané prématuré. L'existence d'une réglementation du bronzage artificiel ne permet pas d'éliminer les risques sanitaires encourus en cas d'exposition, en particulier le risque de cancer. L'utilisation de ces appareils est interdite aux personnes de moins de 18 ans. Porter les lunettes de protection fournies.";
 
 export default function ModalSolarium() {
-  const modalIsVisible = useSelector((state: { modal: modalState }) => state.modal.modalSolarium);
-  const [modalClass, setModalClass] = useState<string>(modalIsVisible ? "" : "hidden");
-  const dispatch = useDispatch();
-  const closeModal = () => { dispatch(setModalClose()) };
+  const visible = useSelector((state: { modal: modalState }) => state.modal.modalSolarium);
   const data = useData();
-  const modalRef = useRef<HTMLDivElement>(null);
-  const solarium = data.prestations[0]["Solarium"];
-  useEffect(() => {
-    if (modalIsVisible) {
-      setModalClass("");
-      modalRef.current?.scrollIntoView({ behavior: "smooth" });
-      modalRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-      const timer = setTimeout(() => {
-        setModalClass("hidden");
-      }, 500);
-      return () => clearTimeout(timer);
-    }
-  }, [modalIsVisible]);
-  const modalVariants = {
-    hidden: { opacity: 0, y: "-100vh" },
-    visible: { opacity: 1, y: "0vh", transition: { duration: 0.4 } },
-    exit: { opacity: 0, y: "100vh", transition: { duration: 0.6 } }
-  };
-  const solariumWarning =
-    "L'exposition aux rayonnements d'un appareil de bronzage peut provoquer des cancers de la peau et des yeux et est responsable d'un vieillissement cutané prématuré. L'existence d'une réglementation du bronzage artificiel ne permet pas d'éliminer les risques sanitaires encourus en cas d'exposition, en particulier le risque de cancer. L'utilisation de ces appareils est interdite aux personnes de moins de 18 ans. Porter les lunettes de protection fournies.";
+  const items = data.prestations[0]?.["Solarium"];
 
   return (
-    <motion.section ref={modalRef} className={`w-full h-full min-h-[95vh] relative flex flex-col gap-4 ${modalClass}`} initial="hidden" animate={modalIsVisible ? "visible" : "hidden"} exit="exit" variants={modalVariants}>
-      <div className="flex w-full justify-between shrink-0">
-        {data.categories[5] && <h3 className="text-4xl">{data.categories[5].name}</h3>}
-        <button className="w-[35px] h-[35px] z-[2] bg-gray-700 rounded-full z-[1] p-2 hover:scale-105 transition ease-in-out duration-300" onClick={closeModal}>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-            <path fill="#fff" d="M12.12,10l4.07-4.06a1.5,1.5,0,1,0-2.11-2.12L10,7.88,5.94,3.81A1.5,1.5,0,1,0,3.82,5.93L7.88,10,3.81,14.06a1.5,1.5,0,0,0,0,2.12,1.51,1.51,0,0,0,2.13,0L10,12.12l4.06,4.07a1.45,1.45,0,0,0,1.06.44,1.5,1.5,0,0,0,1.06-2.56Z"></path>
-          </svg>
-        </button>
-      </div>
-      <aside
-        role="alert"
-        className="min-h-[calc(95vh*0.33)] shrink-0 flex flex-col justify-center rounded-lg border-2 border-amber-700 bg-amber-50 p-4 sm:p-5"
-      >
-        <p className="text-lg sm:text-xl md:text-2xl leading-snug text-amber-950">
-          <strong className="text-xl sm:text-2xl md:text-3xl">Attention !</strong> {solariumWarning}
+    <ModalFrame visible={visible} title={data.categories[5]?.name ?? "Solarium"}>
+      <aside role="alert" className="border border-amber-800/40 bg-amber-50 p-4 text-amber-950">
+        <p className="text-sm leading-relaxed md:text-base">
+          <strong>Attention !</strong> {solariumWarning}
         </p>
       </aside>
-      <Dropdown title="Solarium" items={solarium} />
-      <p>Une prestation vous intéresse vous pouvez prendre rendez-vous en appelant le : <Link href={`tel:${data.profile.telephone}`}>{data.profile.telephone}</Link>, en nous contactant via le <Link className="underline" onClick={closeModal} href={"/contact"}>formulaire</Link>. Vous pouvez offrir une prestation en vous rendant sur notre <Link onClick={closeModal} className="underline" href="/boutique">boutique en ligne</Link>.</p>
-      <div className="w-full h-[400px] mb-10">
-        <Map/>
-      </div>
-      <button  onClick={()=>modalRef.current?.scrollIntoView({ behavior:'smooth'})}  className="border-2 mx-auto rounded-xl p-2 fixed bottom-16 right-4 bg-[#F2E9EB]">
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-        </svg>
-      </button>
-    </motion.section>
+      {items && <Dropdown title="Solarium" items={items} />}
+    </ModalFrame>
   );
 }
-
-

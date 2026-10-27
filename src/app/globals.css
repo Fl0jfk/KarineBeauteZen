@@ -1,30 +1,67 @@
 @import "tailwindcss";
 
+@theme {
+  --color-ink: #2a1f24;
+  --color-ink-soft: #5c4a52;
+  --color-accent: #b56b7a;
+  --color-accent-deep: #8f4f5d;
+  --color-blush: #f7eef1;
+  --color-blush-deep: #ead9df;
+  --color-pearl: #fbf7f8;
+  --color-surface: #ffffff;
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Outfit", system-ui, sans-serif;
+  --animate-marquee: marquee 35s linear infinite;
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  background:
+    radial-gradient(1200px 600px at 10% -10%, #f3e0e6 0%, transparent 55%),
+    radial-gradient(900px 500px at 100% 0%, #efe6ea 0%, transparent 50%),
+    linear-gradient(180deg, var(--color-pearl) 0%, var(--color-blush) 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
 a {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 button {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 body.modal-open {
-    overflow: hidden;
+  overflow: hidden;
 }
 
 ::-webkit-scrollbar {
-    display: none;
+  width: 0;
+  height: 0;
 }
 
-.flip-card-front {
-    backface-visibility: hidden;
+.font-display {
+  font-family: var(--font-display);
 }
 
-.flip-card-front,
-.flip-card-back {
-    perspective: 1000px;
-}
-
-.flip-card-back {
-    transform: rotateY(180deg);
+.text-balance {
+  text-wrap: balance;
 }

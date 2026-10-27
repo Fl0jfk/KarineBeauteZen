@@ -15,31 +15,66 @@ export default function Header() {
   const { scrollY } = useScroll();
   const [menuOpened, setMenuOpened] = useState(false);
   const [hidden, setHidden] = useState(false);
-  const opacityMenu = !menuOpened ? "opacity-80 ease-linear duration-300 h-[10vh]" : "h-[100vh] ease-linear duration-300";
-  const handleClick = () => { setMenuOpened((prev) => !prev);};
+  const [scrolled, setScrolled] = useState(false);
+
+  const handleClick = () => setMenuOpened((prev) => !prev);
+
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() ?? 0;
+    setScrolled(latest > 24);
     if (menuOpened) {
       setHidden(false);
       return;
     }
-    if (latest > previous && latest > 150) {  setHidden(true);
-    } else { setHidden(false);
-    }
+    if (latest > previous && latest > 150) setHidden(true);
+    else setHidden(false);
   });
-  const handleLinkClick = ({ clickOnLink }: HandleLinkClickProps) => {  setMenuOpened(clickOnLink);};
+
+  const handleLinkClick = ({ clickOnLink }: HandleLinkClickProps) => {
+    setMenuOpened(clickOnLink);
+  };
+
   return (
-    <motion.header variants={{ visible: { y: 0 }, hidden: { y: "-100%" }}} animate={hidden ? "hidden" : "visible"}transition={{ duration: 0.35, ease: "easeInOut" }} className={`flex p-4 justify-between items-center w-full fixed z-[12] top-0 bg-[#F2E9EB] ${opacityMenu} self-center text-2xl overflow-hidden max-w-[1500px] mx-auto`}>
-      <div className="w-2/12 flex items-center h-full">
-        <Link href="/">
-          <Image src="/Logo2.png" alt="Logo du site web" width={80} height={80} className="cursor-pointer z-[8]" onClick={() => { window.scrollTo({ top: 0, left: 0, behavior: "smooth" })}}/>
+    <motion.header
+      variants={{ visible: { y: 0 }, hidden: { y: "-100%" } }}
+      animate={hidden ? "hidden" : "visible"}
+      transition={{ duration: 0.35, ease: "easeInOut" }}
+      className={`fixed top-0 left-0 right-0 z-[12] transition-colors duration-300 ${
+        menuOpened
+          ? "bg-blush h-screen"
+          : scrolled
+            ? "bg-pearl/90 backdrop-blur-md border-b border-blush-deep/40"
+            : "bg-transparent"
+      }`}
+    >
+      <div className="mx-auto flex h-[4.5rem] max-w-[1400px] items-center justify-between px-5 md:px-8">
+        <Link
+          href="/"
+          className="relative z-[13] flex items-center gap-3"
+          onClick={() => window.scrollTo({ top: 0, left: 0, behavior: "smooth" })}
+        >
+          <Image
+            src="/Logo2.png"
+            alt="Logo Karine Beauté Zen"
+            width={52}
+            height={52}
+            className="h-11 w-11 object-contain"
+            priority
+          />
+          <span className="font-display text-xl tracking-[0.04em] text-ink sm:hidden">
+            Karine Beauté Zen
+          </span>
         </Link>
-      </div>
-      <p>KARINE BEAUTE ZEN</p>
-      <div className="w-2/12 flex justify-end items-center sm:mt-[-5px] h-full">
-        <Navbar menuOpened={menuOpened} onLinkClick={handleLinkClick} />
-        <div  className="flex justify-end w-[40] items-center h-full"  onClick={handleClick}>
-          <CrossButton menuOpened={menuOpened} />
+
+        <p className="pointer-events-none absolute left-1/2 hidden -translate-x-1/2 font-display text-2xl tracking-[0.12em] text-ink sm:block">
+          Karine Beauté Zen
+        </p>
+
+        <div className="relative z-[13] flex items-center justify-end">
+          <Navbar menuOpened={menuOpened} onLinkClick={handleLinkClick} />
+          <div onClick={handleClick} className="flex h-11 w-11 items-center justify-end">
+            <CrossButton menuOpened={menuOpened} />
+          </div>
         </div>
       </div>
     </motion.header>

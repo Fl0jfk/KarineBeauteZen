@@ -1,19 +1,19 @@
-import FormContact from "../components/Forms/FormContact"
+import FormContact from "../components/Forms/FormContact";
 
-export default function Contact (){
-    return (
-        <main className="pt-[10vh]">
-            <section id="contact" className="p-4 flex flex-col items-center justify-center gap-10 w-full mx-auto max-w-[600px]">
-                <h1 className='text-7xl text-center'>Contact</h1>
-                <div className="flex items-center w-full justify-center">
-                    <p>Vous pouvez nous joindre directement en remplissant le formulaire. Nous vous répondrons le plus rapidement possible.</p>
-                </div>
-                <div className="flex flex-col gap-4 p-6 w-full">
-                    <div className="flex gap-10 justify-center items-center">
-                        <FormContact/>
-                    </div>
-                </div> 
-            </section>
-        </main>
-    )
+export default function Contact() {
+  return (
+    <main className="pt-24 md:pt-28">
+      <section className="mx-auto flex w-full max-w-xl flex-col gap-8 px-5 pb-20 md:px-8">
+        <div>
+          <p className="mb-2 text-sm tracking-[0.22em] text-accent uppercase">Contact</p>
+          <h1 className="font-display text-5xl text-ink md:text-6xl">Écrivons-nous</h1>
+          <p className="mt-4 text-ink-soft">
+            Une question, un rendez-vous ou une idée cadeau ? Laissez-nous un message, on vous
+            répond rapidement.
+          </p>
+        </div>
+        <FormContact />
+      </section>
+    </main>
+  );
 }

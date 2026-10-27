@@ -1,40 +1,61 @@
-import { useState } from 'react';
+"use client";
+
+import { useState } from "react";
 
 interface DropdownProps {
   title: string;
-  items?: any[];
+  items?: Array<{
+    id: number;
+    title: string;
+    price: number;
+    time?: string;
+    description?: string;
+  }>;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({ title, items = [] }) => {
+const Dropdown = ({ title, items = [] }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(true);
-  const toggleDropdown = () => setIsOpen(prev => !prev);
+
   return (
-    <div className='w-full'>
-      <button onClick={toggleDropdown} className="w-full px-4 py-2 bg-[#F2E9EB] text-3xl rounded-xl flex items-center justify-between text-center">
-        {title}
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className={`w-5 h-5 transition-transform duration-300 ${isOpen ? 'rotate-180' : 'rotate-0'}`}>
-          <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/>
+    <div className="w-full">
+      <button
+        type="button"
+        onClick={() => setIsOpen((prev) => !prev)}
+        className="flex w-full items-center justify-between border-b border-blush-deep py-3 text-left"
+      >
+        <span className="font-display text-2xl text-ink md:text-3xl">{title}</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          className={`h-5 w-5 transition-transform duration-300 ${isOpen ? "rotate-180" : "rotate-0"}`}
+        >
+          <path
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M19 9l-7 7-7-7"
+          />
         </svg>
       </button>
+
       {isOpen && (
-        <div className="mt-2 px-4 py-2 border border-gray-300 rounded-xl bg-[#F2E9EB]">
-          <ul className='flex flex-col gap-4'>
-            {items.map((item, index) => (
-              <li key={item.id} className={`flex flex-col gap-1 p-1 ${index < items.length - 1 ? 'border-b border-gray-300' : ''}`}>
-                <div className='flex justify-between'>
-                    <h3 className='text-lg hover:scale-105'>{item.title}</h3>{item.price}€
-                </div>
-                {item.time && <p className='text-sm'>{item.time}</p>}
-                {item.description && <p className='mb-4'>{item.description}</p>}
-              </li>
-            ))}
-          </ul>
-        </div>
+        <ul className="mt-2 flex flex-col">
+          {items.map((item) => (
+            <li key={`${item.id}-${item.title}-${item.time ?? ""}`} className="border-b border-blush-deep/50 py-4">
+              <div className="flex items-baseline justify-between gap-4">
+                <h3 className="text-base font-medium text-ink">{item.title}</h3>
+                <span className="shrink-0 text-accent-deep">{item.price}€</span>
+              </div>
+              {item.time && <p className="mt-1 text-sm text-ink-soft">{item.time}</p>}
+              {item.description && <p className="mt-2 text-sm text-ink-soft">{item.description}</p>}
+            </li>
+          ))}
+        </ul>
       )}
     </div>
   );
 };
 
 export default Dropdown;
-
-
