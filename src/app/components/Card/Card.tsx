@@ -4,8 +4,6 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import FormBuy from "../Forms/FormBuy";
-import { useDispatch } from "react-redux";
-import { setInfoProduct, setDeleteInfoProduct, setDeleteInfoUser } from "@/app/redux/reducers/buy";
 
 interface CardProps {
   item: {
@@ -19,20 +17,11 @@ interface CardProps {
 export default function Card({ item }: CardProps) {
   const [open, setOpen] = useState(false);
   const [customPrice, setCustomPrice] = useState(item.price);
-  const dispatch = useDispatch();
   const isGiftCard = item.title === "Carte cadeau";
   const isButtonDisabled = customPrice < 10 || customPrice > 200;
 
-  const openCheckout = () => {
-    dispatch(setInfoProduct({ ...item, price: customPrice }));
-    setOpen(true);
-  };
-
-  const closeCheckout = () => {
-    setOpen(false);
-    dispatch(setDeleteInfoProduct());
-    dispatch(setDeleteInfoUser());
-  };
+  const openCheckout = () => setOpen(true);
+  const closeCheckout = () => setOpen(false);
 
   useEffect(() => {
     if (!open) return;
@@ -45,12 +34,7 @@ export default function Card({ item }: CardProps) {
       document.body.classList.remove("modal-open");
       window.removeEventListener("keydown", onKey);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
-
-  useEffect(() => {
-    dispatch(setInfoProduct({ ...item, price: customPrice }));
-  }, [customPrice, dispatch, item]);
 
   return (
     <>
@@ -70,7 +54,7 @@ export default function Card({ item }: CardProps) {
 
         <div className="flex flex-1 flex-col gap-4 p-5">
           <div>
-            <h3 className="font-display text-2xl text-ink">{item.title}</h3>
+            <h2 className="font-display text-2xl text-ink">{item.title}</h2>
             <p className="mt-2 text-sm leading-relaxed text-ink-soft">{item.description}</p>
           </div>
 
@@ -141,7 +125,7 @@ export default function Card({ item }: CardProps) {
                   Fermer
                 </button>
               </div>
-              <FormBuy amount={customPrice} />
+              <FormBuy title={item.title} image={item.image} amount={customPrice} />
             </motion.div>
           </motion.div>
         )}

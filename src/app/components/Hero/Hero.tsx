@@ -4,12 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useData } from "@/app/contexts/data";
-import { useDispatch } from "react-redux";
-import { setModalOpenSoins } from "@/app/redux/reducers/modal";
 
 export default function Hero() {
   const { categories } = useData();
-  const dispatch = useDispatch();
   const cover = categories[0]?.img;
 
   return (
@@ -50,16 +47,12 @@ export default function Hero() {
             Soins, massages et moments de détente à Saint-Pierre-des-Fleurs.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <button
-              type="button"
-              onClick={() => {
-                dispatch(setModalOpenSoins());
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              }}
+            <Link
+              href="#soins"
               className="bg-pearl px-6 py-3 text-sm tracking-wide text-ink transition hover:bg-blush"
             >
               Découvrir les soins
-            </button>
+            </Link>
             <Link
               href="/boutique"
               className="border border-pearl/70 px-6 py-3 text-sm tracking-wide text-pearl transition hover:bg-pearl/10"

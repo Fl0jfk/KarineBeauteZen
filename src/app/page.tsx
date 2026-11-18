@@ -1,15 +1,33 @@
 import Hero from "./components/Hero/Hero";
 import ServicesGrid from "./components/Services/ServicesGrid";
-import Modal from "./components/Modals/Modal";
 import Testimonials from "./components/Testimonials/Testimonials";
 import BrandList from "./components/List/BrandList";
 import Link from "next/link";
+import { SERVICE_SLUGS, getServicePage } from "@/lib/services";
+import { getSiteData, pageMetadata } from "@/lib/site";
 
-export default function Home() {
+export const metadata = pageMetadata({
+  description:
+    "Karine Beauté Zen, institut de beauté à Saint-Pierre-des-Fleurs (27) : soins du visage et du corps, massages, manucure, épilation, cils, maquillage. Cartes cadeaux en ligne.",
+  path: "/",
+});
+
+export default async function Home() {
+  const data = await getSiteData();
+  const services = SERVICE_SLUGS.map((slug) => getServicePage(slug, data))
+    .filter((page): page is NonNullable<typeof page> => !!page)
+    .map((page) => ({
+      slug: page.slug,
+      label: page.cardLabel,
+      image: page.image,
+      imageAlt: page.imageAlt,
+      minPrice: page.minPrice,
+    }));
+
   return (
     <main>
       <Hero />
-      <ServicesGrid />
+      <ServicesGrid services={services} />
 
       <section className="mx-auto w-full max-w-[1400px] px-5 py-10 md:px-8 md:py-16">
         <div className="relative overflow-hidden bg-ink px-8 py-14 text-pearl md:px-14 md:py-16">
@@ -32,7 +50,6 @@ export default function Home() {
 
       <BrandList />
       <Testimonials />
-      <Modal />
     </main>
   );
 }

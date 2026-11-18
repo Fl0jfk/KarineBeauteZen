@@ -1,4 +1,12 @@
 import FormContact from "../components/Forms/FormContact";
+import { pageMetadata } from "@/lib/site";
+
+export const metadata = pageMetadata({
+  title: "Contact et prise de rendez-vous",
+  description:
+    "Contactez Karine Beauté Zen à Saint-Pierre-des-Fleurs pour une question, un rendez-vous ou une idée cadeau. Réponse rapide.",
+  path: "/contact",
+});
 
 export default function Contact() {
   return (

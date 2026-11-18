@@ -12,6 +12,17 @@
   --font-display: "Cormorant Garamond", Georgia, serif;
   --font-sans: "Outfit", system-ui, sans-serif;
   --animate-marquee: marquee 35s linear infinite;
+  --animate-rise: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
   @keyframes marquee {
     from {
       transform: translateX(0);
@@ -47,6 +58,12 @@ a {
 
 button {
   cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-rise {
+    animation: none;
+  }
 }
 
 body.modal-open {

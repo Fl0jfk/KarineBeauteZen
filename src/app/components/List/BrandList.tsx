@@ -27,7 +27,8 @@ export default function BrandList() {
             >
               <Image
                 src={brand.logo}
-                alt={brand.name}
+                alt={`Logo ${brand.name}`}
+                {...(index >= brands.length ? { "aria-hidden": true } : {})}
                 width={220}
                 height={110}
                 className="max-h-20 w-auto object-contain md:max-h-24"

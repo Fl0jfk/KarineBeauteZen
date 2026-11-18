@@ -17,13 +17,14 @@ const fieldClass =
   "w-full border border-blush-deep bg-surface px-4 py-3 text-ink outline-none transition focus:border-accent";
 
 function FormContact() {
-  const startedAt = useRef(Date.now());
   const { register, handleSubmit, setValue } = useForm<FormData>({
     defaultValues: {
       website: "",
-      formStartedAt: startedAt.current,
+      formStartedAt: 0,
     },
   });
+
+  const startedAt = useRef(0);
 
   useEffect(() => {
     startedAt.current = Date.now();
@@ -31,14 +32,11 @@ function FormContact() {
   }, [setValue]);
 
   function onSubmit(data: FormData) {
-    sendEmail({
-      ...data,
-      formStartedAt: startedAt.current,
-    });
+    sendEmail({ ...data, formStartedAt: startedAt.current });
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} name="form email" className="relative flex w-full flex-col gap-5" noValidate>
+    <form onSubmit={(event) => handleSubmit(onSubmit)(event)} name="form email" className="relative flex w-full flex-col gap-5" noValidate>
       {/* Honeypot anti-bot : invisible pour les humains, souvent rempli par les scripts */}
       <div
         aria-hidden="true"

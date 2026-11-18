@@ -1,8 +1,6 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
-import { setInfoUser } from "@/app/redux/reducers/buy";
 
 export type FormData = {
   name: string;
@@ -15,27 +13,20 @@ export type FormData = {
 };
 
 interface FormBuyProps {
+  title: string;
+  image: string;
   amount: number;
 }
 
 const fieldClass =
   "w-full border border-blush-deep bg-surface px-4 py-3 text-ink outline-none transition focus:border-accent";
 
-export default function FormBuy({ amount }: FormBuyProps) {
+export default function FormBuy({ title, image, amount }: FormBuyProps) {
   const {
     register,
-    handleSubmit,
     getValues,
     formState: { isValid },
   } = useForm<FormData>({ mode: "onChange" });
-  const dispatch = useDispatch();
-  const itemTitle = useSelector((state: { buy: { title: string } }) => state.buy.title);
-  const itemPrice = useSelector((state: { buy: { price: number } }) => state.buy.price);
-  const itemImage = useSelector((state: { buy: { image: string } }) => state.buy.image);
-
-  function onSubmit(data: FormData) {
-    dispatch(setInfoUser(data));
-  }
 
   const Checkout = async () => {
     const formData = getValues();
@@ -45,9 +36,9 @@ export default function FormBuy({ amount }: FormBuyProps) {
     }
     try {
       const requestData = {
-        title: itemTitle,
-        price: itemPrice,
-        image: itemImage,
+        title,
+        price: amount,
+        image,
         name: formData.name,
         mail: formData.email,
         address: formData.line1,
@@ -69,7 +60,7 @@ export default function FormBuy({ amount }: FormBuyProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+    <form onSubmit={(e) => e.preventDefault()} className="flex flex-col gap-4">
       <div className="flex flex-col gap-1.5">
         <label htmlFor="name" className="text-sm text-ink-soft">
           Votre nom et prénom

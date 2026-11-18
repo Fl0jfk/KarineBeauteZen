@@ -1,87 +1,60 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
-import { useDispatch } from "react-redux";
-import { useData } from "@/app/contexts/data";
-import {
-  setModalOpenCils,
-  setModalOpenEpilation,
-  setModalOpenManucure,
-  setModalOpenMaquillage,
-  setModalOpenSoins,
-  setModalOpenSolarium,
-} from "@/app/redux/reducers/modal";
 
-export default function ServicesGrid() {
-  const { categories } = useData();
-  const dispatch = useDispatch();
+export type ServiceCard = {
+  slug: string;
+  label: string;
+  image: string;
+  imageAlt: string;
+  minPrice: number;
+};
 
-  const openService = (name: string) => {
-    switch (name) {
-      case "Les soins visages et corps":
-        dispatch(setModalOpenSoins());
-        break;
-      case "Manucure":
-        dispatch(setModalOpenManucure());
-        break;
-      case "Épilation":
-        dispatch(setModalOpenEpilation());
-        break;
-      case "Cils et sourcils":
-        dispatch(setModalOpenCils());
-        break;
-      case "Maquillage":
-        dispatch(setModalOpenMaquillage());
-        break;
-      case "Solarium":
-        dispatch(setModalOpenSolarium());
-        break;
-      default:
-        break;
-    }
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  if (!categories.length) return null;
+export default function ServicesGrid({ services }: { services: ServiceCard[] }) {
+  if (!services.length) return null;
 
   return (
-    <section className="mx-auto w-full max-w-[1400px] px-5 py-20 md:px-8 md:py-28">
+    <section id="soins" className="mx-auto w-full max-w-[1400px] scroll-mt-16 px-5 py-20 md:px-8 md:py-28">
       <div className="mb-12 max-w-xl">
         <p className="mb-2 text-sm tracking-[0.22em] text-accent uppercase">Prestations</p>
         <h2 className="font-display text-4xl text-ink md:text-5xl">Nos soins</h2>
         <p className="mt-3 text-ink-soft">
-          Choisissez une catégorie pour consulter les tarifs et réserver.
+          Massages, soins du visage et du corps, onglerie, épilation… Ouvrez une rubrique pour consulter tous les
+          tarifs.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {categories.map((category, index) => (
-          <motion.button
-            key={category.id}
-            type="button"
-            onClick={() => openService(category.name)}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {services.map((service, index) => (
+          <motion.div
+            key={service.slug}
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 0.45, delay: index * 0.06 }}
-            className="group relative aspect-[4/5] w-full overflow-hidden text-left"
+            transition={{ duration: 0.45, delay: (index % 4) * 0.06 }}
           >
-            <Image
-              src={category.img}
-              alt={category.name}
-              fill
-              className="object-cover transition duration-700 group-hover:scale-105"
-              sizes="(max-width: 768px) 100vw, 33vw"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/15 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 p-5">
-              <h3 className="font-display text-2xl text-pearl md:text-3xl">{category.name}</h3>
-              <span className="mt-2 inline-block text-sm text-pearl/80 transition group-hover:text-pearl">
-                Voir les tarifs →
-              </span>
-            </div>
-          </motion.button>
+            <Link
+              href={`/${service.slug}`}
+              className="group relative block aspect-[4/5] w-full overflow-hidden text-left"
+            >
+              <Image
+                src={service.image}
+                alt={service.imageAlt}
+                fill
+                className="object-cover transition duration-700 group-hover:scale-105"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink/75 via-ink/15 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 p-5">
+                <h3 className="font-display text-2xl text-pearl md:text-3xl">{service.label}</h3>
+                <span className="mt-2 inline-block text-sm text-pearl/80 transition group-hover:text-pearl">
+                  Dès {service.minPrice} € · Voir les tarifs →
+                </span>
+              </div>
+            </Link>
+          </motion.div>
         ))}
       </div>
     </section>

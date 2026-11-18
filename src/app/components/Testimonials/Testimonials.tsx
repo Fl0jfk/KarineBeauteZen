@@ -16,11 +16,15 @@ interface Review {
 
 export default function Testimonials() {
   const { reviews } = useData();
-  const [randomReviews, setRandomReviews] = useState<Review[]>([]);
+  const [randomReviews, setRandomReviews] = useState<Review[]>(() =>
+    (reviews ?? []).filter((r) => r.message).slice(0, 6)
+  );
 
   useEffect(() => {
+    // Mélange côté client uniquement : le rendu serveur reste déterministe (pas de décalage d'hydratation).
     if (reviews?.length) {
       const shuffled = [...reviews].sort(() => 0.5 - Math.random());
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setRandomReviews(shuffled.filter((r) => r.message).slice(0, 6));
     }
   }, [reviews]);
@@ -46,7 +50,7 @@ export default function Testimonials() {
             <div className="mb-4 flex items-center gap-3">
               <Image
                 src={review.imageUser}
-                alt={review.nameUser}
+                alt={`Photo de ${review.nameUser}`}
                 width={48}
                 height={48}
                 className="h-12 w-12 rounded-full object-cover"

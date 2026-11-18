@@ -4,56 +4,18 @@ import Link from "next/link";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import { useData } from "@/app/contexts/data";
-import {
-  setModalOpenCils,
-  setModalOpenEpilation,
-  setModalOpenManucure,
-  setModalOpenMaquillage,
-  setModalOpenSoins,
-  setModalOpenSolarium,
-} from "@/app/redux/reducers/modal";
-
-const services = [
-  "Les soins visages et corps",
-  "Manucure",
-  "Épilation",
-  "Cils et sourcils",
-  "Maquillage",
-  "Solarium",
-] as const;
+import { SERVICE_LINKS } from "@/lib/services";
 
 export default function Navbar({ menuOpened, onLinkClick }: NavbarProps) {
   const [servicesAppear, setServicesAppear] = useState(false);
-  const dispatch = useDispatch();
+  const [wasOpened, setWasOpened] = useState(menuOpened);
   const data = useData();
 
-  const handleModalOpen = (name: string) => {
-    switch (name) {
-      case "Les soins visages et corps":
-        dispatch(setModalOpenSoins());
-        break;
-      case "Manucure":
-        dispatch(setModalOpenManucure());
-        break;
-      case "Épilation":
-        dispatch(setModalOpenEpilation());
-        break;
-      case "Cils et sourcils":
-        dispatch(setModalOpenCils());
-        break;
-      case "Maquillage":
-        dispatch(setModalOpenMaquillage());
-        break;
-      case "Solarium":
-        dispatch(setModalOpenSolarium());
-        break;
-      default:
-        break;
-    }
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  if (menuOpened !== wasOpened) {
+    setWasOpened(menuOpened);
+    if (menuOpened) setServicesAppear(false);
+  }
 
   const handleLinkClick = () => {
     onLinkClick({ clickOnLink: false });
@@ -63,7 +25,6 @@ export default function Navbar({ menuOpened, onLinkClick }: NavbarProps) {
   useEffect(() => {
     if (menuOpened) {
       document.body.classList.add("overflow-hidden");
-      setServicesAppear(false);
     } else {
       document.body.classList.remove("overflow-hidden");
     }
@@ -107,7 +68,7 @@ export default function Navbar({ menuOpened, onLinkClick }: NavbarProps) {
             </motion.div>
           ) : (
             <motion.div
-              className="flex flex-col items-center gap-4 text-center"
+              className="flex flex-col items-center gap-3 text-center"
               initial={{ y: 16, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
             >
@@ -118,18 +79,15 @@ export default function Navbar({ menuOpened, onLinkClick }: NavbarProps) {
               >
                 ← Retour
               </button>
-              {services.map((service) => (
-                <button
-                  key={service}
-                  type="button"
-                  className="font-display text-3xl text-ink transition hover:text-accent-deep"
-                  onClick={() => {
-                    handleModalOpen(service);
-                    handleLinkClick();
-                  }}
+              {SERVICE_LINKS.map((service) => (
+                <Link
+                  key={service.slug}
+                  href={service.href}
+                  className="font-display text-2xl text-ink transition hover:text-accent-deep sm:text-3xl"
+                  onClick={handleLinkClick}
                 >
-                  {service}
-                </button>
+                  {service.navLabel}
+                </Link>
               ))}
             </motion.div>
           )}

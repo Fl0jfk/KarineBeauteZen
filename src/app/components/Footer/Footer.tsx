@@ -4,6 +4,7 @@ import Link from "next/link";
 import Map from "../Map/Map";
 import { useData } from "@/app/contexts/data";
 import { usePathname } from "next/navigation";
+import { SERVICE_LINKS } from "@/lib/services";
 
 export default function Footer() {
   const { profile } = useData();
@@ -43,6 +44,24 @@ export default function Footer() {
             <Map />
           </div>
         </div>
+
+        <nav aria-label="Nos prestations" className="border-t border-blush-deep/40 pt-6">
+          <p className="mb-3 text-sm tracking-[0.22em] text-accent uppercase">Nos prestations</p>
+          <ul className="flex flex-wrap gap-x-6 gap-y-2 text-ink-soft">
+            {SERVICE_LINKS.map((service) => (
+              <li key={service.slug}>
+                <Link href={service.href} className="transition hover:text-accent-deep">
+                  {service.navLabel}
+                </Link>
+              </li>
+            ))}
+            <li>
+              <Link href="/boutique" className="transition hover:text-accent-deep">
+                Boutique & cartes cadeaux
+              </Link>
+            </li>
+          </ul>
+        </nav>
 
         <div className="flex flex-col items-start justify-between gap-4 border-t border-blush-deep/40 pt-6 text-sm text-ink-soft md:flex-row md:items-center">
           <p>
