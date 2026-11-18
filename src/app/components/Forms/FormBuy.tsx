@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 
 export type FormData = {
@@ -10,6 +11,7 @@ export type FormData = {
   line1: string;
   postal_code: string;
   nameDes: string;
+  website?: string;
 };
 
 interface FormBuyProps {
@@ -26,7 +28,12 @@ export default function FormBuy({ title, image, amount }: FormBuyProps) {
     register,
     getValues,
     formState: { isValid },
-  } = useForm<FormData>({ mode: "onChange" });
+  } = useForm<FormData>({ mode: "onChange", defaultValues: { website: "" } });
+  const startedAt = useRef(0);
+
+  useEffect(() => {
+    startedAt.current = Date.now();
+  }, []);
 
   const Checkout = async () => {
     const formData = getValues();
@@ -45,6 +52,8 @@ export default function FormBuy({ title, image, amount }: FormBuyProps) {
         city: formData.city,
         cp: formData.postal_code,
         nameDes: formData.nameDes,
+        website: formData.website,
+        formStartedAt: startedAt.current,
       };
       const res = await fetch("/api/checkout", {
         method: "POST",
@@ -60,7 +69,16 @@ export default function FormBuy({ title, image, amount }: FormBuyProps) {
   };
 
   return (
-    <form onSubmit={(e) => e.preventDefault()} className="flex flex-col gap-4">
+    <form onSubmit={(e) => e.preventDefault()} className="relative flex flex-col gap-4">
+      {/* Honeypot anti-bot : invisible pour les humains, souvent rempli par les scripts */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-[9999px] top-auto h-0 w-0 overflow-hidden opacity-0"
+      >
+        <label htmlFor="buy-website">Site web</label>
+        <input id="buy-website" type="text" tabIndex={-1} autoComplete="off" {...register("website")} />
+      </div>
+
       <div className="flex flex-col gap-1.5">
         <label htmlFor="name" className="text-sm text-ink-soft">
           Votre nom et prénom

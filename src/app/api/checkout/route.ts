@@ -11,12 +11,27 @@ interface Data {
   name: string;
   mail: string;
   nameDes: string;
+  website?: string;
+  formStartedAt?: number;
 }
 
+const MIN_FILL_MS = 2500;
+
 export const POST = async (request: NextRequest) => {
-  const stripe = new Stripe(process.env.STRIPE_SECRET as string);
   try {
     const data: Data = await request.json();
+
+    // Honeypot rempli ou envoi trop rapide = bot : fausse réussite, aucun appel à Stripe
+    const started = Number(data.formStartedAt);
+    if (
+      (typeof data.website === "string" && data.website.trim() !== "") ||
+      !Number.isFinite(started) ||
+      Date.now() - started < MIN_FILL_MS
+    ) {
+      return NextResponse.json({ url: "/boutique" }, { status: 200 });
+    }
+
+    const stripe = new Stripe(process.env.STRIPE_SECRET as string);
     const amountInCents = Math.round(data.price * 100);
     if (amountInCents < 1000) { throw new Error("Le prix doit être d'au moins 10€.")}
     const customer = await stripe.customers.create({

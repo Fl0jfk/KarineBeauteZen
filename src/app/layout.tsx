@@ -1,6 +1,6 @@
 import './globals.css';
 import type { Metadata, Viewport } from 'next';
-import { Cormorant_Garamond, Outfit } from 'next/font/google';
+import localFont from 'next/font/local';
 import Providers from './providers';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
@@ -14,18 +14,25 @@ import {
   toE164,
 } from '@/lib/site';
 
-const display = Cormorant_Garamond({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
+// Polices hébergées dans le projet (pas de téléchargement Google Fonts au build).
+const display = localFont({
+  src: [
+    { path: './fonts/cormorant-garamond-latin-400-normal.woff2', weight: '400', style: 'normal' },
+    { path: './fonts/cormorant-garamond-latin-500-normal.woff2', weight: '500', style: 'normal' },
+    { path: './fonts/cormorant-garamond-latin-600-normal.woff2', weight: '600', style: 'normal' },
+    { path: './fonts/cormorant-garamond-latin-700-normal.woff2', weight: '700', style: 'normal' },
+  ],
   variable: '--font-display',
   display: 'swap',
+  fallback: ['Georgia', 'serif'],
 });
 
-const sans = Outfit({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600'],
+const sans = localFont({
+  src: './fonts/outfit-latin-wght-normal.woff2',
+  weight: '100 900',
   variable: '--font-sans',
   display: 'swap',
+  fallback: ['system-ui', 'sans-serif'],
 });
 
 export const metadata: Metadata = {

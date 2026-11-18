@@ -5,7 +5,6 @@ import { createGiftCardPDF } from "@/app/utils/create-gift-card-pdf";
 
 export const runtime = "nodejs";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET as string);
 export const GET = async (request: NextRequest) => {
   try {
     const { searchParams } = request.nextUrl;
@@ -66,6 +65,7 @@ Code : ${orderCode}.`,
       redirectUrl.searchParams.set("session_id", sessionId);
       return NextResponse.redirect(redirectUrl.toString(), 302);
     }
+    const stripe = new Stripe(process.env.STRIPE_SECRET as string);
     const session = await stripe.checkout.sessions.retrieve(sessionId, { expand: ["customer"]});
     const metadata = session.metadata || {};
     const titleFromMeta = metadata.title ?? "Titre non disponible";
