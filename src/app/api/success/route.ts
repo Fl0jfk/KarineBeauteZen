@@ -27,6 +27,17 @@ type Card = {
   nameCos: string;
   nameDes: string;
   mailCos: string;
+  /** Prestation visée par la carte (« Massage californien (1h30) »), pour une carte cadeau offerte depuis une page de soins. */
+  forLabel?: string;
+  /** Petit mot personnel du client, imprimé sur la carte. */
+  message?: string;
+};
+
+/** « 93.00 » → « 93 », « 93.5 » → « 93,50 ». */
+const formatAmount = (value: string) => {
+  const number = Number(value);
+  if (!Number.isFinite(number)) return value;
+  return Number.isInteger(number) ? String(number) : number.toFixed(2).replace(".", ",");
 };
 
 const transporter = () =>
@@ -36,9 +47,9 @@ const transporter = () =>
   });
 
 async function sendPurchaseEmails(card: Card) {
-  const { title, amount, nameCos, nameDes, mailCos } = card;
+  const { title, amount, nameCos, nameDes, mailCos, forLabel, message } = card;
   const orderCode = newOrderCode();
-  const pdfBytes = await createGiftCardPDF(orderCode, amount, title, nameCos, nameDes);
+  const pdfBytes = await createGiftCardPDF(orderCode, amount, title, nameCos, nameDes, forLabel, message);
   const attachments = [{ filename: `gift_card_${orderCode}.pdf`, content: Buffer.from(pdfBytes), encoding: "base64" }];
   const mailer = transporter();
 
@@ -46,12 +57,16 @@ async function sendPurchaseEmails(card: Card) {
     from: SENDER,
     to: mailCos,
     subject: `Merci pour votre achat, ${nameCos}!`,
-    text: `Merci pour votre achat, ${nameCos}! Votre commande pour ${title} d'un montant de ${amount}€ a été bien reçue. 
+    text: `Merci pour votre achat, ${nameCos}! Votre commande pour ${title} d'un montant de ${amount}€${forLabel ? ` (idéale pour : ${forLabel})` : ""} a été bien reçue.${message ? `\nVotre petit mot, imprimé sur la carte : « ${message} »` : ""}
 Votre code de commande est: ${orderCode}. 
 Ce code est valable pour une durée d'un an.`,
     html: `<div style="font-family:Georgia,serif;color:#2A1F24;line-height:1.5">
 <p>Merci pour votre achat, <strong>${esc(nameCos)}</strong>.</p>
-<p>Votre carte cadeau <strong>${esc(title)}</strong> d'une valeur de <strong>${esc(amount)} €</strong> est prête.</p>
+<p>Votre carte cadeau <strong>${esc(title)}</strong> d'une valeur de <strong>${esc(amount)} €</strong> est prête${
+      forLabel ? `, idéale pour : <strong>${esc(forLabel)}</strong>` : ""
+    }.</p>${
+      message ? `\n<p>Votre petit mot, imprimé sur la carte : <em>« ${esc(message)} »</em></p>` : ""
+    }
 <p style="margin:24px 0;padding:16px 20px;background:#F7EEF1;border:1px solid #B56B7A;display:inline-block">
 Code : <strong style="letter-spacing:0.08em">${orderCode}</strong>
 </p>
@@ -68,12 +83,14 @@ Code : <strong style="letter-spacing:0.08em">${orderCode}</strong>
       subject: "Nouvelle commande reçue",
       text: `Une nouvelle commande a été reçue de ${nameCos} (${mailCos}).
 Bénéficiaire: ${nameDes}.
-Produit commandé: ${title}.
+Produit commandé: ${title}.${forLabel ? `\nIdéale pour: ${forLabel}.` : ""}${message ? `\nPetit mot sur la carte: « ${message} »` : ""}
 Montant: ${amount}€.
 Code de commande: ${orderCode}.`,
       html: `<p>Une nouvelle commande a été reçue de <strong>${esc(nameCos)}</strong> (${esc(mailCos)}).</p>
 <p>Bénéficiaire : <strong>${esc(nameDes)}</strong>.</p>
-<p>Produit commandé: <strong>${esc(title)}</strong>.</p>
+<p>Produit commandé: <strong>${esc(title)}</strong>.</p>${
+        forLabel ? `\n<p>Idéale pour : <strong>${esc(forLabel)}</strong>.</p>` : ""
+      }${message ? `\n<p>Petit mot sur la carte : <em>« ${esc(message)} »</em></p>` : ""}
 <p>Montant: <strong>${esc(amount)}€</strong>.</p>
 <p><strong>Code de commande: ${orderCode}</strong>.</p>`,
       attachments,
@@ -110,10 +127,12 @@ export const GET = async (request: NextRequest) => {
       try {
         await sendPurchaseEmails({
           title: metadata.title ?? "Titre non disponible",
-          amount: metadata.amount ?? "0",
+          amount: formatAmount(metadata.amount ?? "0"),
           nameCos: metadata.namecos ?? "Nom inconnu",
           nameDes: metadata.namedes ?? "Nom inconnu",
           mailCos: metadata.mailcos ?? "",
+          forLabel: metadata.forlabel || undefined,
+          message: metadata.message || undefined,
         });
       } catch (error) {
         await stripe.paymentIntents.update(paymentIntentId, { metadata: { giftcard_sent: "" } });

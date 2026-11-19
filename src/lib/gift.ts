@@ -1,6 +1,30 @@
 export const GIFT_CARD_TITLE = "Carte cadeau";
 export const GIFT_CARD_MIN = 10;
 export const GIFT_CARD_MAX = 200;
+/** Longueur maximale du petit mot imprimé sur la carte. */
+export const MESSAGE_MAX = 150;
+
+/** Mot tel qu'il sera imprimé : espaces normalisés, sans emojis (la police de la carte ne sait pas les dessiner). */
+export const cleanMessage = (text: string) =>
+  text
+    .replace(/[\p{Extended_Pictographic}\p{Regional_Indicator}\u200b-\u200f\u2060\ufe00-\ufe0f\u{1F3FB}-\u{1F3FF}]/gu, "")
+    .replace(/\s+/g, " ")
+    .trim();
+
+/** « 1 heure 30 minutes » → « 1h30 », « 40 minutes » → « 40 min ». */
+export function formatDuration(time?: string) {
+  if (!time) return undefined;
+  const hours = time.match(/(\d+)\s*heures?/i)?.[1];
+  const minutes = time.match(/(\d+)\s*minutes?/i)?.[1];
+  if (hours && minutes) return `${hours}h${minutes.padStart(2, "0")}`;
+  if (hours) return `${hours}h`;
+  if (minutes) return `${minutes} min`;
+  return time;
+}
+
+/** Libellé affiché sur la carte : « Massage californien (1h30) ». Même calcul côté page et côté serveur. */
+export const giftLabel = (title: string, formattedTime?: string) =>
+  (formattedTime ? `${title} (${formattedTime})` : title).slice(0, 80);
 
 export type Offer = {
   href: string;
@@ -50,7 +74,7 @@ export function offerFor(
 
   const card = shop.find((s) => s.title === GIFT_CARD_TITLE);
   if (!card || item.price < GIFT_CARD_MIN || item.price > GIFT_CARD_MAX) return undefined;
-  const label = (item.time ? `${item.title} (${item.time})` : item.title).slice(0, 80);
+  const label = giftLabel(item.title, item.time);
   return {
     href: `/boutique?offrir=${card.id}&montant=${item.price}&pour=${encodeURIComponent(label)}`,
     kind: "gift",

@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
+import { MESSAGE_MAX } from "@/lib/gift";
 
 export type FormData = {
   name: string;
@@ -18,17 +19,20 @@ interface FormBuyProps {
   title: string;
   image: string;
   amount: number;
+  forLabel?: string;
 }
 
 const fieldClass =
   "w-full border border-blush-deep bg-surface px-4 py-3 text-ink outline-none transition focus:border-accent";
 
-export default function FormBuy({ title, image, amount }: FormBuyProps) {
+export default function FormBuy({ title, image, amount, forLabel }: FormBuyProps) {
   const {
     register,
     getValues,
+    control,
     formState: { isValid },
-  } = useForm<FormData>({ mode: "onChange", defaultValues: { website: "" } });
+  } = useForm<FormData>({ mode: "onChange", defaultValues: { website: "", message: "" } });
+  const message = useWatch({ control, name: "message" }) ?? "";
   const startedAt = useRef(0);
 
   useEffect(() => {
@@ -46,12 +50,14 @@ export default function FormBuy({ title, image, amount }: FormBuyProps) {
         title,
         price: amount,
         image,
+        forLabel,
         name: formData.name,
         mail: formData.email,
         address: formData.line1,
         city: formData.city,
         cp: formData.postal_code,
         nameDes: formData.nameDes,
+        message: formData.message,
         website: formData.website,
         formStartedAt: startedAt.current,
       };
@@ -158,6 +164,27 @@ export default function FormBuy({ title, image, amount }: FormBuyProps) {
           className={fieldClass}
           {...register("nameDes", { required: true })}
         />
+      </div>
+      <div className="flex flex-col gap-1.5">
+        <div className="flex items-baseline justify-between gap-3">
+          <label htmlFor="message" className="text-sm text-ink-soft">
+            Petit mot personnel <span className="text-ink-soft/70">(facultatif)</span>
+          </label>
+          <span className="text-xs text-ink-soft/70" aria-live="polite">
+            {message.length}/{MESSAGE_MAX}
+          </span>
+        </div>
+        <textarea
+          id="message"
+          rows={3}
+          maxLength={MESSAGE_MAX}
+          placeholder="Joyeux anniversaire ! Profite bien de ce moment pour toi."
+          className={`${fieldClass} resize-none`}
+          {...register("message")}
+        />
+        <p className="text-xs text-ink-soft">
+          Ce mot sera imprimé sur la carte cadeau (les emojis ne peuvent pas être imprimés et seront retirés).
+        </p>
       </div>
 
       <button

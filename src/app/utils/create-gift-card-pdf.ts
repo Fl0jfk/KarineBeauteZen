@@ -55,6 +55,17 @@ function wrapText(text: string, font: PDFFont, size: number, maxWidth: number): 
   return lines;
 }
 
+/** Retire les caractères que la police ne sait pas dessiner (emojis…) pour ne jamais faire échouer la génération. */
+function printable(text: string, font: PDFFont) {
+  const known = new Set(font.getCharacterSet());
+  const kept = [...text.replace(/[\u200b-\u200f\u2060\ufe00-\ufe0f]/g, "")]
+    .filter((char) => known.has(char.codePointAt(0) as number))
+    .join("")
+    .replace(/\s+/g, " ")
+    .trim();
+  return /[\p{L}\p{N}]/u.test(kept) ? kept : "";
+}
+
 function drawCentered(
   page: PDFPage,
   text: string,
@@ -85,7 +96,9 @@ export async function createGiftCardPDF(
   amount: string,
   title: string,
   nameCos: string,
-  nameDes: string
+  nameDes: string,
+  idealFor?: string,
+  message?: string
 ) {
   const pdfDoc = await PDFDocument.create();
   pdfDoc.registerFontkit(fontkit);
@@ -172,12 +185,32 @@ export async function createGiftCardPDF(
   );
   y -= 14;
 
+  // Petit mot personnel : entre l'accroche et l'encadré, jamais tronqué (la taille diminue s'il est long)
+  const note = message ? printable(message, serif) : "";
+  if (note) {
+    const noteWidth = PAGE_W - MARGIN * 3;
+    let noteSize = 13;
+    let noteLines = wrapText(`« ${note} »`, serif, noteSize, noteWidth);
+    while (noteLines.length > 3 && noteSize > 9) {
+      noteSize -= 2;
+      noteLines = wrapText(`« ${note} »`, serif, noteSize, noteWidth);
+    }
+    let ny = y + 8;
+    for (const line of noteLines) {
+      const w = serif.widthOfTextAtSize(line, noteSize);
+      page.drawText(line, { x: (PAGE_W - w) / 2, y: ny, size: noteSize, font: serif, color: colors.inkSoft });
+      ny -= noteSize + 5;
+    }
+    y = ny - 8;
+  }
+
   // Encadré offre
   const boxW = 460;
   const boxX = (PAGE_W - boxW) / 2;
   const titleLines = wrapText(title, sansBold, 13, boxW - 48).slice(0, 2);
-  const boxH = 86 + titleLines.length * 17;
-  const boxY = Math.max(y - boxH + 12, 130);
+  const idealLines = idealFor ? wrapText(`Idéal pour : ${idealFor}`, sans, 11, boxW - 48).slice(0, 2) : [];
+  const boxH = 86 + titleLines.length * 17 + idealLines.length * 15;
+  const boxY = Math.max(y - boxH + 12, 140);
 
   page.drawRectangle({
     x: boxX,
@@ -211,6 +244,19 @@ export async function createGiftCardPDF(
     ty -= 17;
   }
 
+  ty -= 2;
+  for (const line of idealLines) {
+    const w = sans.widthOfTextAtSize(line, 11);
+    page.drawText(line, {
+      x: boxX + (boxW - w) / 2,
+      y: ty,
+      size: 11,
+      font: sans,
+      color: colors.inkSoft,
+    });
+    ty -= 15;
+  }
+
   const amountLabel = `${amount} €`;
   const amountSize = 30;
   const amountW = serifBold.widthOfTextAtSize(amountLabel, amountSize);
@@ -223,7 +269,7 @@ export async function createGiftCardPDF(
   });
 
   // Code — zone dédiée, au-dessus du bandeau bas
-  const codeY = 108;
+  const codeY = 96;
   const codeCaption = "Votre code";
   const captionW = sans.widthOfTextAtSize(codeCaption, 10);
   page.drawText(codeCaption, {

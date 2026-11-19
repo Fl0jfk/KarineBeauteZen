@@ -29,6 +29,8 @@ export default function Card({ item, offer }: CardProps) {
   const customPrice = typedPrice ?? offeredAmount ?? item.price;
   const isButtonDisabled = customPrice < GIFT_CARD_MIN || customPrice > GIFT_CARD_MAX;
   const open = manualOpen || (!!offer && !dismissed);
+  // Mention « idéal pour… » : seulement si le montant n'a pas été modifié depuis le bouton « Offrir »
+  const forLabel = offer?.label && offeredAmount !== undefined && customPrice === offeredAmount ? offer.label : undefined;
 
   const openCheckout = () => setManualOpen(true);
   const hasOffer = !!offer;
@@ -130,9 +132,7 @@ export default function Card({ item, offer }: CardProps) {
                     {item.title}
                   </h3>
                   <p className="mt-1 text-ink-soft">{customPrice}€</p>
-                  {offer?.label && isGiftCard && (
-                    <p className="mt-1 text-sm text-ink-soft">Pour offrir : {offer.label}</p>
-                  )}
+                  {forLabel && <p className="mt-1 text-sm text-ink-soft">Idéal pour : {forLabel}</p>}
                 </div>
                 <button
                   type="button"
@@ -143,7 +143,7 @@ export default function Card({ item, offer }: CardProps) {
                   Fermer
                 </button>
               </div>
-              <FormBuy title={item.title} image={item.image} amount={customPrice} />
+              <FormBuy title={item.title} image={item.image} amount={customPrice} forLabel={forLabel} />
             </motion.div>
           </motion.div>
         )}

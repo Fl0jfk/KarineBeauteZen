@@ -1,5 +1,5 @@
 import type { Data } from "@/app/contexts/data";
-import { offerFor, type Offer } from "./gift";
+import { formatDuration, offerFor, type Offer } from "./gift";
 
 export type RawItem = {
   id: number;
@@ -669,16 +669,6 @@ export const SERVICE_LINKS = SERVICE_CONFIGS.map(({ slug, navLabel, cardLabel })
   navLabel,
   cardLabel,
 }));
-
-export function formatDuration(time?: string) {
-  if (!time) return undefined;
-  const hours = time.match(/(\d+)\s*heures?/i)?.[1];
-  const minutes = time.match(/(\d+)\s*minutes?/i)?.[1];
-  if (hours && minutes) return `${hours}h${minutes.padStart(2, "0")}`;
-  if (hours) return `${hours}h`;
-  if (minutes) return `${minutes} min`;
-  return time;
-}
 
 export function formatPrice(price: number) {
   return `${Number.isInteger(price) ? price : price.toFixed(2).replace(".", ",")} €`;

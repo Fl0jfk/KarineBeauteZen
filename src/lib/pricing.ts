@@ -11,7 +11,7 @@ const isPriced = (value: unknown): value is CatalogItem =>
   !!value && typeof value === "object" && typeof (value as CatalogItem).price === "number";
 
 /** Toutes les prestations du catalogue, quelle que soit la rubrique (y compris les sous-groupes de la manucure). */
-function flattenCatalog(prestations: unknown[]): CatalogItem[] {
+export function flattenCatalog(prestations: unknown[]): CatalogItem[] {
   const items: CatalogItem[] = [];
   const visit = (value: unknown) => {
     if (Array.isArray(value)) value.forEach(visit);

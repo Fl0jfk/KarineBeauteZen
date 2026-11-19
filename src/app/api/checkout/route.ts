@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
-import { resolvePrice } from "@/lib/shop";
+import { GIFT_CARD_TITLE, MESSAGE_MAX, cleanMessage } from "@/lib/gift";
+import { resolveGiftLabel, resolvePrice } from "@/lib/shop";
 
 const MIN_FILL_MS = 2500;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -31,6 +32,8 @@ export const POST = async (request: NextRequest) => {
     // Le produit et le prix viennent du catalogue serveur, jamais du navigateur
     const product = resolvePrice(data.title, data.price);
     if (!product) return bad("Produit ou montant invalide.");
+    // Mention « idéal pour… » : ignorée si elle ne correspond pas à une vraie prestation de ce prix
+    const forLabel = product.title === GIFT_CARD_TITLE ? resolveGiftLabel(data.forLabel, product.price) : undefined;
 
     const name = text(data.name, 100);
     const nameDes = text(data.nameDes, 100);
@@ -40,6 +43,10 @@ export const POST = async (request: NextRequest) => {
     const cp = text(data.cp, 10);
     if (!name || !nameDes || !mail || !address || !city || !cp) return bad("Veuillez remplir tous les champs correctement.");
     if (!EMAIL_RE.test(mail)) return bad("Adresse e-mail invalide.");
+
+    // Petit mot facultatif imprimé sur la carte : refusé s'il est trop long (jamais tronqué en silence)
+    const message = typeof data.message === "string" ? cleanMessage(data.message) : "";
+    if ([...message].length > MESSAGE_MAX) return bad(`Votre petit mot est trop long (${MESSAGE_MAX} caractères maximum).`);
 
     const stripe = new Stripe(process.env.STRIPE_SECRET as string);
     const customer = await stripe.customers.create({
@@ -64,7 +71,7 @@ export const POST = async (request: NextRequest) => {
           quantity: 1,
           price_data: {
             product_data: {
-              name: product.title,
+              name: forLabel ? `${product.title} · idéal pour ${forLabel}` : product.title,
             },
             currency: "eur",
             unit_amount: Math.round(product.price * 100),
@@ -77,6 +84,8 @@ export const POST = async (request: NextRequest) => {
         namecos: name,
         namedes: nameDes,
         mailcos: mail,
+        ...(forLabel ? { forlabel: forLabel } : {}),
+        ...(message ? { message } : {}),
       },
     });
     return NextResponse.json({ url: checkoutSession.url }, { status: 200 });
