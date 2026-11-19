@@ -39,8 +39,8 @@ export default function ServicePage({ page, related, profile }: Props) {
         <div className="pointer-events-none absolute -left-24 top-24 h-72 w-72 rounded-full bg-accent/20 blur-3xl" />
         <div className="pointer-events-none absolute -right-20 top-72 h-80 w-80 rounded-full bg-blush-deep/60 blur-3xl" />
 
-        <div className="relative mx-auto grid w-full max-w-[1400px] items-center gap-12 px-5 pb-16 pt-28 md:px-8 md:pt-36 lg:grid-cols-[1.15fr_0.85fr] lg:gap-20 lg:pb-24">
-          <div>
+        <div className="relative mx-auto grid w-full max-w-[1400px] grid-cols-[minmax(0,1fr)] items-center gap-12 px-5 pb-16 pt-28 md:px-8 md:pt-36 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:gap-20 lg:pb-24">
+          <div className="min-w-0">
             <nav aria-label="Fil d'Ariane" className="animate-rise text-sm text-ink-soft">
               <ol className="flex flex-wrap items-center gap-2">
                 <li>
@@ -62,15 +62,10 @@ export default function ServicePage({ page, related, profile }: Props) {
               {page.eyebrow}
             </p>
             <h1
-              className="animate-rise mt-3 font-display text-5xl leading-[0.98] text-balance text-ink sm:text-6xl lg:text-7xl"
+              className="animate-rise mt-3 font-display text-4xl leading-[1.02] text-balance text-ink [overflow-wrap:anywhere] sm:text-5xl md:text-6xl lg:text-5xl xl:text-7xl"
               style={delay(140)}
             >
-              {page.h1.split("Saint-Pierre-des-Fleurs").map((part, i, parts) => (
-                <span key={i}>
-                  {part}
-                  {i < parts.length - 1 && <span className="whitespace-nowrap">Saint-Pierre-des-Fleurs</span>}
-                </span>
-              ))}
+              {page.h1}
             </h1>
             <p
               className="animate-rise mt-6 max-w-xl text-base leading-relaxed text-ink-soft md:text-lg"
@@ -108,50 +103,57 @@ export default function ServicePage({ page, related, profile }: Props) {
               })}
             </ul>
 
-            <div className="animate-rise mt-10 flex flex-wrap gap-3" style={delay(380)}>
+            <div className="animate-rise mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap" style={delay(380)}>
               <Link
                 href={telHref}
-                className="bg-ink px-6 py-3 text-sm tracking-wide text-pearl transition hover:bg-accent-deep"
+                className="bg-ink px-6 py-3 text-center text-sm tracking-wide text-pearl transition hover:bg-accent-deep"
               >
                 Appeler le {profile.telephone}
               </Link>
               <Link
                 href="/contact"
-                className="border border-ink/25 px-6 py-3 text-sm tracking-wide text-ink transition hover:border-ink"
+                className="border border-ink/25 px-6 py-3 text-center text-sm tracking-wide text-ink transition hover:border-ink"
               >
                 Demander un rendez-vous
               </Link>
               <Link
                 href="/boutique"
-                className="px-3 py-3 text-sm tracking-wide text-accent-deep underline underline-offset-4 transition hover:text-ink"
+                className="px-3 py-3 text-center text-sm tracking-wide text-accent-deep underline underline-offset-4 transition hover:text-ink"
               >
                 Offrir une carte cadeau
               </Link>
             </div>
           </div>
 
-          <div className="animate-rise relative mx-auto w-full max-w-md lg:max-w-none" style={delay(200)}>
-            <div
-              aria-hidden
-              className="absolute inset-0 translate-x-4 translate-y-4 rounded-t-[999px] border border-accent/50 md:translate-x-6 md:translate-y-6"
-            />
-            <div className="relative aspect-[4/5] overflow-hidden rounded-t-[999px] bg-blush-deep">
-              <Image
-                src={page.image}
-                alt={page.imageAlt}
-                fill
-                priority
-                sizes="(max-width: 1024px) 90vw, 40vw"
-                className="object-cover"
+          <div
+            className="animate-rise mx-auto w-full min-w-0 max-w-md pb-6 pr-4 md:pr-6 lg:max-w-none"
+            style={delay(200)}
+          >
+            <div className="relative">
+              <div
+                aria-hidden
+                className="absolute inset-0 translate-x-4 translate-y-4 rounded-t-[999px] border border-accent/50 md:translate-x-6 md:translate-y-6"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-ink/35 via-transparent to-transparent" />
-            </div>
-            <div className="absolute -bottom-6 -left-2 bg-pearl px-6 py-5 shadow-xl shadow-ink/10 md:-left-8">
-              <p className="text-xs tracking-[0.22em] text-ink-soft uppercase">À partir de</p>
-              <p className="font-display text-5xl leading-none text-accent-deep lining-nums">{formatPrice(page.minPrice)}</p>
-              <p className="mt-2 text-sm text-ink-soft">
-                {page.count} prestation{page.count > 1 ? "s" : ""}
-              </p>
+              <div className="relative aspect-[4/5] overflow-hidden rounded-t-[999px] bg-blush-deep">
+                <Image
+                  src={page.image}
+                  alt={page.imageAlt}
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 90vw, 40vw"
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-ink/35 via-transparent to-transparent" />
+              </div>
+              <div className="absolute -bottom-6 left-0 bg-pearl px-5 py-4 shadow-xl shadow-ink/10 md:-left-8 md:px-6 md:py-5">
+                <p className="text-xs tracking-[0.22em] text-ink-soft uppercase">À partir de</p>
+                <p className="font-display text-4xl leading-none text-accent-deep lining-nums md:text-5xl">
+                  {formatPrice(page.minPrice)}
+                </p>
+                <p className="mt-2 text-sm text-ink-soft">
+                  {page.count} prestation{page.count > 1 ? "s" : ""}
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -192,7 +194,7 @@ export default function ServicePage({ page, related, profile }: Props) {
               key={section.id}
               id={section.id}
               aria-labelledby={`${section.id}-title`}
-              className="grid scroll-mt-24 gap-8 md:grid-cols-[minmax(0,300px)_1fr] md:gap-16"
+              className="grid scroll-mt-24 grid-cols-[minmax(0,1fr)] gap-8 md:grid-cols-[minmax(0,300px)_minmax(0,1fr)] md:gap-16"
             >
               <header className="md:sticky md:top-28 md:self-start">
                 <p aria-hidden className="font-display text-6xl leading-none text-accent/40 lining-nums md:text-7xl">
@@ -208,17 +210,17 @@ export default function ServicePage({ page, related, profile }: Props) {
                 {section.entries.map((entry) => (
                   <li
                     key={entry.key}
-                    className="group grid grid-cols-[1fr_auto] items-start gap-x-6 gap-y-1 border-b border-blush-deep px-1 py-5 transition hover:bg-white/70 md:px-4"
+                    className="group grid grid-cols-[minmax(0,1fr)] items-start gap-x-6 gap-y-3 border-b border-blush-deep px-1 py-5 transition hover:bg-white/70 sm:grid-cols-[minmax(0,1fr)_auto] sm:gap-y-1 md:px-4"
                   >
-                    <div>
+                    <div className="min-w-0">
                       <h3 className="text-lg font-medium text-ink">{entry.title}</h3>
                       {entry.description && (
                         <p className="mt-1 max-w-xl text-sm leading-relaxed text-ink-soft">{entry.description}</p>
                       )}
                     </div>
-                    <ul className="flex flex-col items-end gap-2">
+                    <ul className="flex flex-col gap-2 sm:items-end">
                       {entry.options.map((option, i) => (
-                        <li key={i} className="flex items-center gap-3">
+                        <li key={i} className="flex flex-wrap items-center gap-x-3 gap-y-1">
                           {option.time && (
                             <span className="text-sm text-ink-soft">
                               <span className="sr-only">Durée : </span>
@@ -266,7 +268,7 @@ export default function ServicePage({ page, related, profile }: Props) {
       </div>
 
       <section className="bg-pearl/70 py-16 md:py-24" aria-labelledby="faq-title">
-        <div className="mx-auto grid w-full max-w-[1400px] gap-10 px-5 md:px-8 lg:grid-cols-[minmax(0,300px)_1fr] lg:gap-16">
+        <div className="mx-auto grid w-full max-w-[1400px] grid-cols-[minmax(0,1fr)] gap-10 px-5 md:px-8 lg:grid-cols-[minmax(0,300px)_minmax(0,1fr)] lg:gap-16">
           <div>
             <p className="mb-2 text-sm tracking-[0.22em] text-accent uppercase">Bon à savoir</p>
             <h2 id="faq-title" className="font-display text-4xl text-ink md:text-5xl">
@@ -334,9 +336,9 @@ export default function ServicePage({ page, related, profile }: Props) {
       </section>
 
       <section className="mx-auto w-full max-w-[1400px] px-5 pb-16 md:px-8 md:pb-24">
-        <div className="relative overflow-hidden bg-ink px-8 py-14 text-pearl md:px-14 md:py-16">
+        <div className="relative overflow-hidden bg-ink px-6 py-12 text-pearl sm:px-8 md:px-14 md:py-16">
           <div className="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-accent/30 blur-3xl" />
-          <div className="relative grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
+          <div className="relative grid grid-cols-[minmax(0,1fr)] gap-8 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
             <div className="max-w-xl">
               <p className="mb-2 text-sm tracking-[0.22em] text-blush uppercase">Rendez-vous</p>
               <h2 className="font-display text-4xl md:text-5xl">Prenez un moment pour vous</h2>
@@ -346,22 +348,22 @@ export default function ServicePage({ page, related, profile }: Props) {
                 {HOURS}
               </p>
             </div>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <Link
                 href={telHref}
-                className="bg-pearl px-6 py-3 text-sm tracking-wide text-ink transition hover:bg-blush"
+                className="bg-pearl px-6 py-3 text-center text-sm tracking-wide text-ink transition hover:bg-blush"
               >
                 {profile.telephone}
               </Link>
               <Link
                 href="/contact"
-                className="border border-pearl/70 px-6 py-3 text-sm tracking-wide text-pearl transition hover:bg-pearl/10"
+                className="border border-pearl/70 px-6 py-3 text-center text-sm tracking-wide text-pearl transition hover:bg-pearl/10"
               >
                 Écrire à Karine
               </Link>
               <Link
                 href="/boutique"
-                className="border border-pearl/70 px-6 py-3 text-sm tracking-wide text-pearl transition hover:bg-pearl/10"
+                className="border border-pearl/70 px-6 py-3 text-center text-sm tracking-wide text-pearl transition hover:bg-pearl/10"
               >
                 Offrir un soin
               </Link>
