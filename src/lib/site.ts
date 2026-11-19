@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { promises as fs } from "fs";
 import path from "path";
 import type { Data } from "@/app/contexts/data";
+import { alignShopPrices } from "./pricing";
 
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://karine-beaute-zen.com").replace(/\/$/, "");
 export const SITE_NAME = "Karine Beauté Zen";
@@ -52,7 +53,7 @@ export function pageMetadata({
 
 export const getSiteData = cache(async (): Promise<Data> => {
   const file = path.join(process.cwd(), "public", "data.json");
-  return JSON.parse(await fs.readFile(file, "utf-8")) as Data;
+  return alignShopPrices(JSON.parse(await fs.readFile(file, "utf-8")) as Data);
 });
 
 export const toE164 = (phone: string) => `+33${phone.replace(/\D/g, "").replace(/^0/, "")}`;

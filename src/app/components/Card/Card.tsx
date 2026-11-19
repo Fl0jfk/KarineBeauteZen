@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import FormBuy from "../Forms/FormBuy";
+import { GIFT_CARD_MAX, GIFT_CARD_MIN, GIFT_CARD_TITLE, type OfferRequest } from "@/lib/gift";
 
 interface CardProps {
   item: {
@@ -12,16 +13,30 @@ interface CardProps {
     price: number;
     description: string;
   };
+  /** Présent quand on arrive depuis un bouton « Offrir » d'une page de soins. */
+  offer?: OfferRequest;
 }
 
-export default function Card({ item }: CardProps) {
-  const [open, setOpen] = useState(false);
-  const [customPrice, setCustomPrice] = useState(item.price);
-  const isGiftCard = item.title === "Carte cadeau";
-  const isButtonDisabled = customPrice < 10 || customPrice > 200;
+export default function Card({ item, offer }: CardProps) {
+  const [manualOpen, setManualOpen] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
+  const [typedPrice, setTypedPrice] = useState<number | null>(null);
+  const isGiftCard = item.title === GIFT_CARD_TITLE;
+  const offeredAmount =
+    isGiftCard && offer?.amount && offer.amount >= GIFT_CARD_MIN && offer.amount <= GIFT_CARD_MAX
+      ? Math.round(offer.amount * 100) / 100
+      : undefined;
+  const customPrice = typedPrice ?? offeredAmount ?? item.price;
+  const isButtonDisabled = customPrice < GIFT_CARD_MIN || customPrice > GIFT_CARD_MAX;
+  const open = manualOpen || (!!offer && !dismissed);
 
-  const openCheckout = () => setOpen(true);
-  const closeCheckout = () => setOpen(false);
+  const openCheckout = () => setManualOpen(true);
+  const hasOffer = !!offer;
+  const closeCheckout = useCallback(() => {
+    setManualOpen(false);
+    setDismissed(true);
+    if (hasOffer) window.history.replaceState(null, "", "/boutique");
+  }, [hasOffer]);
 
   useEffect(() => {
     if (!open) return;
@@ -34,7 +49,7 @@ export default function Card({ item }: CardProps) {
       document.body.classList.remove("modal-open");
       window.removeEventListener("keydown", onKey);
     };
-  }, [open]);
+  }, [open, closeCheckout]);
 
   return (
     <>
@@ -63,12 +78,12 @@ export default function Card({ item }: CardProps) {
               Montant de la carte
               <input
                 type="number"
-                min={10}
-                max={200}
+                min={GIFT_CARD_MIN}
+                max={GIFT_CARD_MAX}
                 value={customPrice}
                 onChange={(e) => {
                   const value = Number(e.target.value);
-                  if (value <= 200) setCustomPrice(value);
+                  if (value <= GIFT_CARD_MAX) setTypedPrice(value);
                 }}
                 className="border border-blush-deep bg-pearl px-3 py-2 text-ink outline-none focus:border-accent"
               />
@@ -115,6 +130,9 @@ export default function Card({ item }: CardProps) {
                     {item.title}
                   </h3>
                   <p className="mt-1 text-ink-soft">{customPrice}€</p>
+                  {offer?.label && isGiftCard && (
+                    <p className="mt-1 text-sm text-ink-soft">Pour offrir : {offer.label}</p>
+                  )}
                 </div>
                 <button
                   type="button"

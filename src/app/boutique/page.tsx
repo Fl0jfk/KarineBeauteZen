@@ -1,10 +1,17 @@
 "use client";
 
+import { useMemo, useSyncExternalStore } from "react";
 import ListCards from "../components/List/List";
 import { useData } from "../contexts/data";
+import { parseOffer } from "@/lib/gift";
+
+const subscribe = () => () => {};
 
 export default function Boutique() {
   const { shop } = useData();
+  // Lu côté navigateur uniquement : la page reste générée statiquement avec toute la boutique.
+  const search = useSyncExternalStore(subscribe, () => window.location.search, () => "");
+  const offer = useMemo(() => parseOffer(search), [search]);
 
   return (
     <main className="pt-24 md:pt-28">
@@ -16,7 +23,7 @@ export default function Boutique() {
           clics.
         </p>
       </section>
-      <ListCards shop={shop} />
+      <ListCards shop={shop} offer={offer} />
     </main>
   );
 }

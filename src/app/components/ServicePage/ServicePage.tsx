@@ -29,6 +29,7 @@ export default function ServicePage({ page, related, profile }: Props) {
       question: "Puis-je offrir cette prestation ?",
       answer:
         "Oui. Les massages, la manucure complète et les cartes cadeaux à montant libre sont disponibles dans la boutique en ligne, avec paiement sécurisé et envoi par e-mail.",
+      cta: { label: "Aller à la boutique", href: "/boutique" },
     },
   ];
 
@@ -79,17 +80,32 @@ export default function ServicePage({ page, related, profile }: Props) {
             </p>
 
             <ul className="animate-rise mt-8 flex flex-wrap gap-2" style={delay(300)}>
-              {page.highlights.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-center gap-2 border border-blush-deep bg-pearl/70 px-4 py-2 text-sm text-ink"
-                >
-                  <span aria-hidden className="text-accent">
-                    ✦
-                  </span>
-                  {item}
-                </li>
-              ))}
+              {page.highlights.map((item) => {
+                const toShop = /carte cadeau|offrir/i.test(item);
+                const chip = "flex items-center gap-2 border border-blush-deep bg-pearl/70 px-4 py-2 text-sm text-ink";
+                return (
+                  <li key={item}>
+                    {toShop ? (
+                      <Link href="/boutique" className={`${chip} transition hover:border-accent hover:bg-white`}>
+                        <span aria-hidden className="text-accent">
+                          ✦
+                        </span>
+                        {item}
+                        <span aria-hidden className="text-accent-deep">
+                          →
+                        </span>
+                      </Link>
+                    ) : (
+                      <span className={chip}>
+                        <span aria-hidden className="text-accent">
+                          ✦
+                        </span>
+                        {item}
+                      </span>
+                    )}
+                  </li>
+                );
+              })}
             </ul>
 
             <div className="animate-rise mt-10 flex flex-wrap gap-3" style={delay(380)}>
@@ -104,6 +120,12 @@ export default function ServicePage({ page, related, profile }: Props) {
                 className="border border-ink/25 px-6 py-3 text-sm tracking-wide text-ink transition hover:border-ink"
               >
                 Demander un rendez-vous
+              </Link>
+              <Link
+                href="/boutique"
+                className="px-3 py-3 text-sm tracking-wide text-accent-deep underline underline-offset-4 transition hover:text-ink"
+              >
+                Offrir une carte cadeau
               </Link>
             </div>
           </div>
@@ -194,22 +216,36 @@ export default function ServicePage({ page, related, profile }: Props) {
                         <p className="mt-1 max-w-xl text-sm leading-relaxed text-ink-soft">{entry.description}</p>
                       )}
                     </div>
-                    <dl className="flex flex-col items-end gap-1">
+                    <ul className="flex flex-col items-end gap-2">
                       {entry.options.map((option, i) => (
-                        <div key={i} className="flex items-baseline gap-3">
+                        <li key={i} className="flex items-center gap-3">
                           {option.time && (
-                            <dt className="text-sm text-ink-soft">
+                            <span className="text-sm text-ink-soft">
                               <span className="sr-only">Durée : </span>
                               {option.time}
-                            </dt>
+                            </span>
                           )}
-                          <dd className="font-display text-3xl leading-none text-accent-deep lining-nums">
+                          <span className="font-display text-3xl leading-none text-accent-deep lining-nums">
                             <span className="sr-only">Prix : </span>
                             {formatPrice(option.price)}
-                          </dd>
-                        </div>
+                          </span>
+                          {option.offer && (
+                            <Link
+                              href={option.offer.href}
+                              title={
+                                option.offer.kind === "product"
+                                  ? "Offrir ce soin en ligne"
+                                  : `Offrir une carte cadeau de ${formatPrice(option.price)}`
+                              }
+                              aria-label={`Offrir : ${entry.title}${option.time ? `, ${option.time}` : ""}, ${formatPrice(option.price)}`}
+                              className="shrink-0 border border-accent/50 px-3 py-1.5 text-xs tracking-wide text-accent-deep transition hover:border-accent-deep hover:bg-accent-deep hover:text-pearl"
+                            >
+                              Offrir
+                            </Link>
+                          )}
+                        </li>
                       ))}
-                    </dl>
+                    </ul>
                   </li>
                 ))}
               </ul>
@@ -219,6 +255,13 @@ export default function ServicePage({ page, related, profile }: Props) {
 
         <p className="mt-16 text-sm text-ink-soft">
           Tarifs indicatifs en euros TTC, susceptibles d&apos;évoluer. Réservation sur rendez-vous.
+          {page.offerable && (
+            <>
+              {" "}
+              Un soin vous fait envie pour quelqu&apos;un d&apos;autre ? Le bouton « Offrir » ouvre la commande en ligne
+              (le soin lui-même s&apos;il est en boutique, sinon une carte cadeau du même montant).
+            </>
+          )}
         </p>
       </div>
 
@@ -240,6 +283,14 @@ export default function ServicePage({ page, related, profile }: Props) {
                   </span>
                 </summary>
                 <p className="mt-3 max-w-2xl leading-relaxed text-ink-soft">{item.answer}</p>
+                {item.cta && (
+                  <Link
+                    href={item.cta.href}
+                    className="mt-3 inline-block text-sm tracking-wide text-accent-deep underline underline-offset-4 transition hover:text-ink"
+                  >
+                    {item.cta.label} →
+                  </Link>
+                )}
               </details>
             ))}
           </div>

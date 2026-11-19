@@ -182,14 +182,14 @@
                     "title": "Massage ayurvédique",
                     "price": 67,
                     "time": "1 heure",
-                    "description": "Ènergétique, détend tensions et muscles"
+                    "description": "Énergétique, détend tensions et muscles"
                 },
                 {
                     "id": 19,
                     "title": "Massage ayurvédique",
                     "price": 93,
                     "time": "1 heure 30 minutes",
-                    "description": "Ènergétique, détend tensions et muscles"
+                    "description": "Énergétique, détend tensions et muscles"
                 },
                 {
                     "id": 20,
@@ -751,7 +751,7 @@
             "id": 2,
             "title": "Massage ayurvédique",
             "price": 67,
-            "description": "Ènergétique, détend tensions et muscles. (1 heure)",
+            "description": "Énergétique, détend tensions et muscles. (1 heure)",
             "image": "https://karinebeautezen.s3.eu-west-3.amazonaws.com/boutique/ayurve%CC%81dique.jpg"
         },
         {
